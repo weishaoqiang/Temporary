@@ -1,0 +1,105 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="input-group input-medium tblToolbar-search">
+          <span class="fa fa-search"></span>
+          <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="设备名 / SN号" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+          <span class="input-group-btn">
+            <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+          </span>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <label><span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>设备状态：</span>
+            <select name="shopTypeSel" id="shopTypeSel" class="form-control input-small input-inline" ng-options="opt.name for opt in tblToolbar.guardDeviceStateList" ng-model="tblToolbar.stateVal" ng-change="tblToolbar.stateValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>设备名称</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>设备SN号</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>设备状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>状态更新时间</span>
+            </div>
+          </th>
+          <th ng-show="!tblToolbar.cityVal.id">
+            <div>
+              <span>所处城市</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td>
+            <a ng-href="{{'../shopMng/index.html#/shopMng_queryShop/'+item.shopID}}" ng-bind="item.deviceName || '- -'" ng-class="item.deviceName?'':'msgInvalid'"></a>
+          </td>
+          <td ng-bind="item.deviceCode || '- -'" ng-class="item.deviceCode?'':'msgInvalid'"></td>
+          <td ng-bind="(item.state | guardDeviceStateFilter) || '- -'" ng-class="item.state===0?'msgError':(item.state===1)?'msgSuccess':'msgInvalid'"></td>
+          <td ng-bind="(item.updateDate) || '- -'" ng-class="item.updateDate?'':'msgInvalid'"></td>
+          <td ng-show="!tblToolbar.cityVal.id" ng-bind="item.cityName || '- -'" ng-class="item.cityName?'':'msgInvalid'"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a href="" ng-click="tblNormal.unlockGuard(item.deviceCode)" ng-if="(adminModules[9].type == 3) || (adminModules[9].type == 4)" style="padding:4px 14px;background-color:#ffd700;color:#5b4d00 !important;font-size:14px;border-radius:4px;">开锁</a>&emsp;
+            <a ng-href="{{'../shopMng/index.html#/shopMng_editLock/'+item.id+'/shop/'+item.shopID}}" ng-if="(adminModules[9].type == 3) || (adminModules[9].type == 4)">编辑</a>&emsp;
+            <a href="" ng-click="tblNormal.delGuard(item.deviceCode)" ng-if="(adminModules[9].type == 3) || (adminModules[9].type == 4)">删除</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

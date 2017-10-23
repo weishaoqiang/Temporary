@@ -1,0 +1,144 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 跟进方式 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="trackTypeSel" id="trackTypeSel" ng-options="opt for opt in tblDetails.trackTypeList" ng-model="formResult.trackType">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.trackTypeError">* 请选择跟进方式</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 实际跟进时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="trackTime" name="trackTime" type="text" placeholder="请选择实际跟进时间" style="width: 140px;" ng-focus="tblDetails.showTrackTimeDatepicker()" ng-model="formResult.trackTime">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;" ng-click="tblDetails.showTrackTimeDatepicker()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.trackTimeError">* 请选择实际跟进时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 跟进状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="stateSel" id="stateSel" ng-options="opt.name for opt in tblDetails.threadStateList" ng-model="tblDetails.stateVal" ng-change="tblDetails.stateChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.stateError">* 请选择线索状态</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(tblDetails.stateVal.id==1) || (tblDetails.stateVal.id==2) || (tblDetails.stateVal.id==3)">
+              <td class="col-xs-2">
+                <span> 下次跟进时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="trackNextTime" name="trackNextTime" type="text" placeholder="请选择下次跟进时间" style="width: 140px;" ng-focus="tblDetails.showTrackNextTimeDatepicker()" ng-model="formResult.trackNextTime">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;" ng-click="tblDetails.showTrackNextTimeDatepicker()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.trackNextTimeError">* 请选择下次跟进时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(tblDetails.stateVal.id==1) || (tblDetails.stateVal.id==2) || (tblDetails.stateVal.id==3)">
+              <td class="col-xs-2">
+                <span> 跟进情况 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <textarea name="content" rows="4" cols="31" placeholder="请填写跟进情况" value="" style="padding: 10px;" ng-model="formResult.content"></textarea>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.contentError">* 请输入有效的跟进情况</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.stateVal.id === 4">
+              <td class="col-xs-2">
+                <span> 签约订单号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input type="text" id="orderID" name="orderID" value="" placeholder="请填写签约订单号" ng-model="formResult.orderID">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.orderIDError">* 请输入有效的订单号(8或9位)</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.stateVal.id == 5">
+              <td class="col-xs-2">
+                <span> 关闭原因 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="reasonTypeSel" id="reasonTypeSel" ng-options="opt.name for opt in tblDetails.giveUpReasonTypeList" ng-model="tblDetails.giveUpReasonTypeVal" ng-change="tblDetails.giveUpReasonTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.giveUpReasonTypeError">* 请选择关闭原因</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.stateVal.id == 5">
+              <td class="col-xs-2">
+                <span> 原因描述 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <textarea name="giveUpReason" rows="4" cols="31" placeholder="请填写原因描述" value="" style="padding: 10px;" ng-model="formResult.giveUpReason"></textarea>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.giveUpReasonError">* 请输入有效的原因描述</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

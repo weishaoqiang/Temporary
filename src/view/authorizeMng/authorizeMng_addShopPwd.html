@@ -1,0 +1,113 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title.name"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row" ng-show="title.id==='addShopPwd'">
+              <td class="col-xs-2">
+                <span> 所在城市 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="citySel" id="citySel" ng-options="opt.name for opt in tblDetails.cityList" ng-model="tblDetails.cityVal" ng-change="tblDetails.cityValChanged()" style="width:114px;">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 指定门店 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row" ng-show="title.id==='editShopPwd'">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" readonly ng-model="queryResult.shopName">
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+                <div class="row" ng-show="title.id==='addShopPwd'">
+                  <div class="col-xs-4">
+                    <span class="label label-vks" ng-repeat="item in dropdownSel.chsnList">{{item.shopName}}
+                    <span class="fa fa-close" ng-click="dropdownSel.removeItem(item.id)"></span>
+                    </span>
+                  </div>
+                  <div class="col-xs-4">
+                    <span class="msgError" ng-if="valiResult.shopIDError">* 请选择要设置密码的门店</span>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="btn-group dropdown pull-right" style="padding-left:20px;border-left:2px solid #E8EAF1;">
+                      <button id="btnForAddShop" type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="width:114px;" ng-disabled="dropdownSel.chsnList.length>0">
+                      <span>添加门店</span>
+                      <span class="caret" style="margin-left:10px;"></span>
+                    </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <div class="input-group">
+                            <span class="fa fa-search"></span>
+                            <input type="search" class="form-control" placeholder="门店名称..." ng-model="dropdownSel.keyword">
+                            <span class="input-group-btn">
+                            <input type="button" class="btn btn-confirm" value="搜索" ng-click="dropdownSel.searchShops(tblDetails.cityVal, dropdownSel.keyword)">
+                          </span>
+                          </div>
+                        </li>
+                        <li class="opt" ng-repeat="item in dropdownSel.shopList" ng-click="dropdownSel.addShops(item.id, item.name)" ng-show="dropdownSel.shopList.length>0">
+                          <a id="{{item.id}}" href="javascript:;" ng-bind="item.name"></a>
+                        </li>
+                        <li style="text-align:center;" ng-show="!dropdownSel.shopList.length">
+                          <br>
+                          <span class="msgInvalid" ng-show="tblDetails.cityVal.id"> 暂无内容 </span>
+                          <span class="msgInvalid" ng-show="!tblDetails.cityVal.id"> -请先选择城市- </span>
+                          <br>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 设置密码 </span><br>
+                <span> (6位数字) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" placeholder="请输入要设置的门禁密码" ng-model="formResult.password">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.pwdError">* 请输入有效的门禁密码</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <!-- <input type="button" class="btn btn-long {{item.classTxt}}" value="{{item.name}}" id="{{item.idTxt}}" ng-repeat="item in tblDetails.btn" ng-click="item.launchFunc()" ng-disabled="item.disabledFlag"/> -->
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

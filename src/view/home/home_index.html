@@ -1,0 +1,162 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <!-- 下拉列表-->
+      <label>
+        <div style="margin-bottom: 4px;"><span class="titleDivider"></span><span>选择城市</span></div>
+        <select class="form-control input-inline" name="citySel" id="citySel" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+          <option value="">-请选择-</option>
+        </select>
+      </label>
+      <!-- 下拉列表-->
+      <label ng-show="tblToolbar.cityVal.id">
+        <div style="margin-bottom: 4px;"><span class="titleDivider"></span><span>选择门店</span></div>
+        <select class="form-control input-inline" name="shopSel" id="shopSel" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+          <option value="">-请选择-</option>
+        </select>
+      </label>
+      <!-- <div class="row">
+        <div class="col-xs-6">
+        </div>
+        <div class="col-xs-6"></div>
+      </div> -->
+    </div>
+    <!-- Deal situation -->
+    <div class="table-statics">
+      <div class="title"><span class="titleDivider"></span>经营状况</div>
+      <div class="content">
+        <div class="statics-label-large statics-label-orange">
+          <object class="logo-orange" data="../../img/reserve.svg" type="image/svg+xml"></object>
+          <!-- <div class="number" ng-cloak="">{{tblStatics.unitsRentRate}}</div><div style="clear:both;"></div> -->
+          <div class="number" ng-cloak="">{{tblStatics.countRentRate}}%</div>
+          <div style="clear:both;"></div>
+          <!-- <div class="text">仓位出租率 ({{tblStatics.rentCount}} / {{tblStatics.allCount}})</div> -->
+          <div class="text" style="text-align:right;">
+            <div class="" style="display:inline-block;">
+              仓位出租率
+            </div>
+            <div class="" style="float:right;">
+              ({{tblStatics.rentCount}} / {{tblStatics.allCount}})
+            </div>
+          </div>
+        </div>
+        <div class="statics-label-large statics-label-olive">
+          <object class="logo-olive" data="../../img/capacity.svg" type="image/svg+xml"></object>
+          <!-- <div class="number" ng-cloak="">{{tblStatics.capacityRentRate}}</div><div style="clear:both;"></div> -->
+          <div class="number" ng-cloak="">{{tblStatics.volumeRentRate}}%</div>
+          <div style="clear:both;"></div>
+          <div class="text" style="text-align:right;">
+            <div class="" style="display:inline-block;">
+              容积出租率
+            </div>
+            <div class="" style="float:right;">
+              ({{tblStatics.rentVolume}} / {{tblStatics.allVolume}})
+            </div>
+          </div>
+        </div>
+        <div class="statics-label-large statics-label-yellow">
+          <object class="logo-yellow" data="../../img/allIncome.svg" type="image/svg+xml"></object>
+          <div class="number" ng-cloak="">{{tblStatics.incomeInSevDays}}<span style="font-size:14px;">元</span></div>
+          <div style="clear:both;"></div>
+          <div class="text">最近7天总收款</div>
+        </div>
+        <div class="statics-label-large statics-label-blue">
+          <object class="logo-blue" data="../../img/reletScale.svg" type="image/svg+xml"></object>
+          <div class="number" ng-cloak="">{{tblStatics.reveletScale}}%</div>
+          <div style="clear:both;"></div>
+          <div class="text">客户续租比例</div>
+        </div>
+        <div class="statics-label-large">
+          <div class="statics-label-large-divider"></div>
+          <div class="statics-label-green all-client-cnt" style="border-radius:52px;position:relative;">
+            <object class="logo-green" data="../../img/clientCnt.svg" type="image/svg+xml" style="width:70px;"></object>
+            <div class="number" ng-cloak="">{{tblStatics.allClientCnt}}<span style="font-size:14px;">位</span></div><br>
+            <div class="text">全国累计客户数量</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Real-time situation -->
+    <div class="table-statics">
+      <div class="title"><span class="titleDivider"></span>实时动态</div>
+      <div class="content">
+        <a class="statics-label-medium" ng-href="{{localLink.newOrderListUrl + '/'+(tblToolbar.cityVal.id?tblToolbar.cityVal.id:'0') +'/'+(tblToolbar.shopVal.id?tblToolbar.shopVal.id:'0') }}">
+          <div class="text">今日新增订单</div>
+          <div class="number" ng-cloak="">{{tblStatics.newOrderCnt}}</div>
+          <span class="fa fa-chevron-circle-right"></span>
+        </a>
+        <a class="statics-label-medium" ng-href="{{localLink.threadMngUrl +'/today/'+(tblToolbar.cityVal.id?tblToolbar.cityVal.id:'0') +'/0/0/0/0' }}">
+          <div class="text">今日新增线索</div>
+          <div class="number" ng-cloak="">{{tblStatics.newIntentionCnt}}</div>
+          <span class="fa fa-chevron-circle-right"></span>
+        </a>
+        <a class="statics-label-medium" ng-href="{{localLink.willExpireOrderListUrl + '/'+(tblToolbar.cityVal.id?tblToolbar.cityVal.id:'0') +'/'+(tblToolbar.shopVal.id?tblToolbar.shopVal.id:'0') }}">
+          <div class="text">即将到期订单</div>
+          <div class="number" ng-cloak="">{{tblStatics.soonExpireOrderCnt}}</div>
+          <span class="fa fa-chevron-circle-right"></span>
+        </a>
+        <a class="statics-label-medium" ng-href="{{localLink.expiredOrderListUrl + '/'+(tblToolbar.cityVal.id?tblToolbar.cityVal.id:'0') +'/'+(tblToolbar.shopVal.id?tblToolbar.shopVal.id:'0') }}">
+          <div class="text">已到期订单</div>
+          <div class="number" ng-cloak="">{{tblStatics.expireOrderCnt}}</div>
+          <span class="fa fa-chevron-circle-right"></span>
+        </a>
+      </div>
+    </div>
+    <!-- Statics Diagram -->
+    <div class="table-statics table-statics-diagram">
+      <div class="title"><span class="titleDivider"></span>统计图表</div>
+      <div class="content">
+        <div id="rentRateDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-header">
+              <div class="title diagramTitle">容积出租率趋势图</div>
+              <div class="datepickerDiv">
+                <div class="">
+                  <span class="fa fa-angle-down" ng-click="rentRateDatepicker.showStart()"></span>
+                  <input id="rentRateDateStart" ng-model="tblStatics.rentRateStart" style="margin-right:0;">
+                </div>
+                <span style="color:#E5E7F0;">—</span>
+                <!-- <div id="rentRateDateEnd" class="laydate-icon" ng-model="tblStatics.rentRateEnd"></div> -->
+                <div class="">
+                  <span class="fa fa-angle-down" ng-click="rentRateDatepicker.showEnd()"></span>
+                  <input id="rentRateDateEnd" ng-model="tblStatics.rentRateEnd" style="margin-right:0;">
+                </div>
+              </div>
+            </div>
+            <div class="content-box-body">
+              <div id="rentRateDiagram" style="width:100%;height:320px;"></div>
+            </div>
+          </div>
+        </div>
+        <div id="allIncomeDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-header">
+              <div class="title diagramTitle">收款趋势图</div>
+              <div class="timePeriod" ng-click="timePeriod.changed($event)">
+                <a href="javascript:;" class="timePeriodDay timePeriodChsn">日</a>
+                <a href="javascript:;" class="timePeriodWeek">周</a>
+                <a href="javascript:;" class="timePeriodMon">月</a>
+              </div>
+              <div class="datepickerDiv">
+                <div class="">
+                  <span class="fa fa-angle-down" ng-click="allIncomeDatepicker.showStart()"></span>
+                  <input id="allIncomeDateStart" ng-model="tblStatics.allIncomeStart" style="margin-right:0;">
+                </div>
+                <span style="color:#E5E7F0;">—</span>
+                <div class="">
+                  <span class="fa fa-angle-down" ng-click="allIncomeDatepicker.showEnd()"></span>
+                  <input id="allIncomeDateEnd" ng-model="tblStatics.allIncomeEnd" style="margin-right:0;">
+                </div>
+              </div>
+            </div>
+            <div class="content-box-body">
+              <div id="allIncomeDiagram" style="width:100%;height:320px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

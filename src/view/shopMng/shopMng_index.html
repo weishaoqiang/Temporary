@@ -1,0 +1,137 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="门店名称" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+          <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/shopMng_addShop" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span>新增门店</span>
+          </a>
+        </div>
+        <div class="right-arrange">
+          <label><span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-small input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">-请选择-</option>
+              <option value="">-添加城市-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>选择门店类型：</span>
+            <select name="shopTypeSel" id="shopTypeSel" class="form-control input-small input-inline" ng-options="opt.name for opt in tblToolbar.shopTypeList" ng-model="tblToolbar.shopTypeVal" ng-change="tblToolbar.shopTypeValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-small input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <table class="table table-hover table-bordered tblSortable">
+      <thead>
+        <tr>
+          <th ng-repeat="(objName, item) in tblSortable.theadConfig.sortBuffer">
+            <div>
+              <span ng-bind="item.name"></span>
+              <i ng-class="{'fa':true, 'fa-sort':!item.sortState, 'fa-sort-asc':item.sortState&&(item.sortDir==='up'), 'fa-sort-desc':item.sortState&&(item.sortDir==='down')}" ng-click="tblSortable.launchSort(objName, item)" ng-if="item.canSort"></i>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblSortable.dataList" ng-if="tblSortable.dataList.length>0">
+          <td ng-bind="item.name"></td>
+          <td ng-bind="item.shopType | shopTypeFilter"></td>
+          <td ng-bind="item.unitCount?item.unitCount:0"></td>
+          <td ng-bind="item.volume | volumeFilter"></td>
+          <td ng-bind="item.volumeRentRate | volumeRentRateFilter"></td>
+          <td ng-bind="item.openDate | dateFilter:'yyyy-MM-dd'"></td>
+          <td ng-bind="item.managers.length>0?(item.managers.join('，')):'- -'" ng-class="item.managers.length>0?'':'msgInvalid'"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/shopMng_queryShop/' + item.id}}" ng-if="(adminModules[1].type == '2') || (adminModules[1].type == '4')">查看</a>&nbsp;&nbsp;
+            <a ng-href="{{'#/shopMng_editShop/' + item.id}}" ng-if="(adminModules[1].type == '3') || (adminModules[1].type == '4')">编辑</a>&nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr ng-if="tblSortable.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right mt-20" ng-if="tblSortable.dataList.length>0">
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportBtn" style="margin-right:20px" ng-click="tblToolbar.exportTblList()">导出</button>
+      <div expagination="" data-config-obj="tblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <a class="editLink" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)" ng-click="modalBasic.header.linkFunc()">编辑</a>
+            <div class="modal-title" id="myModalLabel" ng-bind="modalBasic.header.content"></div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-3">
+                <input type="text" id="provinceName" name="provinceName" value="" placeholder="请输入省份名称" ng-model="aboutCity.formResult.province">
+                <!-- <div class="modalTipMsg">如：广东省</div> -->
+                <div class="modalErrorMsg" ng-show="aboutCity.formError.provinceNameError">请输入有效的省份名</div>
+              </div>
+              <div class="col-xs-3">
+                <input type="text" id="regionName" name="regionName" value="" placeholder="{{aboutCity.btnName==='添加'?'请输入城市简称':'请选择城市'}}" ng-model="aboutCity.formResult.name">
+                <!-- <div class="modalTipMsg">如：深圳</div> -->
+                <div class="modalErrorMsg" ng-show="aboutCity.formError.shortNameError">请输入有效的简称</div>
+                <div class="modalErrorMsg" ng-show="aboutCity.formError.shortNameEmptyError">先选择城市再修改</div>
+                <div class="modalErrorMsg" ng-show="aboutCity.formError.shortNameExistedError">该城市已存在</div>
+              </div>
+              <div class="col-xs-3">
+                <input type="text" id="regionFullName" name="regionFullName" value="" placeholder="请输入城市全称" ng-model="aboutCity.formResult.fullName">
+                <!-- <div class="modalTipMsg">如：深圳市</div> -->
+                <div class="modalErrorMsg" ng-show="aboutCity.formError.fullNameError">请输入有效的全称</div>
+              </div>
+              <div class="col-xs-3">
+                <!-- <input type="button" class="btn btn-confirm" value="{{aboutCity.btnName}}" ng-click="aboutCity.btnFunc(aboutCity.btnName)"/> -->
+                <input type="button" class="btn btn-confirm" value="{{aboutCity.btnName}}" ng-click="(aboutCity.btnName==='添加'?aboutCity.saveAdding():aboutCity.saveEditing())">
+                <div class="modalSuccessMsg" ng-show="aboutCity.formError.addSuccess">操作成功！</div>
+                <div class="modalErrorMsg" ng-show="aboutCity.formError.addError">操作失败..</div>
+              </div>
+            </div>
+            <div class="row citiesContainer">
+              <div class="col-xs-3" ng-repeat="item in tblToolbar.cityListPure">
+                <span data-city-id="{{item.id}}" ng-click="(aboutCity.btnName==='修改')?aboutCity.getCityInfo($event):''" ng-bind="item.name" ng-class="{label:true, clickable:(aboutCity.btnName==='修改'),}"></span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" ng-class="'btn btn-cancel'" ng-click="modalBasic.footer.returnFunc()">取消</button>
+            <button type="button" ng-class="'btn btn-confirm'" ng-click="modalBasic.footer.finishFunc()">完成</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

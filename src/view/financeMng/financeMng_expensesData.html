@@ -1,0 +1,176 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-statics table-statics-diagram">
+      <div class="table-toolbar tblToolbar">
+        <div class="tblToolbar-row">
+          <div class="left-arrange">
+            <div class="title">现金流统计</div>
+          </div>
+          <div class="right-arrange">
+          </div>
+        </div>
+        <div class="tblToolbar-row content-box-header">
+          <div class="left-arrange">
+            <label>
+              <span>选择城市</span>
+              &nbsp;
+              <select name="cashCitySel" id="cashCitySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cashCityList" ng-model="tblToolbar.cashCityVal" ng-change="tblToolbar.cashCityValChanged()">
+                <option value="">- 全国 -</option>
+              </select>
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label>
+              <span>选择门店</span>
+              &nbsp;
+              <select name="cashShopSel" id="cashShopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cashShopList" ng-model="tblToolbar.cashShopVal" ng-change="tblToolbar.cashShopValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+            </label>
+          </div>
+          <div class="right-arrange">
+            <div class="timePeriod cashTimePeriod" ng-click="timePeriod.cashChanged($event)">
+              <a href="javascript:;" class="timePeriodDay timePeriodChsn">日</a>
+              <a href="javascript:;" class="timePeriodWeek">周</a>
+              <a href="javascript:;" class="timePeriodMon">月</a>
+            </div>
+            <div class="datepickerDiv">
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="cashDatepicker.showStart()"></span>
+                <input id="cashDateStart" ng-model="tblToolbar.cashStartDate" style="margin-right:0;">
+              </div>
+              <span style="color:#E5E7F0;">—</span>
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="cashDatepicker.showEnd()"></span>
+                <input id="cashDateEnd" ng-model="tblToolbar.cashEndDate" style="margin-right:0;">
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="content">
+        <div id="cashDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-body">
+              <div id="cashDiagram" style="width:100%;height:500px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-statics table-statics-diagram">
+      <div class="table-toolbar tblToolbar">
+        <div class="tblToolbar-row">
+          <div class="left-arrange">
+            <div class="title">毛利率统计</div>
+          </div>
+          <div class="right-arrange">
+          </div>
+        </div>
+        <div class="tblToolbar-row content-box-header">
+          <div class="left-arrange">
+            <label>
+              <span>选择城市</span>
+              &nbsp;
+              <select name="rateCitySel" id="rateCitySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.rateCityList" ng-model="tblToolbar.rateCityVal" ng-change="tblToolbar.rateCityValChanged()">
+                <option value="">- 全国 -</option>
+              </select>
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label>
+              <span>选择门店</span>
+              &nbsp;
+              <select name="rateShopSel" id="rateShopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.rateShopList" ng-model="tblToolbar.rateShopVal" ng-change="tblToolbar.rateShopValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+            </label>
+          </div>
+          <div class="right-arrange">
+            <div class="timePeriod rateTimePeriod" ng-click="timePeriod.rateChanged($event)">
+              <a href="javascript:;" class="timePeriodDay timePeriodChsn">日</a>
+              <a href="javascript:;" class="timePeriodWeek">周</a>
+              <a href="javascript:;" class="timePeriodMon">月</a>
+            </div>
+            <div class="datepickerDiv">
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="rateDatepicker.showStart()"></span>
+                <input id="rateDateStart" ng-model="tblToolbar.rateStartDate" style="margin-right:0;">
+              </div>
+              <span style="color:#E5E7F0;">—</span>
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="rateDatepicker.showEnd()"></span>
+                <input id="rateDateEnd" ng-model="tblToolbar.rateEndDate" style="margin-right:0;">
+              </div>
+            </div>
+        </div>
+      </div>
+      </div>
+      <div class="content">
+        <div id="rateDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-body">
+              <div id="rateDiagram" style="width:100%;height:500px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-statics table-statics-diagram">
+      <div class="table-toolbar tblToolbar">
+        <div class="tblToolbar-row">
+          <div class="left-arrange">
+            <div class="title">分摊收入统计</div>
+          </div>
+          <div class="right-arrange">
+          </div>
+        </div>
+        <div class="tblToolbar-row content-box-header">
+          <div class="left-arrange">
+            <label>
+              <span>选择城市</span>
+              &nbsp;
+              <select name="apportCitySel" id="apportCitySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.apportCityList" ng-model="tblToolbar.apportCityVal" ng-change="tblToolbar.apportCityValChanged()">
+                <option value="">- 全国 -</option>
+              </select>
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label>
+              <span>选择门店</span>
+              &nbsp;
+              <select name="apportShopSel" id="apportShopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.apportShopList" ng-model="tblToolbar.apportShopVal" ng-change="tblToolbar.apportShopValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+            </label>
+          </div>
+          <div class="right-arrange">
+            <div class="timePeriod apportTimePeriod" ng-click="timePeriod.apportChanged($event)">
+              <a href="javascript:;" class="timePeriodDay timePeriodChsn">日</a>
+              <a href="javascript:;" class="timePeriodWeek">周</a>
+              <a href="javascript:;" class="timePeriodMon">月</a>
+            </div>
+            <div class="datepickerDiv">
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="apportDatepicker.showStart()"></span>
+                <input id="apportDateStart" ng-model="tblToolbar.apportStartDate" style="margin-right:0;">
+              </div>
+              <span style="color:#E5E7F0;">—</span>
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="apportDatepicker.showEnd()"></span>
+                <input id="apportDateEnd" ng-model="tblToolbar.apportEndDate" style="margin-right:0;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div id="apportDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-body">
+              <div id="apportDiagram" style="width:100%;height:500px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

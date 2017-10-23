@@ -1,0 +1,19 @@
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a ng-if="modalBasic.header.hasLink" class="editLink" ng-click="modalBasic.header.linkFunc()">编辑</a>
+        <div class="modal-title" id="myModalLabel" ng-bind="modalBasic.header.content"></div>
+      </div>
+      <div class="modal-body">
+        <div ng-bind="modalBasic.body.content"></div>
+        <div ng-bind-html="modalBasic.body.htmlContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-class="item.styleList" ng-repeat="item in modalBasic.footer.btn" ng-click="item.func()" ng-bind="item.name"></button>
+      </div>
+    </div>
+  </div>
+</div>

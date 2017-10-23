@@ -1,0 +1,816 @@
+/*********************************************************************
+ * 基本元素样式重载
+ *********************************************************************/
+* {
+  box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body {
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+ul {
+  list-style-type: none !important;
+}
+table th {
+  font-weight: normal !important;
+}
+table td {
+  vertical-align: middle;
+}
+a {
+  text-decoration: none !important;
+}
+input,
+button {
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+}
+.clear {
+  clear: both;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+/*********************************************************************
+ * 原子类样式设置
+ *********************************************************************/
+.flt-lf {
+  float: left;
+}
+.flt-rt {
+  float: right;
+}
+.m0 {
+  margin: 0;
+}
+.p0 {
+  padding: 0;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mb20 {
+  margin-bottom: 20px;
+}
+.mt20 {
+  margin-top: 20px;
+}
+.mf20 {
+  margin-left: 20px;
+}
+.mr20 {
+  margin-right: 20px;
+}
+.pt10 {
+  padding-top: 10px;
+}
+.pt20 {
+  padding-top: 20px;
+}
+/*********************************************************************
+ * 元素样式重载
+ *********************************************************************/
+table {
+  border-top-width: 0px !important;
+  background-color: #FBFCFD;
+}
+table a {
+  color: #6FADE9 !important;
+}
+table a:hover {
+  color: #9E9879 !important;
+}
+select:not(option) {
+  background-color: #E8EAF1;
+  padding: 8px 20px;
+  border-radius: 5px;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  font-size: 12px;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  font-size: 12px;
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  font-size: 12px;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  font-size: 12px;
+}
+/*********************************************************************
+ * 组件样式重载
+ *********************************************************************/
+.left-arrange {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.right-arrange {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.title-divider-container {
+  color: #9D9FA7;
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+.title-divider-container .title-divider {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1px;
+  height: 16px;
+  border-left: 3px solid #9D9FA7;
+  margin-right: 10px;
+}
+.item-divider {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1px;
+  height: 20px;
+  border-left: 1px solid #D0D0D0;
+  margin-left: 14px;
+  margin-right: 14px;
+}
+.hr-divider {
+  height: 30px;
+  padding: 0 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+.hr-divider .hr-divider-line {
+  display: inline-block;
+  width: 44%;
+  height: 1px;
+  border-top: 1px solid #E8EAF1;
+}
+.hr-divider .hr-divider-text {
+  color: #D8DAE1;
+}
+.hr-divider .hr-divider-text .fa {
+  font-size: 12px;
+}
+.input-inline {
+  display: inline-block !important;
+  vertical-align: middle;
+  width: auto;
+}
+.input-medium {
+  width: 240px;
+}
+.table-toolbar .col-xs-6 {
+  margin-bottom: 10px;
+}
+.table-toolbar .btn {
+  border-radius: 0;
+}
+.panel {
+  border: none;
+  border-radius: 0;
+}
+.panel-warning > .panel-heading {
+  border-radius: 0;
+  color: inherit;
+  background-color: #E8EAF1;
+  border: none;
+}
+.btn {
+  border: none;
+  border-radius: 5px !important;
+  padding: 0px 12px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 14px;
+}
+.btn-min {
+  width: 80px;
+  height: 34px;
+  line-height: 34px;
+}
+.btn-medium {
+  width: 130px;
+  height: 40px;
+  line-height: 40px;
+}
+.btn-long {
+  width: 180px;
+  height: 40px;
+  line-height: 40px;
+}
+.btn-confirm {
+  background-color: #ffd700;
+  border: none;
+  transition: all .3s;
+  color: inherit;
+}
+.btn-confirm:hover {
+  background-color: #ffcc00;
+}
+.btn-confirm:active {
+  background-color: #ffc600;
+}
+.btn-cancel {
+  background-color: #ffffff;
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  transition: all .3s;
+}
+.btn-cancel:hover {
+  background-color: #ffcc00 !important;
+  color: inherit;
+}
+.btn-cancel:active {
+  color: inherit;
+  background-color: #ffc600;
+}
+input.input-long {
+  width: 95% !important;
+}
+.label {
+  border-radius: 0px;
+  font-size: 14px;
+}
+.label-vks {
+  background-color: #ffd700;
+}
+@media (min-width: 768px) {
+  .modal-open .modal {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .mainContent .modal-dialog {
+    width: 516px;
+    margin: 10% auto 15% auto;
+  }
+  .mainContent .modal-dialog .modal-header {
+    height: 71px;
+    text-align: center;
+    background-color: #efede5;
+    border-radius: 6px;
+    border-bottom: none;
+  }
+  .mainContent .modal-dialog .modal-header .modal-title {
+    line-height: 40px;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .mainContent .modal-dialog .modal-header a.editLink {
+    color: inherit;
+    font-size: 16px;
+    line-height: 40px;
+    float: right;
+    cursor: pointer;
+  }
+  .mainContent .modal-dialog .modal-body {
+    min-height: 171px;
+    text-align: center;
+    font-size: 16px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+  }
+  .mainContent .modal-dialog .modal-body input[type='text'],
+  .mainContent .modal-dialog .modal-body input[type='password'] {
+    text-align: left;
+    outline: none;
+    border-width: 0;
+    border-bottom: 1px solid transparent;
+    width: 100%;
+    transition: all .2s;
+  }
+  .mainContent .modal-dialog .modal-body input[type='text']:focus,
+  .mainContent .modal-dialog .modal-body input[type='password']:focus {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  .mainContent .modal-dialog .modal-body input[type='text']:hover,
+  .mainContent .modal-dialog .modal-body input[type='password']:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  .mainContent .modal-dialog .modal-footer {
+    height: 85px;
+    border-top-color: #f1f1f1;
+    text-align: center;
+  }
+  .mainContent .modal-dialog .modal-footer button {
+    width: 204px;
+    height: 52px;
+  }
+}
+#myModalPhoto .modal-content {
+  background-color: transparent;
+}
+#myModalPhoto .modal-body {
+  padding: 15px;
+}
+#myModalPhoto .modal-body img {
+  max-width: 100%;
+  max-height: 100%;
+}
+#myModalPhoto .modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background-color: transparent;
+  text-align: center;
+  line-height: 28px;
+  font-size: 36px;
+  color: #E8EAF1;
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  z-index: 100;
+  cursor: pointer;
+  transition: all .3s;
+  -webkit-transition: all .3s;
+}
+#myModalPhoto .modal-close:hover {
+  color: #a3a3a3;
+}
+.msgSuccess {
+  color: #7CAE25;
+}
+.msgError {
+  color: #e4393c;
+}
+.msgWarning {
+  color: #FFC78F;
+}
+.msgInvalid {
+  color: #c3c9de;
+  font-size: 12px;
+}
+.msgBold {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.msgNew {
+  font-size: 10px;
+}
+ul.pagination {
+  margin-top: 0px !important;
+}
+ul.pagination li > a:hover {
+  background-color: #f5f5f5;
+}
+ul.pagination li:first-child > a,
+ul.pagination li:first-child + li > a {
+  color: #c8c8c8;
+}
+ul.pagination li:first-child > a:hover,
+ul.pagination li:first-child + li > a:hover {
+  background-color: #fff;
+  cursor: default;
+}
+.page-breadcrumb li {
+  margin-left: 1px;
+  margin-right: 2px;
+}
+.page-breadcrumb a {
+  text-decoration: none;
+}
+div.input-group .form-control {
+  width: 100% !important;
+  display: block !important;
+}
+/*********************************************************************
+ * index页日期选择区域 默认样式设置
+ *********************************************************************/
+.datepickerDiv > div {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.datepickerDiv span.fa {
+  height: 34px;
+  line-height: 34px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: #E6E7F0;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: bolder;
+  right: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+.datepickerDiv input[id] {
+  border: none;
+  width: 110px;
+  height: 34px;
+  line-height: 34px;
+  padding-left: 6px;
+  background-color: #F1F3FA;
+}
+/*********************************************************************
+ * 下拉框 默认样式设置
+ *********************************************************************/
+.idropdown-sel > .idropdown-btn {
+  display: inline-block !important;
+  width: 114px;
+  height: 34px;
+  line-height: 18px;
+  border: 0px solid #E7ECF1;
+  border-radius: 5px;
+  background-color: #E8EAF1;
+  outline: none;
+  vertical-align: middle;
+  position: relative;
+  padding: 8px 20px;
+  text-align: left;
+}
+.idropdown-sel > .idropdown-btn > .caret {
+  border-top-width: 6px;
+  border-left-width: 3px;
+  border-right-width: 3px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: scale(0.9) translateY(-50%);
+          transform: scale(0.9) translateY(-50%);
+  right: 10px;
+}
+.idropdown-sel > .idropdown-menu {
+  margin: 4px 0 0 0;
+  border: 1px solid #E7ECF1;
+  border-radius: 2px;
+  background-color: #f8f9fc;
+  width: 114px;
+  position: absolute;
+  z-index: 4;
+}
+.idropdown-sel > .idropdown-menu > ul {
+  padding-left: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.idropdown-sel > .idropdown-menu > ul > li:first-child {
+  height: 40px;
+}
+.idropdown-sel > .idropdown-menu > ul > li:first-child ~ li {
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 20px;
+}
+.idropdown-sel > .idropdown-menu > ul > li:first-child ~ li:hover {
+  background-color: #F1F3FA;
+  cursor: pointer;
+}
+.idropdown-sel > .idropdown-menu > .pagination-ctnr {
+  border-top: 1px solid #E3E5E6;
+  padding: 10px 20px 0 20px;
+  overflow: hidden;
+}
+.idropdown-sel > .idropdown-menu > .pagination-ctnr .tblPagination {
+  padding: 0;
+  margin: 0;
+}
+.idropdown-sel > .idropdown-menu > .pagination-ctnr .tblPagination a {
+  padding: 3px 6px;
+}
+.idropdown-sel .classified-title-ctnr {
+  width: 100%;
+  padding: 4px 20px;
+}
+.idropdown-sel .classified-title-ctnr .classified-title {
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+  height: 24px;
+  line-height: 16px;
+  color: #A9A9A9;
+  border-bottom: 1px solid #E3E5E6;
+}
+.idropdown-sel .search-group {
+  position: relative;
+  width: 100%;
+  vertical-align: top;
+  font-size: 14px;
+  height: 56px;
+  padding: 12px 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #e3e5e6;
+}
+.idropdown-sel .search-group .fa.fa-search {
+  font-size: 14px;
+  position: absolute;
+  top: 2px;
+  left: 18px;
+  color: #E7ECF1;
+}
+.idropdown-sel .search-group .search-group-text {
+  width: 38px;
+  height: 32px;
+  line-height: 30px;
+  padding: 0 0 0 26px;
+  border: 1px solid #E7ECF1;
+  border-right: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  vertical-align: top;
+}
+.idropdown-sel .search-group .search-group-btn {
+  width: 50px;
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  vertical-align: top;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+/*********************************************************************
+ * 登录页样式设置
+ *********************************************************************/
+#loginBody {
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+#loginBody div.background {
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 0px;
+  bottom: 0px;
+  background-image: url(../img/loginBackground.jpg);
+  background-position: center center;
+  background-size: cover;
+}
+#loginBody div.container {
+  position: absolute;
+  z-index: 3;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 0% 20%;
+  color: #ffffff;
+}
+#loginBody div.container div.subContainer,
+#loginBody div.container div.loginFooter {
+  margin-left: auto;
+  margin-right: auto;
+}
+#loginBody div.loginTitle {
+  margin: 0 0 16px 0;
+  width: 420px;
+  height: 50px;
+  margin-bottom: 20px;
+  background-image: url('../img/loginTitleText.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 50% 50%;
+}
+#loginBody div.subContainer {
+  position: absolute;
+  z-index: 4;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+}
+#loginBody div.loginFooter {
+  position: absolute;
+  z-index: 4;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  color: #e1dcd1;
+}
+#loginBody div.loginContent {
+  width: 420px;
+  height: auto;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: #ffd700;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 60px;
+  padding-right: 60px;
+  /*修改placeholder的颜色*/
+}
+#loginBody div.loginContent input {
+  width: 99.9%;
+  height: 36px;
+  line-height: 36px;
+  outline: none;
+  border: none;
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  font-size: 16px;
+}
+#loginBody div.loginContent input#verCode {
+  width: 50%;
+  display: inline-block;
+  vertical-align: bottom;
+}
+#loginBody div.loginContent span#verCodePic {
+  height: 36px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 10px;
+}
+#loginBody div.loginContent span#verCodeChange:hover {
+  cursor: pointer;
+}
+#loginBody div.loginContent span#verCodeChange:active {
+  color: #D9AD15;
+}
+#loginBody div.loginContent input[type="text"],
+#loginBody div.loginContent input[type="password"] {
+  padding: 0px 0px 0px 2px;
+  margin: 24px 0px 0 0px;
+  color: #4c3f3e;
+  background-color: #ffd700;
+  border-bottom: 1px solid #e4c012;
+}
+#loginBody div.loginContent input[type="text"]:active,
+#loginBody div.loginContent input[type="password"]:active {
+  background-color: #ffd700 !important;
+  color: #fff9de !important;
+}
+#loginBody div.loginContent input:-webkit-autofill,
+#loginBody div.loginContent textarea:-webkit-autofill,
+#loginBody div.loginContent select:-webkit-autofill {
+  background-color: #ffd700 !important;
+  color: #fff9de !important;
+}
+#loginBody div.loginContent :-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #d9ad15;
+}
+#loginBody div.loginContent ::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #d9ad15;
+}
+#loginBody div.loginContent input:-ms-input-placeholder,
+#loginBody div.loginContent textarea:-ms-input-placeholder {
+  color: #d9ad15;
+}
+#loginBody div.loginContent input::-webkit-input-placeholder,
+#loginBody div.loginContent textarea::-webkit-input-placeholder {
+  color: #d9ad15;
+}
+#loginBody div.loginContent input[type='button'] {
+  height: 50px;
+  margin: 18px 0 30px;
+  padding: 0;
+  line-height: 50px;
+  background-color: #fff9de;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #4c3f3e;
+  cursor: pointer;
+}
+#loginBody div.loginContent input[type='button']:active {
+  background-color: #efe9ce;
+  transition: all .3s;
+  -webkit-transition: all .3s;
+}
+#loginBody div.loginContent div.msgDiv {
+  display: none;
+  color: #e4393c;
+  font-size: 12px;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  width: 100%;
+}
+#loginBody div.loginContent div.remDiv {
+  font-size: 14px;
+  cursor: default;
+  margin-top: 16px;
+}
+#loginBody div.loginContent div.remDiv span.remComp {
+  margin-left: 2px;
+  cursor: pointer;
+  display: inline-block;
+}
+#loginBody div.loginContent div.remDiv span.remIcon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: url('../img/remIcons.png') no-repeat -18px 0px;
+  vertical-align: bottom;
+}
+#loginBody div.loginContent div.remDiv span.remIcon.rem {
+  background-image: url('../img/remIcons.png');
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+}
+#loginBody div.loginContent div.remDiv span.remIcon.unrem {
+  background-image: url('../img/remIcons.png');
+  background-repeat: no-repeat;
+  background-position: -18px 0px;
+}
+/**********************************************************
+* 信息小提示样式
+***********************************************************/
+.tip {
+  color: #d6d6d6;
+  padding: 0 4px;
+  border-radius: 50%;
+  background-color: #eee;
+  cursor: pointer;
+  position: relative;
+}
+.tip > i {
+  color: #333;
+}
+.tip .tip-info {
+  box-sizing: content-box;
+  text-align: left;
+  display: none;
+  padding: 15px 4px;
+  border-radius: 5px;
+  width: 220px;
+  height: 40px;
+  background-color: #eee;
+  position: absolute;
+  right: -106px;
+  top: 26px;
+}
+.tip .tip-info > div {
+  padding: 0 5px;
+  color: #757575;
+}
+.tip .tip-info > span.corner {
+  border: 8px solid transparent;
+  position: absolute;
+  border-bottom: 8px solid #eee;
+  top: -15px;
+  left: 106px;
+}
+.tip:hover .tip-info {
+  display: block;
+}
+/*******************************************************************************
+*时间控件选择图标设置
+*******************************************************************************/
+.laydate-icon {
+  width: 25px !important;
+  height: 22px !important;
+  background-color: transparent !important;
+  background-image: url(../img/dateIcon-per.png) !important;
+  background-size: 100% 100%;
+}
+.laydate-icon:hover {
+  background-image: url(../img/dateIcon.png) !important;
+}

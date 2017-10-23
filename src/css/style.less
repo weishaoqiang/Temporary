@@ -1,0 +1,786 @@
+
+@import "define.less";
+@import "basic.less";
+
+@tableBKGColor: #FBFCFD;
+@selectBKGColor: #E8EAF1;
+/*********************************************************************
+ * 元素样式重载
+ *********************************************************************/
+table{
+  border-top-width: 0px !important;
+  background-color: @tableBKGColor;
+  a{
+    // 原主颜色用于超链接太耀眼
+    // color: @MainColor !important;
+    color: #6FADE9 !important;
+    &:hover{
+      color: @ViceColor !important;
+    }
+  }
+}
+select:not(option){
+  background-color: @selectBKGColor;
+  padding:8px 20px;
+  border-radius: 5px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size:12px;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size:12px;
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  font-size:12px;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  font-size:12px;
+}
+
+/*********************************************************************
+ * 组件样式重载
+ *********************************************************************/
+ //
+ .left-arrange {
+   display:flex;
+   justify-content:flex-start;
+   align-items:center;
+ }
+ .right-arrange {
+   display:flex;
+   justify-content:flex-end;
+   align-items:center;
+ }
+ // 标题前导竖杠
+ @titleDividerColor: #9D9FA7;
+ .title-divider-container {
+   color: @titleDividerColor;
+   margin-top: 18px;
+   margin-bottom: 10px;
+   .title-divider{
+     display: inline-block;
+     vertical-align: middle;
+     width:1px;
+     height: 16px;
+     border-left: 3px solid @titleDividerColor;
+     margin-right: 10px;
+   }
+ }
+
+ // 水平条item分隔符
+ .item-divider{
+   display: inline-block;
+   vertical-align: middle;
+   width:1px;
+   height: 20px;
+   border-left: 1px solid #D0D0D0;
+   margin-left: 14px;
+   margin-right: 14px;
+ }
+
+ // 带文字的水平分割线
+ .hr-divider {
+  @hrDividerHeight: 30px;
+  @hrTextColor: #D8DAE1;
+  @hrLineColor: #E8EAF1;
+  height: @hrDividerHeight;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 4px;
+  .hr-divider-line {
+    display: inline-block;
+    width: 44%;
+    height: 1px;
+    border-top: 1px solid @hrLineColor;
+  }
+  .hr-divider-text {
+    color: @hrTextColor;
+    .fa {
+      font-size: 12px;
+    }
+  }
+ }
+.input-inline {
+  display: inline-block !important;
+  vertical-align: middle;
+  width: auto;
+}
+.input-medium{
+  width:240px;
+}
+.table-toolbar {
+  .col-xs-6{
+    margin-bottom:10px;
+  }
+  .btn {
+    border-radius: 0;
+  }
+}
+
+//panel面板样式重载
+.panel{
+  border:none;
+  border-radius: 0;
+}
+.panel-warning>.panel-heading {
+  border-radius: 0;
+  color: inherit;
+  background-color: #E8EAF1;
+  border: none;
+}
+
+//btn样式设置
+.btn{
+  border: none;
+  border-radius: 5px !important;
+  padding: 0px 12px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 14px;
+}
+.btn-min{
+  width: 80px;
+  height:34px;
+  line-height: 34px;
+}
+.btn-medium{
+  width: 130px;
+  height:40px;
+  line-height: 40px;
+}
+.btn-long{
+  width: 180px;
+  height:40px;
+  line-height: 40px;
+}
+.btn-confirm {
+  background-color: @MainColor;
+  border: none;
+  transition: all .3s;
+  color: inherit;
+  &:hover {
+    background-color: @MainHoverColor;
+  }
+  &:active {
+    background-color: @MainActiveColor;
+  }
+}
+.btn-cancel {
+  background-color: #ffffff;
+  border: 1px solid @MainColor;
+  color: @MainColor;
+  transition: all .3s;
+  &:hover {
+    background-color: @MainHoverColor !important;
+    color: inherit;
+  }
+  &:active {
+    color: inherit;
+    background-color: @MainActiveColor;
+  }
+}
+
+//input样式重载
+input.input-long{
+  width: 95% !important;
+}
+
+//.label样式重载
+.label{
+  border-radius: 0px;
+  font-size:14px;
+}
+.label-vks{
+  background-color: @MainColor;
+}
+
+//重载该应用场景下的模态框
+@media (min-width: 768px){
+  .modal-open .modal {
+    background-color: rgba(0,0,0, 0.4);
+  }
+  .mainContent .modal-dialog {
+    //width: 508px;
+    width: 516px;
+    margin: 10% auto 15% auto;
+    .modal-header {
+      height: 71px;
+      text-align :center;
+      background-color: #efede5;
+      border-radius: 6px;
+      border-bottom: none;
+      .modal-title {
+        line-height: 40px;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      a.editLink{
+        color: inherit;
+        font-size: 16px;
+        line-height: 40px;
+        float:right;
+        cursor: pointer;
+      }
+    }
+    .modal-body {
+      min-height: 171px;
+      text-align: center;
+      font-size: 16px;
+      padding-top: 40px;
+      padding-bottom: 10px;
+      input[type='text'], input[type='password']{
+        text-align: left;
+        outline: none;
+        border-width: 0;
+        border-bottom: 1px solid transparent;
+        width: 100%;
+        transition: all .2s;
+        &:focus{
+          border-bottom: 1px solid rgba(0,0,0,0.15);
+        }
+        &:hover{
+          border-bottom: 1px solid rgba(0,0,0,0.15);
+        }
+      }
+    }
+    .modal-footer {
+      height: 85px;
+      border-top-color: #f1f1f1;
+      text-align: center;
+      button {
+        width: 204px;
+        height: 52px;
+      }
+    }
+  }
+}
+
+//图片模态框样式设置
+#myModalPhoto{
+  .modal-content {
+    background-color: transparent;
+  }
+  .modal-body {
+    padding: 15px;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  .modal-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: transparent;
+    text-align: center;
+    line-height: 28px;
+    font-size:36px;
+    color: #E8EAF1;
+    position: absolute;
+    top:-24px;
+    right: -24px;
+    z-index:100;
+    cursor: pointer;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    &:hover {
+      color: #a3a3a3;
+    }
+  }
+}
+
+
+//提示信息颜色设置
+.msgSuccess{
+  color: #7CAE25;
+}
+.msgError{
+  color: #e4393c;
+}
+.msgWarning{
+  color: #FFC78F;
+}
+.msgInvalid{
+  color: #c3c9de;
+  font-size: 12px;
+}
+//提示信息粗细设置
+.msgBold{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.msgNew {
+  font-size: 10px;
+}
+
+//页码样式重载
+ul.pagination{
+  margin-top: 0px !important;
+  li>a:hover{
+    background-color: rgb(245,245,245);
+  }
+  li:first-child>a,li:first-child+li>a{
+    color:rgb(200,200,200);
+    &:hover{
+      background-color: #fff;
+      cursor: default;
+    }
+  }
+}
+
+//面包屑样式重载
+.page-breadcrumb{
+  li{
+    margin-left: 1px;
+    margin-right: 2px;
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+//输入组样式重载
+div.input-group {
+  .form-control {
+    width: 100% !important;
+    display: block !important;
+    //margin-left: 6px;
+  }
+}
+
+/*********************************************************************
+ * index页日期选择区域 默认样式设置
+ *********************************************************************/
+ .datepickerDiv {
+   @divHeight: 34px;
+   &>div {
+     position: relative;
+     display: inline-block;
+     vertical-align: middle;
+   }
+   span.fa{
+     height: @divHeight;
+     line-height: @divHeight;
+     padding-left: 8px;
+     padding-right: 8px;
+     background-color: #E6E7F0;
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     font-size: 12px;
+     font-weight: bolder;
+     right: 0;
+     z-index:2;
+     cursor: pointer;
+   }
+   input[id]
+    {
+     border: none;
+     width: 110px;
+     height: @divHeight;
+     line-height: @divHeight;
+     padding-left: 6px;
+     background-color: #F1F3FA;
+   }
+ }
+
+/*********************************************************************
+ * 下拉框 默认样式设置
+ *********************************************************************/
+ .idropdown-sel {
+   @borderColor: #E7ECF1;
+   @itemSelWidth: 114px;
+   @itemSelHeight: 34px;
+   &>.idropdown-btn {
+     display: inline-block !important;
+     width: @itemSelWidth;
+     height: @itemSelHeight;
+     line-height: @itemSelHeight - 16px;
+     border: 0px solid @borderColor;
+     border-radius: 5px;
+     background-color: #E8EAF1;
+     outline: none;
+     vertical-align: middle;
+     position: relative;
+     padding: 8px 20px;
+     text-align: left;
+     &>.caret {
+       border-top-width: 6px;
+       border-left-width: 3px;
+       border-right-width: 3px;
+       position: absolute;
+       top: 50%;
+       transform: scale(0.9) translateY(-50%);
+       right: 10px;
+     }
+   }
+   &>.idropdown-menu {
+     margin: 4px 0 0 0;
+     border: 1px solid @borderColor;
+     border-radius: 2px;
+     background-color: #f8f9fc;
+     width: @itemSelWidth;
+     position: absolute;
+     z-index: 4;
+     &>ul {
+       padding-left: 10px;
+       max-height: 300px;
+       overflow-y: auto;
+       &>li:first-child {
+         height: 40px;
+       }
+       &>li:first-child~li {
+         font-size: 14px;
+         height: 30px;
+         line-height: 30px;
+         padding-left:20px;
+         &:hover {
+           background-color: #F1F3FA;
+           cursor: pointer;
+         }
+       }
+     }
+
+     &>.pagination-ctnr {
+       border-top: 1px solid #E3E5E6;
+       padding: 10px 20px 0 20px;
+       overflow: hidden;
+       .tblPagination {
+         padding: 0;
+         margin: 0;
+         a {
+           padding: 3px 6px;
+         }
+       }
+     }
+   }
+
+   .classified-title-ctnr {
+     width: 100%;
+     padding: 4px 20px;
+     .classified-title {
+       padding: 0 10px;
+       display: flex;
+       justify-content: space-between;
+       align-items: flex-start;
+       width: 100%;
+       height: 24px;
+       line-height: 16px;
+       color: #A9A9A9;
+       border-bottom: 1px solid #E3E5E6;
+     }
+   }
+
+   .search-group {
+     @searchGroupHeight: 32px;
+     position: relative;
+     width: 100%;
+     vertical-align: top;
+     font-size: 14px;
+     height: @searchGroupHeight+24;
+     padding: 12px 12px;
+     margin-bottom: 6px;
+     border-bottom: 1px solid #e3e5e6;
+     .fa.fa-search {
+       font-size: 14px;
+       position: absolute;
+       top: 2px;
+       left: 18px;
+       color: @borderColor;
+     }
+     .search-group-text {
+       width: @itemSelWidth - 76px;
+       height: @searchGroupHeight;
+       line-height: @searchGroupHeight - 2;
+       padding: 0 0 0 26px;
+       border: 1px solid @borderColor;
+       border-right: 0;
+       border-top-left-radius: 4px;
+       border-bottom-left-radius: 4px;
+       vertical-align: top;
+     }
+     .search-group-btn {
+       width: 50px;
+       height: @searchGroupHeight;
+       line-height: @searchGroupHeight;
+       border: none;
+       vertical-align: top;
+       border-top-right-radius: 4px;
+       border-bottom-right-radius: 4px;
+     }
+   }
+ }
+
+
+
+/*********************************************************************
+ * 登录页样式设置
+ *********************************************************************/
+#loginBody{
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+  margin: 0px;
+  padding: 0px;
+  div.background{
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    z-index:1;
+    width:100%;
+    top: 0px;
+    bottom: 0px;
+    background-image: url(../img/loginBackground.jpg);
+    background-position: center center;
+    background-size:cover;
+    //background-size: 99.99% 99.99%;
+  }
+  div.container{
+    position: absolute;
+    z-index:3;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 0% 20%;
+    color: #ffffff;
+    div.subContainer, div.loginFooter{
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  div.loginTitle{
+    margin: 0 0 16px 0;
+    width:420px;
+    height:50px;
+    margin-bottom: 20px;
+    background-image: url('../img/loginTitleText.png');
+    background-repeat: no-repeat ;
+    background-size: contain;
+    background-position: 50% 50%;
+    // img{
+    //   max-width:100%;
+    // }
+  }
+
+  div.subContainer{
+    position: absolute;
+    z-index: 4;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+  }
+
+  div.loginFooter{
+    position: absolute;
+    z-index: 4;
+    bottom:20px;
+    left: 50%;
+    transform: translateX(-50%) ;
+    -webkit-transform: translateX(-50%) ;
+    color: #e1dcd1;
+  }
+
+  div.loginContent{
+    // height: 265px;
+    width: 420px;
+    height: auto;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: @MainColor;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    input{
+      width:99.9%;
+      height: 36px;
+      line-height: 36px;
+      outline: none;
+      border: none;
+      font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+      font-size: 16px;
+    }
+    input#verCode {
+      width: 50%;
+      display: inline-block;
+      vertical-align: bottom;
+      // float: left;
+    }
+    span#verCodePic {
+      // width: 50%;
+      height: 36px;
+      display: inline-block;
+      vertical-align: bottom;
+      margin-left:10px;
+    }
+    span#verCodeChange{
+      &:hover{
+        cursor: pointer;
+      }
+      &:active {
+        color: #D9AD15;
+      }
+    }
+    input[type="text"], input[type="password"]{
+      //padding:0px 0px 0px 35px;
+      padding:0px 0px 0px 2px;
+      margin:24px 0px 0 0px;
+      //color: #fff9de;
+      color: #4c3f3e;
+      background-color: @MainColor;
+      border-bottom: 1px solid #e4c012;
+    }
+
+    input[type="text"]:active, input[type="password"]:active{
+      background-color: rgb(255,215,0) !important;
+      color: rgb(255,249,222) !important;
+    }
+
+    input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+      background-color: rgb(255,215,0) !important;
+      color: rgb(255,249,222) !important;
+    }
+
+    /*修改placeholder的颜色*/
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #d9ad15;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #d9ad15;
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+      color: #d9ad15;
+    }
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+      color: #d9ad15;
+    }
+
+    input[type='button']{
+      height:50px;
+      margin: 18px 0 30px;
+      padding:0;
+      line-height: 50px;
+      background-color: #fff9de;
+      border:1px solid transparent;
+      border-radius: 5px;
+      //color: #f5d01f;
+      color: #4c3f3e;
+      cursor: pointer;
+      &:active{
+        background-color: #efe9ce;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+      }
+    }
+
+    //登录信息提示DIV
+    div.msgDiv{
+      //visibility: hidden;
+      display:none;
+      color: #e4393c;
+      font-size:12px;
+      text-align: center;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+      width:100%;
+    }
+
+    //"记住我"单选框
+    div.remDiv{
+      font-size: 14px;
+      cursor: default;
+      margin-top: 16px;
+      span.remComp{
+        margin-left: 2px;
+        cursor: pointer;
+        display: inline-block;
+      }
+      span.remIcon{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background: url('../img/remIcons.png') no-repeat -18px 0px;
+        vertical-align: bottom;
+      }
+      span.remIcon.rem{
+        background-image: url('../img/remIcons.png');
+        background-repeat: no-repeat;
+        background-position: 0px 0px;
+      }
+      span.remIcon.unrem{
+        background-image: url('../img/remIcons.png');
+        background-repeat: no-repeat;
+        background-position: -18px 0px;
+      }
+    }
+  }
+}
+
+/**********************************************************
+* 信息小提示样式
+***********************************************************/
+
+.tip {
+    color: #d6d6d6;
+    padding: 0 4px;
+    border-radius: 50%;
+    background-color: #eee;
+    cursor:pointer;
+    position: relative;
+    >i {
+        color: #333;
+    }
+    .tip-info {
+        box-sizing: content-box;
+        text-align: left;
+        display: none;
+        padding: 15px 4px;
+        border-radius: 5px;
+        width: 220px;
+        height: 40px;
+        background-color: #eee;
+        position: absolute;
+        right: -106px;
+        top: 26px;
+        >div {
+            padding: 0 5px;
+            color: #757575;
+        }
+        > span.corner {
+            border: 8px solid transparent;
+            position: absolute;
+            border-bottom: 8px solid #eee;
+            top: -15px;
+            left: 106px;
+        }
+    }
+    &:hover .tip-info{
+        display: block;
+    }
+}
+
+
+/*******************************************************************************
+*时间控件选择图标设置
+*******************************************************************************/
+.laydate-icon {
+  width: 25px !important;
+  height: 22px !important;
+  background-color: transparent !important;
+  background-image: url(../img/dateIcon-per.png) !important;
+  background-size: 100% 100%;
+  &:hover {
+    background-image: url(../img/dateIcon.png) !important;
+  }
+}

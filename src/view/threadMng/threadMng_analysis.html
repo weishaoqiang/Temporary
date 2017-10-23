@@ -1,0 +1,417 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="">
+          <label>
+            <span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">全国</option>
+            </select>
+          </label>
+        </div>
+        <div class="right-arrange">
+          <label>
+            <span>选择时间段：</span>
+            <select name="timeTypeSel" id="timeTypeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.timeTypeList" ng-model="tblToolbar.timeTypeVal" ng-change="tblToolbar.timeTypeValChanged()">
+            </select>
+          </label>
+          <div class="item-divider" ng-show="tblToolbar.timeTypeVal.id==='manual'"></div>
+          <label ng-show="tblToolbar.timeTypeVal.id==='manual'">
+            <span>选择时间：</span>
+            <div class="datepickerDiv" style="display:inline-block;">
+              <div>
+                <span class="fa fa-angle-down" ng-click="staticDatepicker.showStart()"></span>
+                <input id="staticDateStart" ng-model="staticDatepicker.result.staticDateStart" style="margin-right:0;">
+              </div>
+              <span style="color:#E5E7F0;">—</span>
+              <div>
+                <span class="fa fa-angle-down" ng-click="staticDatepicker.showEnd()"></span>
+                <input id="staticDateEnd" ng-model="staticDatepicker.result.staticDateEnd" style="margin-right:0;">
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 统计数据 模块 -->
+    <div class="card-panel statics-card-panel">
+      <div class="card-panel-header">
+        <div class="card-panel-header-lf">
+          统计数据
+        </div>
+        <div class="card-panel-header-rt msgInvalid">
+          更新时间: {{tblToolbar.updateTime}}
+        </div>
+      </div>
+      <div class="card-panel-body">
+        <div class="statics-ctnr">
+          <a class="lg-statics-zone" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/0/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/0'}}">
+            <img src="../../img/men.png" alt="">
+            <div class="zone-test">
+              <div class="zone-title"> 线索总数 </div>
+              <div class="zone-data">
+                <span class="zone-number"> {{statics.result.totalNum}} </span>
+                <span class="zone-change-ctnr">&nbsp;
+                  <span class="zone-change" ng-class="{'msgSuccess':(statics.result.totalChangeRate>=0), 'msgError':(statics.result.totalChangeRate<0)}">
+                    <i class="fa"
+                      ng-class="{'fa-sort-asc': (statics.result.totalChangeRate>=0), 'fa-sort-desc': (statics.result.totalChangeRate<0)}"></i>
+                    {{statics.result.totalChangeRateStr}}
+                  </sapn>
+                </span>
+              </div>
+            </div>
+          </a>
+          <a class="lg-statics-zone" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/4/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/0'}}">
+            <img src="../../img/note.png" alt="">
+            <div class="zone-test">
+              <div class="zone-title"> 已签约 </div>
+              <div class="zone-data">
+                <span class="zone-number"> {{statics.result.signedNum}} </span>
+                <span class="zone-change-ctnr">&nbsp;
+                  <span class="zone-change" ng-class="{'msgSuccess':(statics.result.signedChangeRate>=0), 'msgError':(statics.result.signedChangeRate<0)}">
+                    <i class="fa"
+                      ng-class="{'fa-sort-asc': (statics.result.signedChangeRate>=0), 'fa-sort-desc': (statics.result.signedChangeRate<0)}"></i>
+                    {{statics.result.signedChangeRateStr}}
+                  </sapn>
+                </span>
+              </div>
+            </div>
+          </a>
+          <div class="lg-statics-zone">
+            <img src="../../img/person-checked.png" alt="">
+            <div class="zone-test">
+              <div class="zone-title"> 线索转化率 </div>
+              <div class="zone-data">
+                <span class="zone-number"> {{statics.result.conversionRate+'%'}} </span>
+                <span class="zone-change-ctnr">&nbsp;
+                  <span class="zone-change" ng-class="{'msgSuccess':(statics.result.conversionChangeRate>=0), 'msgError':(statics.result.conversionChangeRate<0)}">
+                    <i class="fa"
+                      ng-class="{'fa-sort-asc': (statics.result.conversionChangeRate>=0), 'fa-sort-desc': (statics.result.conversionChangeRate<0)}"></i>
+                    {{statics.result.conversionChangeRateStr}}
+                  </sapn>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="sm-statics-zone">
+            <div class="sm-statics-zone-row">
+              <a class="sm-statics-zone-col" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/2/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/0'}}">
+                <div class="zone-test">
+                  <div class="zone-title"> 待评估 </div>
+                  <div class="zone-data">
+                    <span class="zone-number"> {{statics.result.willEvaluateNum}} </span>
+                  </div>
+                </div>
+              </a>
+              <a class="sm-statics-zone-col" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/1/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/0'}}">
+                <div class="zone-test">
+                  <div class="zone-title"> 正在跟进 </div>
+                  <div class="zone-data">
+                    <span class="zone-number"> {{statics.result.trackingNum}} </span>
+                  </div>
+                </div>
+            </div>
+            </a>
+            <div class="sm-statics-zone-row">
+              <a class="sm-statics-zone-col" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/3/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/0'}}">
+                <div class="zone-test">
+                  <div class="zone-title"> 正在搬运 </div>
+                  <div class="zone-data">
+                    <span class="zone-number"> {{statics.result.willMoveOutNum}} </span>
+                  </div>
+                </div>
+              </a>
+              <a class="sm-statics-zone-col" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/5/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/0'}}">
+                <div class="zone-test">
+                  <div class="zone-title"> 已关闭 </div>
+                  <div class="zone-data">
+                    <span class="zone-number"> {{statics.result.lostNum}} </span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 图表分析 模块 -->
+    <div class="card-panel">
+      <div class="card-panel-header">
+        <div class="card-panel-header-lf">
+          图表分析
+        </div>
+        <div class="card-panel-header-rt msgInvalid">
+          更新时间: {{tblToolbar.updateTime}}
+        </div>
+      </div>
+      <div class="card-panel-body">
+        <div class="card-panel-body-row">
+          <!-- 新增线索图表 -->
+          <div class="">
+            <h4 class="overflow-hidden">
+              <span class="flt-lf"> 新增线索 </span>
+              <span class="flt-rt"></span>
+            </h4>
+            <div id="newThreadDiagram" ng-class="{'nodata-diagram': (diagram.dayThreadCounts.length==0)}"></div>
+          </div>
+          <!-- 客户来源图表 -->
+          <div class="clientSrcDiagramZonex">
+            <h4 class="overflow-hidden">
+              <span class="flt-lf"> 客户来源 </span>
+              <span class="flt-rt"> 合计：{{diagram.clientSrcTotal}} 人 </span>
+            </h4>
+            <div ng-class="{'nodata-diagram': (diagram.srcThreadCounts.length==0)}">
+              <div ng-show="diagram.srcThreadCounts.length!=0" id="clientSrcDiagram"></div>
+              <div ng-show="diagram.srcThreadCounts.length!=0" class="legend-zone">
+                <!-- 图例：把所有客户来源全部展示 -->
+                <div class="" ng-repeat="item in srcListWithColor">
+                  <span class="color" ng-style="{'background-color': item.color}"></span>
+                  <span>{{item.content}}</span>
+                  <span class="flt-rt" style="position:relative;right:2px;">{{(item.id | threadSrcValFilter:diagram.srcThreadCounts) || '0'}}人</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-body-row">
+          <!-- 搜索关键词列表 -->
+          <div class="">
+            <h4 class="overflow-hidden">
+              <span class="flt-lf"> 搜索关键词 </span>
+              <span class="flt-rt"> TOP 10 </span>
+            </h4>
+            <div class="" style="padding:0 30px;">
+              <table class="diagram-table keywords-table">
+                <thead>
+                  <tr>
+                    <th>关键词</th>
+                    <th>访客数</th>
+                    <th>下单转化率</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in diagram.keywordThreadCounts">
+                    <td>{{item.keyword}}</td>
+                    <td>{{item.total}}</td>
+                    <td>{{(item.signedRate*100).toFixed(2)+'%'}}</td>
+                  </tr>
+                  <tr ng-show="diagram.keywordThreadCounts.length==0" class="hintNoMsg">
+                    <td colspan="3">
+                      <span class="msgInvalid">- 暂无相关信息 -</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 上门搬存与自存仓比例图表 -->
+          <div class="selfThreadDiagramZonex">
+            <h4 class="overflow-hidden">
+              <span class="flt-lf"> 上门搬存与自存仓比例 </span>
+              <span class="flt-rt"> 合计：{{diagram.selfThreadTotal}} 单 </span>
+            </h4>
+            <div ng-class="{'nodata-diagram': (diagram.selfThreadCount.total==0)}">
+              <div ng-class="diagram.selfThreadCount.total!=0" id="selfThreadDiagram"></div>
+              <div ng-class="diagram.selfThreadCount.total!=0" class="legend-zone">
+                <div>
+                  <span class="color" style="background: #2490C3"></span>
+                  <span>自存仓</span>
+                  <span class="flt-rt" style="position:relative;right:2px;">{{diagram.selfThreadCount.self}}单</span>
+                </div>
+                <div>
+                  <span class="color" style="background: #7CD300"></span>
+                  <span>上门搬存</span>
+                  <span class="flt-rt" style="position:relative;right:2px;">{{diagram.selfThreadCount.selfHelp}}单</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-panel-body-row">
+          <!-- 存储物品类型图表 -->
+          <div class="storeTypeDiagramZonex">
+            <h4 class="overflow-hidden">
+              <span class="flt-lf"> 存储物品类型 </span>
+              <span class="flt-rt"> 合计：{{diagram.storeTypeTotal}} 人 </span>
+            </h4>
+            <div ng-class="{'nodata-diagram': (diagram.storageTypeCount.length==0)}">
+              <div ng-show="diagram.storageTypeCount.length!=0" id="storeTypeDiagram"></div>
+              <div ng-show="diagram.storageTypeCount.length!=0" class="legend-zone">
+                <!-- 图例：把所有存储物品类型全部展示 -->
+                <div class="" ng-repeat="item in storeTypeListWithColor">
+                  <span class="color" ng-style="{'background-color': item.color}"></span>
+                  <span>{{item.name}}</span>
+                  <span class="flt-rt" style="position:relative;right:2px;">{{(item.id | storeTypeValFilter:diagram.storageTypeCount) || '0'}}人</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 关闭原因图表 -->
+          <div class="giveUpReasonDiagramZonex">
+            <h4 class="overflow-hidden">
+              <span class="flt-lf"> 关闭原因 </span>
+              <span class="flt-rt"> 合计：{{diagram.giveUpReasonTotal}} 人 </span>
+            </h4>
+            <div ng-class="{'nodata-diagram': (diagram.giveUpReasonCount.length==0)}">
+              <div ng-show="diagram.giveUpReasonCount.length!=0" id="giveUpReasonDiagram"></div>
+              <div ng-show="diagram.giveUpReasonCount.length!=0" class="legend-zone">
+                <!-- 图例：把所有关闭原因全部展示 -->
+                <div class="" ng-repeat="item in giveUpReasonListWithColor">
+                  <span class="color" ng-style="{'background-color': item.color}"></span>
+                  <span>{{item.name}}</span>
+                  <span class="flt-rt" style="position:relative;right:2px;">{{(item.id | giveUpReasonValFilter:diagram.giveUpReasonCount) || '0'}}人</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 销售人员业绩 模块 -->
+    <div class="card-panel">
+      <div class="card-panel-header">
+        <div class="card-panel-header-lf">
+          销售人员业绩
+        </div>
+        <div class="card-panel-header-rt msgInvalid">
+          <div class="right-arrange">
+            <span style="margin-right: 30px;">更新时间: {{tblToolbar.updateTime}}</span>
+            <div class="search-widget">
+              <span class="fa fa-search"></span>
+              <input type="text" name="" value="" placeholder="按姓名搜索.." ng-model="sales.searchVal" />
+              <button class="btn btn-confirm" type="button" ng-click="sales.launchSearch(sales.searchVal)"> 搜索 </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-panel-body" style="overflow:hidden;padding:0 30px;">
+        <table class="diagram-table sales-table">
+          <thead>
+            <tr>
+              <th>销售员</th>
+              <th>线索数量</th>
+              <th>正在跟进</th>
+              <th>已签约</th>
+              <th>待评估</th>
+              <th>待搬运</th>
+              <th>关闭</th>
+              <th>转化率</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in sales.result" ng-if="sales.result.length>0">
+              <td ng-bind="item.name || '- -'" ng-class="item.name?'':'msgInvalid'"></td>
+              <td ng-class="item.threadCount?'':'msgInvalid'">
+                <a ng-show="item.threadCount" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/0/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/'+item.managerID}}">
+                  {{item.threadCount}}
+                </a>
+                <span ng-show="!item.threadCount">0</span>
+              </td>
+              <td ng-class="item.tracking?'':'msgInvalid'">
+                <a ng-show="item.tracking" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/1/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/'+item.managerID}}">
+                  {{item.tracking}}
+                </a>
+                <span ng-show="!item.tracking">0</span>
+              </td>
+              <td ng-class="item.signed?'':'msgInvalid'">
+                <a ng-show="item.signed" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/4/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/'+item.managerID}}">
+                  {{item.signed}}
+                </a>
+                <span ng-show="!item.signed">0</span>
+              </td>
+              <td ng-class="item.evaluate?'':'msgInvalid'">
+                <a ng-show="item.evaluate" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/2/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/'+item.managerID}}">
+                  {{item.evaluate}}
+                </a>
+                <span ng-show="!item.evaluate">0</span>
+              </td>
+              <td ng-class="item.moveOut?'':'msgInvalid'">
+                <a ng-show="item.moveOut" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/3/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/'+item.managerID}}">
+                  {{item.moveOut}}
+                </a>
+                <span ng-show="!item.moveOut">0</span>
+              </td>
+              <td ng-class="item.giveUp?'':'msgInvalid'">
+                <a ng-show="item.giveUp" ng-href="{{'#/threadMng_index/'+ tblToolbar.timeTypeVal.id +'/'+ (tblToolbar.cityVal.id || '0') +'/5/'+(staticDatepicker.result.staticDateStart || '0')+'/'+(staticDatepicker.result.staticDateEnd || '0')+'/'+item.managerID}}">
+                  {{item.giveUp}}
+                </a>
+                <span ng-show="!item.giveUp">0</span>
+              </td>
+              <td ng-bind="(item.convertRate || item.convertRate==0)?item.convertRate+'%':'- -'" ng-class="item.convertRate?'':'msgInvalid'"></td>
+            </tr>
+            <tr ng-show="sales.result.length==0" class="hintNoMsg">
+              <td colspan="8">
+                <span class="msgInvalid">- 暂无相关信息 -</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pull-right">
+          <div expagination="" data-config-obj="salesPagination"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 客服人员业绩 模块 -->
+    <div class="card-panel">
+      <div class="card-panel-header">
+        <div class="card-panel-header-lf">
+          客服人员业绩
+        </div>
+        <div class="card-panel-header-rt msgInvalid">
+          <div class="right-arrange">
+            <span style="margin-right: 30px;">更新时间: {{tblToolbar.updateTime}}</span>
+            <div class="search-widget">
+              <span class="fa fa-search"></span>
+              <input type="text" name="" value="" placeholder="按姓名搜索.." ng-model="cs.searchVal" />
+              <button class="btn btn-confirm" type="button" ng-click="cs.launchSearch(cs.searchVal)"> 搜索 </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-panel-body" style="overflow:hidden;padding:0 30px;">
+        <table class="diagram-table cs-table">
+          <thead>
+            <tr>
+              <th>客服人员</th>
+              <th>线索数量</th>
+              <th>正在跟进</th>
+              <th>已签约</th>
+              <th>待评估</th>
+              <th>待搬运</th>
+              <th>关闭</th>
+              <th>转化率</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in cs.result" ng-if="sales.result.length>0">
+              <td ng-bind="item.name || '- -'" ng-class="item.name?'':'msgInvalid'"></td>
+              <td ng-bind="item.threadCount" ng-class="item.threadCount?'':'msgInvalid'"></td>
+              <td ng-bind="item.tracking" ng-class="item.threadCount?'':'msgInvalid'"></td>
+              <td ng-bind="item.signed" ng-class="item.signed?'':'msgInvalid'"></td>
+              <td ng-bind="item.evaluate" ng-class="item.evaluate?'':'msgInvalid'"></td>
+              <td ng-bind="item.moveOut" ng-class="item.moveOut?'':'msgInvalid'"></td>
+              <td ng-bind="item.giveUp" ng-class="item.giveUp?'':'msgInvalid'"></td>
+              <td ng-bind="(item.convertRate || item.convertRate==0)?item.convertRate+'%':'- -'" ng-class="item.convertRate?'':'msgInvalid'"></td>
+            </tr>
+            <tr ng-show="cs.result.length==0" class="hintNoMsg">
+              <td colspan="8">
+                <span class="msgInvalid">- 暂无相关信息 -</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pull-right">
+          <div expagination="" data-config-obj="csPagination"></div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+</div>

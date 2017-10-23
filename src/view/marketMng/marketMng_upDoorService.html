@@ -1,0 +1,194 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row" style="margin-bottom: 20px;">
+        <div class="left-arrange">
+          <div class="title">存储标准单价</div>
+        </div>
+        <div class="right-arrange">
+          <a id="edit" ng-href="#/marketMng_storageCostEdit"  ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)">编辑</a>
+        </div>
+      </div>
+    </div>
+    <form id="formOfAdding">
+      <table class="table table-hover table-bordered tblNormal">
+        <thead>
+          <tr class="row">
+            <th class="col-xs-3 formCtrlTd">
+              <div>
+                <span>城市</span>
+              </div>
+            </th>
+            <th class="col-xs-10" style="padding-left: 20px !important;">
+              <div class="row">
+                <div class="col-xs-1">
+                  <span>单价</span>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row" ng-repeat="item in tblNormal.upDoorPriceList">
+            <td class="col-xs-3">
+              <span ng-bind="item.cityID | cityListFilter"></span>
+            </td>
+            <td class="col-xs-8 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-1">
+                  <span ng-bind="item.storeFee"></span>
+                </div>
+                <div class="col-xs-3" style="text-align: left;">
+                  <span>元／立方米／月</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <!-- <tr class="row">
+            <td colspan="3">
+              <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-6">
+                  <a class="btn btn-long btn-confirm" id="edit" ng-href="#/marketMng_storageCostEdit">编辑</a>
+                </div>
+              </div>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+    </form>
+  </section>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <div class="title">优惠活动定价</div>
+        </div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="搜索活动名称" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+                  <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+                </span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="tblToolbar-row">
+      </div> -->
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <div class="left-arrange">
+            <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/marketMng_upDoorAdd" ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span>新增活动</span>
+                </a>
+          </div>
+        </div>
+        <div class="right-arrange">
+          <label>
+            <span>选择城市</span>
+            &nbsp;
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChange()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+            <div class="item-divider"></div>
+          <label>
+            <span>活动状态</span>
+            &nbsp;
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.promotionStateList" ng-model="tblToolbar.promotionStateVal" ng-change="tblToolbar.promotionStateValChange()">
+              <option value=""> 全部 </option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+              <span>显示条数：</span>
+              <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+              </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>活动名称</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>城市</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>有效时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>规则描述</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>活动状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length > 0">
+          <td ng-bind="item.name"></td>
+          <td ng-bind="item.cityName"></td>
+          <td>
+            <span ng-bind="item.startDate | dateFilter:'yyyy-MM-dd'"></span>
+            <span>&nbsp;至&nbsp;</span>
+            <span ng-bind="item.endDate | dateFilter:'yyyy-MM-dd'"></span>
+          </td>
+          <td>
+            <span ng-if="(item.businessType===1||item.businessType===2)&&(item.discountType===1)" class="repeat-discount" ng-repeat="subItem in item.rule">
+              <span ng-bind="'满'+ subItem.condition +'个月 '+subItem.discount+'折'"></span><br/>
+            </span>
+            <span ng-if="(item.businessType===1||item.businessType===2)&&(item.discountType===2)" class="repeat-discount" ng-repeat="subItem in item.rule">
+              <span ng-bind="'满'+ subItem.condition +'个月 送'+subItem.discount+'个月'"></span><br/>
+            </span>
+            <span ng-if="(item.businessType===1||item.businessType===2)&&(item.discountType===3)" class="repeat-discount" ng-repeat="subItem in item.rule">
+              <span ng-bind="'满'+ subItem.condition +'元 减'+subItem.discount+'元'"></span><br/>
+            </span>
+          </td>
+          <td ng-bind="item.state | promotionStateFilter"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/marketMng_upDoorDetails/'+ (item.id || '')+'/'+item.businessType}}" ng-if="(adminModules[8].type == 2) || (adminModules[8].type == 4)">详情</a>
+            &nbsp;&nbsp;
+            <a ng-href="{{'#/marketMng_upDoorEdit/'+(item.id || '')+'/'+item.businessType}}"  ng-if="((adminModules[8].type == 3) || (adminModules[8].type == 4))&&(item.state !==3)">编辑</a>
+            &nbsp;&nbsp;
+            <a ng-click="tblNormal.deletePromotion(item.id)" ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)">删除</a>
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="12">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pull-right" style="margin-right: 30px;">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

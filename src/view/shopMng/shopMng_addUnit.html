@@ -1,0 +1,145 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位名称 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" placeholder="请输入仓位名称" ng-model="formResult.name">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.nameError">* 请输入有效的仓位名称</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位区域 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="regionSel" id="regionSel" ng-options="opt.name for opt in tblDetails.regionList" ng-model="tblDetails.regionVal" ng-change="tblDetails.regionValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.regionValError">* 请选择仓位区域</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopType!==3">
+              <td class="col-xs-2">
+                <span> 仓型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="unitTypeSel" id="unitTypeSel" ng-options="(opt.name + opt.sizeStr) for opt in tblDetails.unitTypeList" ng-model="tblDetails.unitTypeVal" ng-change="tblDetails.unitTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.unitTypeValError">* 请选择仓型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位大小(m) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="length" type="text" name="length" value="" placeholder="仓位长" style="width:40px;" ng-model="formResult.length"><span class="msgInvalid">x</span>
+                    <input id="width" type="text" name="width" value="" placeholder="仓位宽" style="width:40px;text-align:center;" ng-model="formResult.width"><span class="msgInvalid">x</span>
+                    <input id="height" type="text" name="height" value="" placeholder="仓位高" style="width:40px;text-align:center;" ng-model="formResult.height">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.unitSizeError">* 请输入完整有效的仓位大小</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位容积 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="(formResult.volume=((formResult.length * formResult.width * formResult.height).toFixed(4))*1)||'自动计算容积..'" ng-class="(formResult.length* formResult.width * formResult.height)?'':'msgInvalid'"></span>
+                    <span ng-show="formResult.volume">m³</span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.volumeError">* 请输入有效的仓位大小以获得容积</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopType===1">
+              <td class="col-xs-2">
+                <span> 标准单价(元/月) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span><input id="price" type="text" name="price" value="" placeholder="请输入标准单价" ng-model="formResult.price">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.priceError">* 请输入有效的标准单价</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopType===3">
+              <td class="col-xs-2">
+                <span> 设备SN码 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="SNCode" name="SNCode" type="text" value="" placeholder="请输入设备SN码" ng-model="formResult.remarks">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.SNCodeError">* 请输入有效的设备SN码</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 锁类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="unitLockTypeSel" id="unitLockTypeSel" ng-options="opt.name for opt in tblDetails.unitLockTypeList" ng-model="tblDetails.unitLockTypeVal" ng-change="tblDetails.unitLockTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.unitLockTypeValError">* 请选择锁类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

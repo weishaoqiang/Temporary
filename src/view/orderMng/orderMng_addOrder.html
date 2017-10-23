@@ -1,0 +1,232 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderID"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单创建时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderCreateDate"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.shopName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.unitName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 租客姓名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.userName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 销售管理员 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.managerName || '- -'" ng-class="(queryResult.managerName?'':'msgInvalid')"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12" colspan="2" style="border-right:0;padding:4px !important;">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <div class="pull-right">
+                    </div>
+                  </div>
+                  <div class="col-xs-10">
+                    <span class="msgInvalid">-&nbsp;以下为可编辑部分&nbsp;-</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 起用时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="startDate" name="startDate" type="text" style="width:100px;" placeholder="请选择起用时间" ng-model="formResult.startDate" ng-click="startDatepicker.showStartDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="startDatepicker.showStartDate()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.startDateError">* 请选择起用时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderPayTime">
+              <td class="col-xs-2">
+                <span> 支付时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="payTime" name="payTime" type="text" style="width:136px;" placeholder="请选择支付时间" ng-model="formResult.payTime" ng-click="payTimepicker.showPayTime()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="payTimepicker.showPayTime()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.payTimeError">* 请选择支付时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 租赁期限 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="rentLast" type="text" name="rentLast" value="" style="width:110px;" placeholder="请输入租赁期限" ng-model="formResult.rentLast" ng-style="formResult.rentLast?{width:'24px'}:{width:'100px'}">个月
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.rentLastError">* 请输入有效的租赁期限</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 标准单价(元/月) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    ￥&nbsp;<input id="price" type="text" name="price" value="" placeholder="请输入标准单价" ng-model="formResult.price">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.priceError">* 请输入有效的标准单价</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 押金 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    ￥&nbsp;<input id="deposit" type="text" name="deposit" value="" placeholder="请输入押金数额" ng-model="formResult.deposit">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.depositError">* 请输入有效的押金数额</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 优惠金额 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    ￥&nbsp;<input id="discount" type="text" name="discount" value="" placeholder="请输入优惠金额" ng-model="formResult.discount">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.discountError">* 请输入有效的优惠金额</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 总价 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    ￥&nbsp;<span id="sumPrice" type="text" name="sumPrice" value="" placeholder="请输入总价" ng-bind="(formResult.sumPrice=(formResult.price*formResult.rentLast+formResult.deposit*1).toFixed(2)) || ('自动计算总价..')" ng-class="formResult.sumPrice?'':'msgInvalid'">
+                  </span>
+
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.sumPriceError">* 请注意总价为负!</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 实际支付 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    ￥&nbsp;<span id="actualPay" type="text" name="actualPay" value="" placeholder="请输入实际支付金额" ng-bind="(formResult.actualPay=(formResult.price*formResult.rentLast + formResult.deposit*1 - formResult.discount*1).toFixed(2)) || ('自动计算实际支付金额..')"
+                      ng-class="formResult.actualPay?'':'msgInvalid'">
+                  </span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.actualPayError">* 请注意实际支付金额为负!</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

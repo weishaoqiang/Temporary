@@ -1,0 +1,156 @@
+
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent add-page">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+    </div>
+    <form id="formOfAdding">
+      <table class="table tbl_edit tbl_details tblDetails">
+        <tbody>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>优惠码</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.voucherDetails.couponsCode"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row" ng-if="tblNormal.voucherDetails.state == 2">
+            <td class="col-xs-2">
+              <span>关联订单</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <a ng-href="{{'../orderMng/index.html#/orderMng_queryOrder/'+tblNormal.voucherDetails.orderID}}" ng-bind="tblNormal.voucherDetails.orderID"></a>
+                  <!-- <span ng-bind="tblNormal.voucherDetails.orderID"></span> -->
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>金额</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="'￥'+tblNormal.voucherDetails.cash"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>开始时间</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.voucherDetails.startDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>结束时间</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-8">
+                  <span ng-bind="tblNormal.voucherDetails.endDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>使用范围</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.voucherDetails.cityName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>使用状态</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-class="{'not-use': tblNormal.voucherDetails.state===1}" ng-bind="tblNormal.voucherDetails.couponsState"></span>
+                  <span ng-if="passDue">（已过期）</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-12 td-divider" colspan="2"></td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>创建人</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span ng-bind="tblNormal.voucherDetails.adminName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>创建时间</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span ng-bind="tblNormal.voucherDetails.createDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row" ng-if="tblNormal.voucherDetails.state === 2">
+            <td class="col-xs-2">
+              <span>经手人</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-8">
+                  <span ng-bind="tblNormal.voucherDetails.managerName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td colspan="2">
+              <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10">
+                  <a class="btn btn-long btn-confirm" ng-href="{{'#/marketMng_voucherEdit/'+ tblNormal.voucherDetails.id}}">编辑</a>
+                  <input type="button" class="btn btn-long btn-cancel" value="返回列表" id="cancel" ng-click="tblNormal.back()">
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

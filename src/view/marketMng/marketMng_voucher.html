@@ -1,0 +1,136 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <div class="title">抵用券</div>
+        </div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="搜索优惠码" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+                  <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+                </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/marketMng_voucherAdd" ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span>新增抵用券</span>
+          </a>
+          <button type="button" class="exportBtn btn btn-long btn-cancel flt-lf" id="exportBtn" style="margin-left:20px;width: 120px;" ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)" ng-click="tblNormal.deleteAllDue(tblToolbar.cityVal)">删除所有过期</button>
+        </div>
+        <div class="right-arrange">
+          <label>
+            <span>选择城市</span>
+            &nbsp;
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChange()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+            <span>状态</span>
+            &nbsp;
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.stateList" ng-model="tblToolbar.stateVal" ng-change="tblToolbar.stateValChange()">
+              <option value=""> 全部 </option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+              <span>显示条数：</span>
+              <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+              </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <table class="table table-hover tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>优惠码</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>金额（元）</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>有效时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>使用范围</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>创建人</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length > 0">
+          <td ng-bind="item.couponsCode"></td>
+          <td ng-bind="item.cash"></td>
+          <td>
+            <span ng-bind="item.startDate | dateFilter:'yyyy-MM-dd'"></span>
+            <span>&nbsp;至&nbsp;</span>
+            <span ng-bind="item.endDate | dateFilter:'yyyy-MM-dd'"></span>
+          </td>
+          <td>
+              <span ng-bind="item.cityName"></span><br/>
+          </td>
+          <td>
+            <span ng-bind="item.adminName"></span>
+          </td>
+          <td>
+            <span ng-class="{'not-use': item.state===1}" ng-bind="item.couponsState"></span>
+            <span ng-if="item.passDue">(已过期)</span>
+          </td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/marketMng_voucherDetails/'+ (item.id || '')}}"  ng-if="(adminModules[8].type == 2) || (adminModules[8].type == 4)">详情</a>
+            &nbsp;&nbsp;
+            <a ng-href="{{'#/marketMng_voucherEdit/'+(item.id || '')}}"  ng-if="((adminModules[8].type == 3) || (adminModules[8].type == 4))&&((item.state !== 2))" ng-show="((adminModules[8].type == 3) || (adminModules[8].type == 4))&&!item.passDue">编辑</a>
+            &nbsp;&nbsp;
+            <a ng-click="tblNormal.deleteVoucher(item.id)"  ng-if="((adminModules[8].type == 3) || (adminModules[8].type == 4))&&(item.state !== 2)">删除</a>
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="12">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pull-right" style="margin-right: 30px;">
+      <div expagination="" data-config-obj="tblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

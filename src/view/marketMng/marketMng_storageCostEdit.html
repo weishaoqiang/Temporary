@@ -1,0 +1,47 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 存储标准单价编辑 </span>
+        </h3>
+      </div>
+    </div>
+    <form id="formOfAdding">
+      <table class="table tbl_edit tbl_details tblDetails">
+        <tbody>
+          <tr class="row" ng-repeat="item in formResult">
+            <td class="col-xs-3">
+              <span ng-bind="item.cityID | cityListFilter"></span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-1">
+                  <!-- <span ng-bind="queryResult.name"></span> -->
+                  <input type="text" ng-model="item.storeFee" style="padding: 0; width: 60px;" ng-blur="tblNormal.setUpdateData(item)"/>
+                </div>
+                <div class="col-xs-8" style="text-align: left;">
+                  <span>元／立方米／月</span>
+                  <span class="msgError" ng-show="item.storeFeeError" style="padding-left: 100px;">* 输入数据不合法，只能入正整数</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td colspan="3">
+              <div class="row">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-6">
+                  <input type="button" class="btn btn-long btn-confirm" id="edit" value="保存" ng-click="tblNormal.save()">
+                  <input type="button" class="btn btn-long btn-cancel" id="edit" value="返回" ng-click="tblNormal.cancel()">
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

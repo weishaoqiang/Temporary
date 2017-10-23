@@ -1,0 +1,131 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent add-page">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 定价详情 </span>
+        </h3>
+      </div>
+    </div>
+    <form id="formOfAdding">
+      <table class="table tbl_edit tbl_details tblDetails">
+        <tbody>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>活动名称</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.priceDetails.name"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>活动创建时间</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.priceDetails.createDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>活动有效时间</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-8">
+                  <span ng-bind="tblNormal.priceDetails.startDate"></span> &nbsp;
+                  <span>至</span> &nbsp;
+                  <span ng-bind="tblNormal.priceDetails.endDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>最近更新</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.priceDetails.adminName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>活动状态</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.priceDetails.state | promotionStateFilter"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-12 td-divider" colspan="2"></td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>规则描述</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span class="label" ng-repeat="item in tblNormal.priceDetails.rules"  ng-bind="'租出率≤'+ item.condition+'%'+' '+item.discount+'折'"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>城市</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span ng-bind="tblNormal.priceDetails.cityName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>参与活动的门店</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-8">
+                  {{tblNormal.priceDetails.shops}}
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-12" colspan="2">
+              <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10">
+                  <input type="button" class="btn btn-long btn-cancel" value="返回" id="save" ng-click="tblNormal.back()">
+                  <input type="button" class="btn btn-long btn-confirm" ng-if="((adminModules[9].type == 3) || (adminModules[9].type == 4)) && (tblNormal.priceDetails.state !== 3)" value="结束活动" id="save" ng-click="tblNormal.cancel(tblNormal.priceDetails)">
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

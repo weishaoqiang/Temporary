@@ -1,0 +1,143 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 订单详情 </span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <!-- 基本订单信息 -->
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 销售管理员 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.managerName || '- -'" ng-class="(queryResult.managerName?'':'msgInvalid')"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.id"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单创建时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.createDate"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <!-- 订单所属信息 -->
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 城市 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.cityName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.shopName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 收款类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.payType | otherIncomeTypeFilter"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 收款描述 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.describe"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 支付状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="+queryResult.state | otherOrderStateFilter"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 收款金额 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="'¥ '+queryResult.actualPay" style="font-weight:bold;"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

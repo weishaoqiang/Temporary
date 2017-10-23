@@ -1,0 +1,196 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <div class="table-toolbar tblToolbar" ng-if="(!viewTag)" style="padding-left: 0;">
+    <div class="tblToolbar-row">
+      <div class="left-arrange">
+        <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" href="javascript:;" ng-click="stepControl.recreate()" ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)">
+          <i class="fa fa-plus"></i>&nbsp;
+          <span>创建活动</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <section class="mainContent add-page">
+    <div class="sales-step-timeline">
+      <div ng-class="{'step-active':step>=1}" ng-click="stepControl.editStepEvent(1)"><span>1</span>设置活动信息</div>
+      <div ng-class="{'step-active':step>=2}" ng-click="stepControl.editStepEvent(2)"><span>2</span>设置活动类型</div>
+      <div ng-class="{'step-active':step>=3}" ng-click="stepControl.editStepEvent(3)"><span>3</span>选择活动城市</div>
+      <div ng-class="{'step-active':step>=4}" ng-click="stepControl.editStepEvent(4)"><span>4</span>提交完成</div>
+    </div>
+    <div class="panel panel-warning">
+      <!-- <div class="panel-heading" ng-if="step!==3">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div> -->
+      <form ng-show="step===1" class="sales-step-one data-form" id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-4">
+                <span> 活动名称 </span>
+              </td>
+              <td class="col-xs-4 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <input type="text" placeholder="请输入活动名称" ng-model="activeTitle" />
+                  </div>
+                </div>
+              </td>
+              <td class="col-xs-4">
+                  <div class="col-xs-12"><span class="msgError" ng-show="valiResult.activeTitleError">* 请输入活动名称</span></div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-4">
+                <span> 开始时间 </span>
+              </td>
+              <td class="col-xs-4 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: right;margin-top:5px;" ng-click="startDatePicker.showOpenDate()"></span>
+                    <input id="startDate" name="startDate" class="laydate-time" style="overflow: hidden;" type="text" placeholder="请选择开始时间" ng-model="activeStartTime" ng-click="startDatePicker.showOpenDate()">
+                  </div>
+                </div>
+              </td>
+              <td class="col-xs-4">
+                <div class="col-xs-12"><span class="msgError" ng-show="valiResult.activeStartTimeError">* 请选择开始时间</span></div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-4">
+                <span> 结束时间 </span>
+              </td>
+              <td class="col-xs-4 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span class="laydate-icon"  style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: right;margin-top:5px;" ng-click="endDatePicker.showOpenDate()"></span>
+                    <input id="endDate" name="endDate" class="sel-time" type="text" style="overflow: hidden;" placeholder="请选择结束时间" ng-model="activeEndTime" ng-click="endDatePicker.showOpenDate()">
+                  </div>
+                </div>
+              </td>
+              <td class="col-xs-4">
+                <div class="col-xs-12"><span class="msgError" ng-show="valiResult.activeStartTimeError">* 请选择结束时间</span></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <div ng-show="step===2" class="sales-step-two">
+        <div class="sales-select-box">
+          <p>选择活动规则</p>
+          <select name="typeSel" id="typeSel" class="form-control input-inline" ng-options="opt.name for opt in stepControl.discountRuleList" ng-model="stepControl.discountRuleVal" ng-change="stepControl.discountRuleChange()">
+          </select>
+          <p>＊有三种优惠规则可选择</p>
+          <p>折扣优惠、满送优惠、满减优惠</p>
+        </div>
+        <div ng-if="stepControl.discountRuleVal.id === 1">
+          <p>
+            <span>折扣优惠</span><a class="btn btn-confirm btn-cancel" ng-click="stepControl.addSaleRules(1)">添加折扣优惠</a>
+            <span class="msgError" ng-show="discountTyprError">* 只能输入数字</span>
+          </p>
+          <ul>
+            <li class="sales-step-two-card sales-step-two-card-big" ng-repeat="item in typeOneList">
+              <label>
+                满<input type="number" ng-model="item.condition" placeholder="月份"/>个月
+              </label>
+
+              <label>
+                <input type="number" ng-model="item.discount" placeholder="折扣"/>折
+              </label>
+              <span class="delete btn-confirm" ng-click="stepControl.removeSaleRules(1,$index)" ng-if="typeOneList.length > 1"></span>
+              <div>
+                <span>如：满3个月 9折</span>
+                <span>*可输入小数点</span>
+              </div>
+            </li>
+          </ul>
+          <!-- <span class="sales-type-checked" ng-if="salesType===1"></span> -->
+        </div>
+        <span class="v-line"></span>
+        <div  ng-if="stepControl.discountRuleVal.id === 2">
+          <p>
+            <span>满送优惠</span><a class="btn btn-confirm btn-cancel" ng-click="stepControl.addSaleRules(2)">添加满送优惠</a>
+            <span class="msgError" ng-show="discountTyprError">* 只能输入数字</span>
+          </p>
+          <ul>
+            <li class="sales-step-two-card sales-step-two-card-big" ng-repeat="item in typeTwoList">
+              <label>
+                满<input type="number" ng-model="item.condition" placeholder="月份"/>个月
+              </label>
+              <label>
+                送<input type="number"  ng-model="item.discount" placeholder="月份"/>个月
+              </label>
+              <span class="delete btn-confirm" ng-click="stepControl.removeSaleRules(2,$index)" ng-if="typeTwoList.length > 1"></span>
+              <div>
+                <span>如：满6个月 送2个月</span>
+                <span>*只能输入整数</span>
+              </div>
+            </li>
+          </ul>
+          <!-- <span class="sales-type-checked" ng-if="salesType===2"></span> -->
+        </div>
+        <span class="v-line"></span>
+        <div  ng-if="stepControl.discountRuleVal.id === 3">
+          <p>
+            <span>满减优惠</span><a class="btn btn-confirm btn-cancel" ng-click="stepControl.addSaleRules(3)">添加满减优惠</a>
+            <span class="msgError" ng-show="discountTyprError">* 只能输入数字</span>
+          </p>
+          <ul>
+            <li class="sales-step-two-card sales-step-two-card-big" ng-repeat="item in typeThreeList">
+              <label>
+                满<input type="number"  ng-model="item.condition" placeholder="金额"/>元
+              </label>
+
+              <label>
+                减<input type="number" ng-model="item.discount" placeholder="金额"/>元
+              </label>
+              <span class="delete btn-confirm" ng-click="stepControl.removeSaleRules(3,$index)" ng-if="typeThreeList.length > 1"></span>
+              <div>
+                <span>如：满1000元 减100元</span>
+                <span>*只能输入整数</span>
+              </div>
+            </li>
+          </ul>
+          <!-- <span class="sales-type-checked" ng-if="salesType===3"></span> -->
+        </div>
+      </div>
+      <div ng-show="step===3" class="sales-step-three">
+        <p>
+          参加活动的城市
+        </p>
+        <section class="no-border">
+          <!-- <a class="btn btn-confirm sales-shops" ng-class="{'sales-shops-onsale':item.isAttended===2}" ng-repeat="item in cityPreList" ng-bind="item.cityName" ng-click="stepControl.addCities(item)"></a> -->
+          <div class="item-box">
+            <div ng-repeat="item in cityPreList" class="sub-item  sales-shops">
+              <span  ng-bind="item.cityName"></span>
+              <a class="btn btn-confirm" ng-class="{'sales-shops-onsale':item.isAttended===2}" ng-click="stepControl.addCities(item)" ng-bind="(item.isAttended===2)?'已选择':'选择'"></a>
+            </div>
+          </div>
+        </section>
+        <div class="msgInvalid empty-tip" ng-if="cityPreList.length <= 0">暂无相关城市</div>
+        <div class="pull-right" style="margin-right: 20px;">
+          <div expagination="" data-config-obj="tblPagination"></div>
+        </div>
+        <a class="btn btn-confirm btn-min btn-cancel sales-shops-all" ng-click="stepControl.checkAll(cityPreList)">全选</a>
+        <p style="margin-top:20px;">
+          已选择的城市
+        </p>
+        <section>
+          <a class="btn btn-confirm sales-shops" ng-repeat="item in citySelectList" >
+            <span ng-bind="item.cityName"></span>
+            <span class="fa fa-close removeItem" ng-click="stepControl.removeCity(item,$index)"></span>
+          </a>
+        </section>
+        <div class="msgInvalid empty-tip" ng-if="citySelectList.length <= 0">暂无相关城市</div>
+        <a class="btn btn-confirm btn-min btn-cancel sales-shops-all" ng-click="stepControl.clearAll(citySelectList)">全部取消</a>
+      </div>
+      <div ng-include="'../../template/modalBasic.html'"></div>
+    </div>
+    <div class="sales-step-timeline-btn" ng-show="step!=4">
+      <a class="btn btn-confirm btn-long btn-cancel" ng-click="stepControl.stepEvent('prev')" ng-if="step===1">返回</a>
+      <a class="btn btn-confirm btn-long btn-cancel" ng-click="stepControl.stepEvent('prev')" ng-if="step!==1">上一步</a>
+      <a class="btn btn-long btn-confirm" ng-click="stepControl.stepEvent('next')">{{step | stepFilter}}</a>
+    </div>
+  </section>
+</div>

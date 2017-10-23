@@ -1,0 +1,18 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <h2>交易列表</h2>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-body">
+        <!-- TABLE 工具栏-->
+        <div ng-include="'../../template/tblToolbar.html'"></div>
+        <!-- TABLE 主体-->
+        <div ng-include="'../../template/tblNormal.html'"></div>
+        <!-- TABLE 分页条-->
+        <div ng-include="'../../template/tblPagination.html'"></div>
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+  </section>
+</div>

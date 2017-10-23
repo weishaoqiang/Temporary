@@ -1,0 +1,72 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="info-container-wrapper">
+      <div class="info-container" style="display:inline-block;width:1066px;">
+        <!-- <div class="info-container" style="display:inline-block;width:1066px;position:relative;left:50%;transform:translateX(-50%);"> -->
+        <div class="info-header">
+          <!-- <div class="col-md-3 col-xs-4"> -->
+          <div class="info-header-pic">
+            <div class="mainPicContainer" ng-click="tblDetails.addMainPic()">
+              <div class="mainPicDiv">
+                <img ng-src="{{tblDetails.mainPictureUrl}}" alt="">
+              </div><br>
+              <button type="button" name="button"> 添加资讯主图 </button>
+              <div><span class="msgError" ng-show="valiResult.mainPictureUrlError">* 请添加有效的资讯主图</span></div>
+            </div>
+            <input type="file" name="files" value="" id="mainPicInput" class="hide">
+          </div>
+          <!-- <div class="col-md-9 col-xs-8 info-header-text"> -->
+          <div class="info-header-text">
+            <div class="">
+              <div class="info-header-title">
+                <div> 标题&nbsp;&nbsp;: </div>
+                <div>
+                  <input type="text" name="title" value="" placeholder="请输入资讯标题" ng-model="formResult.title">
+                </div>
+                <div class="msg-container"><span class="msgError" ng-show="valiResult.titleError">* 请输入有效的资讯标题</span></div>
+              </div>
+            </div>
+            <div class="">
+              <div class="info-header-abstract">
+                <div> 摘要&nbsp;&nbsp;: </div>
+                <div>
+                  <input type="text" name="abstract" value="" placeholder="请输入资讯摘要，限制200个字符" maxlength="200" ng-model="formResult.articleAbstract">
+                </div>
+                <div class="msg-container"><span class="msgError" ng-show="valiResult.articleAbstractError">* 请输入有效的摘要内容</span></div>
+              </div>
+            </div>
+            <div class="">
+              <div class="info-header-publisher">
+                <div> 发布者&nbsp;&nbsp;: </div>
+                <div>
+                  <input type="text" name="publisher" value="" placeholder="请输入资讯发布者名称" ng-model="formResult.publisher">
+                </div>
+                <div class="msg-container"><span class="msgError" ng-show="valiResult.publisherError">* 请输入有效的资讯发布者名称</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row info-editor">
+          <div class="col-xs-12">
+            <!-- 加载编辑器的容器 -->
+            <script id="ueditor-container" name="content" type="text/plain" style="width: 100%;height: 500px;"></script>
+          </div>
+        </div>
+
+        <div class="row info-footer">
+          <div class="col-xs-12">
+            <div class="pull-right">
+              <button type="button" name="button" class="btn btn-confirm btn-medium" style="margin-right:30px;" ng-click="tblDetails.preview()">预览</button>
+              <button type="button" name="button" class="btn btn-grey btn-medium" style="margin-right:8px;" ng-click="tblDetails.saveTemp()">保存到草稿箱</button>
+              <button type="button" name="button" class="btn btn-cancel btn-medium" style="margin-right:8px;" ng-click="tblDetails.cancel()">取消</button>
+              <button type="button" name="button" class="btn btn-confirm btn-medium" ng-click="tblDetails.save()">发布</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

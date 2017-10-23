@@ -1,0 +1,71 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/marketMng_priceFixAdd" ng-if="(adminModules[8].type == 3) || (adminModules[8].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span>新增定价</span>
+          </a>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <label>
+            <span>选择城市</span>
+            &nbsp;
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChange()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+        </div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="关键字" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+                  <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+                </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tblToolbar-row" style="margin-bottom: 0;">
+      <div class="sales-tab left-arrange sales-state">
+        <span ng-class="{'sales-tab-active':isActive===2}" ng-click="tblToolbar.getActivitiesByTag(2)">进行中</span>
+        <span ng-class="{'sales-tab-active':isActive===1}" ng-click="tblToolbar.getActivitiesByTag(1)">待开始</span>
+        <span ng-class="{'sales-tab-active':isActive===3}" ng-click="tblToolbar.getActivitiesByTag(3)">已结束</span>
+      </div>
+      <div class="right-arrange">
+        <label>
+            <span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+        </label>
+      </div>
+    </div>
+    <ul class="sales-list">
+      <li ng-repeat="item in tblNormal.dataList">
+        <div class="sales-info">
+          <h6>
+            <a ng-href="{{'#/marketMng_priceFixDetail/'+ (item.id || '')}}" ng-bind="item.name"></a>
+          </h6>
+          <p>活动有效时间：{{item.startDate}} - {{item.endDate}}</p>
+          <span class="salse-item-tag full-sub-dis">浮动定价</span>
+        </div>
+        <div class="sales-ctrl" ng-if="(item.state != 3)">
+          <a class="btn btn-confirm" ng-href="{{'#/marketMng_priceFixEdit/'+(item.id || '')}}">编辑</a>
+          <a class="btn btn-confirm btn-cancel" ng-click="tblNormal.cancel(item)">结束活动</a>
+        </div>
+      </li>
+      <li ng-if="(tblNormal.dataList.length <= 0 )" ng-class="(tblNormal.dataList.length <= 0 )?'msgInvalid':''" style="text-align:center;"><p class="empty-tip">暂无相关活动数据</p></li>
+    </ul>
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

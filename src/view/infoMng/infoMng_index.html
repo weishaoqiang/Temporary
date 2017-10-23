@@ -1,0 +1,86 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="">
+          <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/infoMng_add" ng-if="(adminModules[6].type == 3) || (adminModules[6].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span>新增资讯</span>
+          </a>
+        </div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="关键字" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th style="width:320px;">
+            <div>
+              <span>时间</span>
+            </div>
+          </th>
+          <th style="width:320px;">
+            <div>
+              <span>发布者</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>标题</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td>
+            <span style="position: relative;">{{item.createDate}}
+            <span class="info-state-tip" ng-show="item.state==1">草稿</span>
+            </span>
+          </td>
+          <td ng-bind="item.publisher"></td>
+          <td ng-bind="item.title"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/infoMng_query/' + item.id}}" ng-if="(adminModules[6].type == 2) || (adminModules[6].type == 4)">查看</a>&nbsp;&nbsp;
+            <a ng-href="{{'#/infoMng_edit/' + item.id}}" ng-if="(adminModules[6].type == 3) || (adminModules[6].type == 4)">编辑</a>&nbsp;&nbsp;
+            <a href="javascript:;" ng-click="tblNormal.delete(item.id)" ng-if="(adminModules[6].type == 3) || (adminModules[6].type == 4)">删除</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

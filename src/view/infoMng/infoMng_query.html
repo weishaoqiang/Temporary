@@ -1,0 +1,59 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+
+    <!-- <div style="border:1px solid rgba(0,0,0,0.15);width:98%;padding:6px 48px;background-color:#fff;" >
+      <div style="border:0px solid #888;overflow:hidden;margin-bottom:36px;">
+        <div style="float:left; width:260px;  text-align:right; padding:20px 50px 0 0;
+          border-right:1px solid #aaa; position:relative;">
+          <span style="display:inline-block;border:10px solid transparent;border-right-color:#aaa;position:absolute;
+            top:50%;transform:translateY(-50%);right:-1px;">
+            <span style="position:absolute;right:-10px;top:50%;transform:translateY(-50%);display:inline-block;border:9px solid transparent;border-right-color:#fff;"></span>
+          </span>
+          <div style="float:right;width:auto;min-height:130px; border-bottom:1px solid #aaa;">
+            <div style="font-size:44px;margin-bottom:8px;" ng-bind="queryResult.createDate | dateFilter:'yyyy'"></div>
+            <span style="font-size:24px;font-weight:lighter;" ng-bind="queryResult.createDate | dateFilter:'MM-dd hh:mm'"></span>
+          </div>
+        </div>
+        <div style="float:left; width:auto;  padding:20px 0 0 30px;">
+          <div style="font-size:40px; width:100%;overflow:hidden;" ng-bind="queryResult.title"></div>
+        </div>
+      </div>
+      <div id="info-content">
+      </div>
+    </div> -->
+
+    <div class="panel panel-warning" style="max-width:1062px;position:relative;left:50%;transform:translateX(-50%);">
+      <div class="panel-heading text-primary">
+        <h3 class="panel-title">
+          <span>查看资讯</span>
+          <a ng-href="{{'#/infoMng_edit/'+param}}" class="pull-right" ng-if="(adminModules[6].type == 3) || (adminModules[6].type == 4)">编辑</a>
+        </h3>
+      </div>
+      <div style="padding:20px 30px;background-color:#fff;border:1px solid #E8EAF1;overflow-x:auto;">
+        <!-- <div style="padding:20px 20px;background-color:#FFF;"> -->
+        <div class="article-body">
+          <!-- New Title -->
+          <div style="font-size: 0;position: relative;height: 160px;margin-bottom: 30px;">
+            <div style="display: inline-block;width: 160px;height: 160px;font-size: 16px;position: absolute;top: 0;text-align: right;padding: 0 60px 0 0;">
+              <h4 id="year" style="position: relative;top: 60px;font-size: 28px;" ng-bind="queryResult.createDate | dateFilter:'MM-dd'"></h4>
+              <p id="date" style="position: relative;top: 70px;font-size: 16px;" ng-bind="queryResult.createDate | dateFilter:'yyyy'"></p>
+              <img style="position: absolute;height: 80%;top: 20px;right: 20px;" src="../../img/xiangzhuang.svg" alt="">
+              <hr style="position: absolute;bottom: -8px;width: 125px;height: 0;border: 0;  border-bottom: 1px solid #f1f1f1;">
+            </div>
+            <div style="left:170px;background-color:#ffffff;border:0;display: inline-block;height: 160px;width: 850px;position: absolute;padding: 20px;">
+              <h4 id="title" style="  width: 100%;height: 40px;font-size:26px;" ng-bind="queryResult.title"></h4>
+              <p id="editer" style="font-size:16px;color:gray;position:absolute;bottom:30px;" ng-cloak="">
+                发布者：{{queryResult.publisher}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览次数：{{queryResult.readCount}}</p>
+            </div>
+          </div>
+          <!-- Content -->
+          <div id="info-content">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+</div>

@@ -1,0 +1,228 @@
+@mainPicHeight: 170px;
+@mainPicWidth: 250px;
+@infoHeaderHeight: @mainPicHeight+40px;
+@inputTextFontSize: 16px;
+
+section {
+  // max-width: 1002px !important;
+}
+
+input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.veiw {
+  max-width: 1022px !important;
+}
+
+.msgError {
+  font-size: 10px;
+}
+
+.info-header {
+  overflow: hidden;
+  padding: 0 15px 20px;
+  margin-bottom: 12px;
+
+  & > div {
+    height: @infoHeaderHeight;
+  }
+
+  .info-header-pic {
+    float: left;
+    width: @mainPicWidth+80px;
+  }
+
+  .info-header-text {
+    // float: left;
+    // min-width: 60%;
+    padding-top: 20px;
+    padding-left: @mainPicWidth+80px;
+
+    & > div {
+      width: 100%;
+      position: relative;
+      z-index: 0;
+
+      & > div:first-child {
+        margin-bottom: 56px;
+
+        .msg-container {
+          position: absolute;
+          z-index: 2;
+          bottom: 0;
+          right: 0;
+        }
+        // &+div {
+        //   position: absolute;
+        //   z-index: 2;
+        //   bottom: -20px;
+        //   left: 100px;
+        // }
+      }
+
+      & > div[class*='info-header-'] {
+        font-size: 16px;
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+        overflow: hidden;
+
+        div:first-child {
+          float: left;
+          width: 80px;
+        }
+
+        div:first-child + div {
+          float: left;
+          min-width: 80%;
+          padding-right: 100px;
+        }
+      }
+
+      input[type='text'] {
+        font-size: 16px;
+        width: 100%;
+      }
+    }
+  }
+
+  :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    font-size: @inputTextFontSize;
+  }
+
+  ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    font-size: @inputTextFontSize;
+  }
+
+  input:-ms-input-placeholder,
+  textarea:-ms-input-placeholder {
+    font-size: @inputTextFontSize;
+  }
+
+  input::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder {
+    font-size: @inputTextFontSize;
+  }
+
+  .mainPicContainer {
+    cursor: pointer;
+    width: @mainPicWidth;
+
+    & > .mainPicDiv {
+      display: inline-block;
+      background-color: #fff;
+      border: none;
+
+      & > img {
+        width: @mainPicWidth;
+        height: @mainPicHeight;
+        // background: url("../../img/tianjia.png") no-repeat 50% 50%;
+        background-size: 30%;
+        border: 1px solid #E8EAF1;
+      }
+    }
+
+    & > button {
+      width: @mainPicWidth;
+      background-color: #E4E4E4;
+      border: none;
+      padding: 10px 0;
+      color: #949494;
+      outline: none;
+
+      &:hover {
+        background-color: #dbdbdb;
+      }
+
+      &:active {
+        background-color: #d0d0d0;
+      }
+    }
+  }
+}
+
+.info-container-wrapper {
+  display: block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1066px;
+  overflow-x: auto;
+}
+
+.info-editor {
+  padding-top: 10px;
+  margin-bottom: 10px;
+
+  & > div {
+    // max-width: 1002px !important;
+  }
+
+  #ueditor-container {
+    // width: 100% !important;
+    // height: 500px !important;
+  }
+}
+
+.info-footer {
+  margin-bottom: 12px;
+}
+
+.info-state-tip {
+  position: absolute;
+  z-index: 2;
+  top: -40%;
+  right: -30px;
+  color: #e4393c;
+  font-size: 8px;
+}
+
+.article-body {
+  width: 1002px;
+  // position: relative;;
+  // z-index: 1;
+  // left: 50%;
+  // transform: translateX(-50%);
+  background-color: #ffffff;
+  font-size: 16px;
+
+  hr {
+    margin: 0;
+  }
+}
+
+.article-body,
+.preview-content {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold !important;
+  }
+
+  & > div:first-child {
+    color: #000;
+  }
+
+  #info-content {
+    color: #1a1a1a !important;
+  }
+}
+
+.preview-modal {
+  .modal-dialog {
+    width: 1044px !important;
+    margin: 2% auto !important;
+
+    .modal-body {
+      padding: 16px 20px !important;
+      text-align: left !important;
+    }
+  }
+}

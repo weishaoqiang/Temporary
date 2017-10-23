@@ -1,0 +1,118 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="订单号" ng-model="tblToolbar.searchVal">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <label>
+            <span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+            <span>收款类型：</span>
+            <select name="otherIncomeSel" id="otherIncomeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.otherIncomeTypeList" ng-model="tblToolbar.otherIncomeTypeVal" ng-change="tblToolbar.otherIncomeTypeValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+            <span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>订单编号</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>城市</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>门店</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>收款类型</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>创建时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>支付状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>收款金额</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.id"></td>
+          <!--<td ng-bind="item.cityID | defaultFilter:tblToolbar.cityList"></td>-->
+          <td ng-bind="item.cityName"></td>
+          <td ng-bind="item.shopName"></td>
+          <td ng-bind="item.payType | otherIncomeTypeFilter"></td>
+          <td ng-bind="item.createDate.slice(0, 10)"></td>
+          <td ng-bind="item.state | otherOrderStateFilter"></td>
+          <td ng-bind="'¥'+item.actualPay.toFixed(2)"></td>
+          <td>
+            <a ng-href="{{'#/orderMng_queryOtherOrder/' + item.id}}" ng-if="(adminModules[3].type == 2)||(adminModules[3].type == 4)">查看详情</a>&nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+  </section>
+</div>

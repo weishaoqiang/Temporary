@@ -1,0 +1,83 @@
+/*********************************************************************
+ * 基本元素样式重载
+ *********************************************************************/
+*{
+  box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6,body{
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+}
+ul{
+  list-style-type: none !important;
+}
+table{
+  th{
+    font-weight: normal !important;
+  }
+  td{
+    vertical-align: middle;
+  }
+}
+a {
+  text-decoration: none !important;
+}
+input, button {
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+}
+.clear {
+  clear: both;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.clearfix::after {
+    content: '';
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    clear: both;
+}
+.clearfix {
+    zoom: 1;
+}
+/*********************************************************************
+ * 原子类样式设置
+ *********************************************************************/
+.flt-lf {
+  float: left;
+}
+.flt-rt {
+  float: right;
+}
+.m0 {
+    margin: 0;
+}
+.p0 {
+    padding: 0;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mb20 {
+    margin-bottom: 20px;
+}
+.mt20 {
+  margin-top: 20px;
+}
+.mf20 {
+    margin-left: 20px;
+}
+.mr20 {
+    margin-right: 20px;
+}
+.pt10 {
+  padding-top: 10px;
+}
+.pt20 {
+  padding-top: 20px;
+}

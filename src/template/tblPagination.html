@@ -1,0 +1,39 @@
+<!-- TABLE 分页条-->
+<!-- <div class="row">
+  <div class="col-xs-4"></div>
+  <div class="col-xs-8">
+    <div class="pull-right"> -->
+      <ul class="pagination tblPagination">
+        <!-- 左翻页 -->
+        <li class="lfPage" ng-show="tblPagination.pageObj.lfPage.exist">
+          <a href="javascript:;" ng-class="tblPagination.pageObj.lfPage.effective?'effective':'uneffective'"
+            ng-click="tblPagination.changePage('lfPage', tblPagination.pageObj.lfPage.effective)">
+            <i class="fa fa-angle-left"></i>
+          </a>
+        </li>
+        <!-- 左翻页组 -->
+        <li class="lfGrp" ng-show="tblPagination.pageObj.lfGrp.exist">
+          <a href="javascript:;" ng-class="tblPagination.pageObj.lfGrp.effective?'effective':'uneffective'"
+            ng-click="tblPagination.changePage('lfGrp', tblPagination.pageObj.lfGrp.effective)">...</a>
+        </li>
+        <!-- 数字页码 -->
+        <li class="{{item.name}}" ng-repeat="item in tblPagination.pageObj.pages"
+          ng-disabled="!item.effective" ng-show="item.exist">
+          <a href="javascript:;" ng-bind="item.name.slice(4)" ng-class="item.effective?'effective':'uneffective'" ng-click="tblPagination.changePage(item.name, item.effective)"></a>
+        </li>
+        <!-- 右翻页组 -->
+        <li class="rtGrp" ng-show="tblPagination.pageObj.rtGrp.exist">
+          <a href="javascript:;" ng-class="tblPagination.pageObj.rtGrp.effective?'effective':'uneffective'"
+            ng-click="tblPagination.changePage('rtGrp', tblPagination.pageObj.rtGrp.effective)">...</a>
+        </li>
+        <!-- 右翻页 -->
+        <li class="rtPage" ng-show="tblPagination.pageObj.rtPage.exist">
+          <a href="javascript:;" ng-class="tblPagination.pageObj.rtPage.effective?'effective':'uneffective'"
+            ng-click="tblPagination.changePage('rtPage', tblPagination.pageObj.rtPage.effective)">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      </ul>
+    <!-- </div>
+  </div>
+</div> -->

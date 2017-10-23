@@ -1,0 +1,310 @@
+/**********************
+  后台模板框架布局设置
+**********************/
+body {
+  background-color: #F1F1F9;
+  min-width: 1210px;
+  overflow-x: auto;
+}
+.ipage-header {
+  height: 56px;
+  background-color: #ffffff;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+}
+.ipage-header .ipage-logo.closed {
+  width: 45px !important;
+}
+.ipage-header .ipage-logo {
+  display: inline-block;
+  width: 168px;
+  height: 56px;
+  background-color: #ffd700;
+  padding: 6px 4px 0 4px;
+}
+.ipage-header .ipage-logo a {
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+.ipage-header .ipage-logo a .logo-default {
+  display: inline-block;
+  width: 120px;
+  height: 46px;
+  background: url('../img/logo.svg') no-repeat 50% 50%;
+  background-size: contain;
+}
+.ipage-header .ipage-logo .menu-toggler {
+  float: right;
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  margin-top: 10px;
+  margin-right: 6px;
+  cursor: pointer;
+  background-image: url('../img/icon-menu_toggler.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.ipage-header-menu-wrapper {
+  display: inline-block;
+  margin-right: 20px;
+}
+.ipage-header-menu-wrapper .ipage-header-menu li.dropdown {
+  cursor: pointer;
+  float: right;
+}
+.ipage-header-menu-wrapper .ipage-header-menu li.dropdown > a {
+  display: inline-block;
+  color: #9E9879;
+  padding: 10px;
+  font-size: 13px;
+  height: 56px;
+}
+.ipage-header-menu-wrapper .ipage-header-menu li.dropdown > a .fa::before {
+  position: relative;
+  top: 2px;
+}
+.ipage-header-menu-wrapper .ipage-header-menu li.dropdown > a > .admin-portrait {
+  display: inline-block;
+  width: 29px;
+  height: 29px;
+  vertical-align: middle;
+  margin-right: 4px;
+  background: url("../img/headPortrait.png") no-repeat 50% 50%;
+  background-size: contain;
+}
+.ipage-header-menu-wrapper .ipage-header-menu li.dropdown:hover {
+  background-color: #ffd700;
+}
+.ipage-header-menu-wrapper .ipage-header-menu .dropdown-menu {
+  width: 180px;
+}
+.ipage-header-menu-wrapper .ipage-header-menu .dropdown-menu > li > a > i {
+  margin-right: 12px;
+}
+.ipage-container.closed .ipage-sidebar-wrapper {
+  width: 45px;
+  overflow-y: visible;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item > a > .title {
+  display: none;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item > a > span.arrow {
+  display: none;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item > .sub-menu {
+  display: none;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item:hover {
+  width: 256px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 5px 5px rgba(44, 53, 66, 0.2);
+  background-color: #2C2B2F;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item:hover > a > i[class*='icon'] {
+  color: #ffd700;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item:hover > a > span.title {
+  padding: 16px;
+  display: inline;
+  color: #ffd700;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item:hover .sub-menu {
+  width: 210px;
+  box-shadow: 5px 5px rgba(44, 53, 66, 0.2);
+  display: block !important;
+  background-color: #343337;
+  position: absolute;
+  z-index: 103;
+  right: 0;
+  margin: 0;
+}
+.ipage-container.closed .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item:hover .sub-menu .nav-item > a {
+  padding-left: 20px;
+}
+.ipage-container.closed .ipage-content-wrapper {
+  margin-left: 45px;
+}
+.ipage-container {
+  padding-top: 56px;
+  background-color: #343337;
+}
+.ipage-container ::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
+}
+.ipage-container .ipage-sidebar-wrapper {
+  width: 168px;
+  position: fixed;
+  z-index: 5;
+  top: 56px;
+  left: auto;
+  background-color: #343337;
+  overflow-y: auto;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar {
+  height: 100%;
+  z-index: 5;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #9E9879;
+  background-color: #343337;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open > a {
+  background-color: #2C2B2F;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open span.arrow::before {
+  content: "\f107";
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open .sub-menu {
+  display: block;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.active {
+  position: relative;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open > a > i[class*='icon'],
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.active > a > i[class*='icon'],
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open.active > a > i[class*='icon'],
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open > a > span.title,
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.active > a > span.title,
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.open.active > a > span.title {
+  color: #ffd700;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item.active > a > .selected {
+  display: block;
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 16px;
+  background: 0 0;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid #F1F3FA;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item {
+  display: block;
+  background-color: #343337;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item .sub-menu {
+  display: none;
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item .sub-menu > .nav-item.active > a {
+  background-color: #2C2B2F;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item .sub-menu > .nav-item.active > a > i[class*='icon'],
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item .sub-menu > .nav-item.active > a > span.title {
+  color: #9E9879;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item .sub-menu li.nav-item {
+  margin-top: 2px;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item .sub-menu li.nav-item > a {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 46px;
+  height: auto;
+  border: none;
+  color: #9E9879;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item a {
+  display: block;
+  height: 45px;
+  line-height: 21px;
+  color: #9E9879;
+  text-decoration: none;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 300;
+  border-top: 1px solid #2C2B2F;
+  cursor: pointer;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item a:hover {
+  background-color: #2C2B2F;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item a span.arrow::before {
+  float: right;
+  width: 14px;
+  text-align: center;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+  display: inline;
+  font-size: 12px;
+  font-family: "fa";
+  height: auto;
+  content: "\f104";
+  font-weight: 300;
+  text-shadow: none;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item a i[class*='icon'] {
+  font-size: 16px;
+  margin-right: 14px;
+  line-height: 20px;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item a i[class*='icon']::before {
+  font-size: inherit;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu .nav-item a span.title {
+  line-height: 20px;
+}
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item > a:hover i[class*='icon'],
+.ipage-container .ipage-sidebar-wrapper .ipage-sidebar-menu > .nav-item > a:hover span.title {
+  color: #ffd700;
+}
+.ipage-container .ipage-content-wrapper {
+  margin-left: 168px;
+  padding: 15px;
+  background-color: #F1F3FA;
+  min-height: 700px;
+}
+.ipage-container .ipage-content-wrapper .page-content header {
+  margin: 20px 0;
+}
+.ipage-container .ipage-content-wrapper .page-content .page-bar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e7ecf1;
+  position: relative;
+  margin: -12px -14px 0;
+  padding: 2px 20px;
+}
+.ipage-container .ipage-content-wrapper .page-content .page-bar .page-breadcrumb {
+  height: 32px;
+  line-height: 16px;
+  padding: 8px;
+  margin: 0;
+}
+.ipage-container .ipage-content-wrapper .page-content .page-bar .page-breadcrumb li {
+  display: inline-block;
+  color: #888888;
+}
+.ipage-container .ipage-content-wrapper .page-content .page-bar .page-breadcrumb li a {
+  color: #888888;
+}
+.ipage-footer {
+  height: 33px !important;
+  background-color: #343337;
+}
+.ipage-footer .page-footer-inner {
+  padding-top: 8px;
+  text-align: center;
+  color: #9E9879;
+  font-size: 12px;
+}
+.ipage-footer .page-footer-inner a {
+  color: #ffd700;
+}

@@ -1,0 +1,610 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 订单详情 </span>
+          <!-- <a ng-href="{{'#/orderMng_editOrder/'+param}}" class="pull-right" ng-show="adminModules[3].isHave">编辑</a> -->
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <!-- 基本订单信息 -->
+            <tr class="row" ng-show="queryResult.orderContractNum">
+              <td class="col-xs-2">
+                <span> 合同编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderContractNum"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderID"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 线索编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4" ng-if="queryResult.threadID">
+                    <a ng-href="{{'../threadMng/index.html#/threadMng_queryThread/' + queryResult.threadID}}" ng-bind="queryResult.threadID"></a>
+                  </div>
+                  <div class="col-xs-4" ng-if="!queryResult.threadID">
+                    <span class="msgInvalid">无关联线索</span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderParentID">
+              <td class="col-xs-2">
+                <span> 父订单编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <a ng-href="{{'../orderMng/index.html#/orderMng_queryOrder/'+ queryResult.orderParentID}}" ng-bind="queryResult.orderParentID"></a>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单创建时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderCreateDate"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderCancelDate">
+              <td class="col-xs-2">
+                <span> 订单取消时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderCancelDate"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单业务类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderBusinessType | orderBusinessTypeFilter"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <!-- 订单所属信息 -->
+            <tr class="row" ng-if="queryResult.shopName">
+              <td class="col-xs-2">
+                <span> 门店 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.shopName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="queryResult.shopType">
+              <td class="col-xs-2">
+                <span> 门店类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.shopType | shopTypeFilter"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="queryResult.orderUnitList.length>0">
+              <td class="col-xs-2">
+                <span> 仓位号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-repeat="item in queryResult.orderUnitList">
+                    <a ng-href="{{'../shopMng/index.html#/shopMng_queryUnit/'+ item.unitID + '/shop/' + queryResult.shopID}}" ng-bind="item.unitName"></a>&emsp;
+                  </span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户姓名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <a ng-href="{{'../clientMng/index.html#/clientMng_queryRentClient/'+ queryResult.userID}}" ng-bind="queryResult.userName || '- -'"></a>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 销售管理员 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.managerName || '- -'" ng-class="(queryResult.managerName?'':'msgInvalid')"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <!-- 订单期限信息 -->
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 起用时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderStartDate"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 结束时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderEndDate"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 租用容积 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderRentVolume + ' m³'"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 租赁期限 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderRentLast + ((queryResult.orderBusinessType==1||queryResult.orderBusinessType==2||queryResult.orderBusinessType==4)?' 个月':' 天')"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 赠送租期 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderPresentRentPeriod + ((queryResult.orderBusinessType==1||queryResult.orderBusinessType==2||queryResult.orderBusinessType==4)?' 个月':' 天')"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 是否逾期 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.overdue?'是':'否'"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span ng-bind="queryResult.orderRemainingDate>=0?'租用剩余天数':'逾期天数'"></span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="(queryResult.orderRemainingDate>=0?1:(-1))*queryResult.orderRemainingDate + '天'"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderMoveOutDate">
+              <td class="col-xs-2">
+                <span> 办理退仓时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderMoveOutDate"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <!-- 订单支付信息 -->
+            <tr class="row" ng-show="queryResult.orderState!==22">
+              <td class="col-xs-2">
+                <span> 支付状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderState | orderPayStateFilter" ng-class="((queryResult.orderState | orderPayStateFilter).indexOf('成功')!==-1?'msgSuccess':'msgError')"></span>
+                    <span>(</span>
+                    <span ng-bind="queryResult.payState | payStateFilter" ng-class="(queryResult.payState == 1?'msgSuccess':'msgError')"></span>
+                    <span>)</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- 上门搬存订单费用信息 -->
+            <tr class="row" ng-show="(queryResult.orderBusinessType | orderBusinessTypeFilter) == '上门搬存'">
+              <td class="col-xs-2">
+                <span> 搬出费用 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderMoveOutFee?('￥' + queryResult.orderMoveOutFee):'- -'" ng-class="{'msgInvalid':(!queryResult.orderMoveOutFee)}"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(queryResult.orderBusinessType | orderBusinessTypeFilter) == '上门搬存'">
+              <td class="col-xs-2">
+                <span> 搬回费用 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderMoveInFee?('￥' + queryResult.orderMoveInFee):'- -'" ng-class="{'msgInvalid':(!queryResult.orderMoveInFee)}"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(queryResult.orderBusinessType | orderBusinessTypeFilter) == '上门搬存'">
+              <td class="col-xs-2">
+                <span> 搬运收入 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderMoveFee?('￥' + queryResult.orderMoveFee):'- -'" ng-class="{'msgInvalid':(!queryResult.orderMoveFee)}"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(queryResult.orderBusinessType | orderBusinessTypeFilter) == '上门搬存'">
+              <td class="col-xs-2">
+                <span> 存储费用 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderSumPrice?('￥' + queryResult.orderSumPrice):'- -'" ng-class="{'msgInvalid':(!queryResult.orderSumPrice)}"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <!-- 订单价格信息 -->
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 标准单价(元/月) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="'￥' + queryResult.orderPrice"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderDeposit>=0">
+              <td class="col-xs-2">
+                <span> 押金 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.orderDeposit?('￥'+queryResult.orderDeposit):'- -'" ng-class="(queryResult.orderDeposit?'':'msgInvalid')"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 优惠金额 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="'￥' + queryResult.orderDiscount"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 租金 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="'￥' + queryResult.orderRent"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span ng-show="(((queryResult.orderState | orderStateFilter).indexOf('未')===-1)
+                &&((queryResult.orderState | orderStateFilter).indexOf('失败')===-1))"> 实际支付(含押金) </span>
+                <span ng-show="!(((queryResult.orderState | orderStateFilter).indexOf('未')===-1)
+                &&((queryResult.orderState | orderStateFilter).indexOf('失败')===-1))"> 需支付(含押金) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span style="font-weight:bolder;" ng-bind="'￥' + queryResult.orderActualPay"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(queryResult.overdueAmounts>=0) && queryResult.overdue">
+              <td class="col-xs-2">
+                <span> 逾期金额 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="'￥' + queryResult.overdueAmounts"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- Deprecated
+          <tr class="row" ng-show="((((queryResult.orderState | orderStateFilter).indexOf('未')===-1)
+            &&((queryResult.orderState | orderStateFilter).indexOf('失败')===-1))) && (queryResult.orderExpectRefund>=0)">
+            <td class="col-xs-2">
+              <span> 需退金额 </span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span ng-bind="'￥' + queryResult.orderExpectRefund"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          -->
+            <tr class="row" ng-show="queryResult.orderBackAmount?true:(queryResult.orderBackAmount==0)">
+              <td class="col-xs-2">
+                <span> 实际退款 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="'￥' + queryResult.orderBackAmount"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- 其他信息 -->
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderState | orderStateFilter" ng-class="(((queryResult.orderState | orderStateFilter).indexOf('未')===-1)
+                      &&((queryResult.orderState | orderStateFilter).indexOf('失败')===-1))?'msgSuccess':'msgError'"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 支付方式 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span class="msgSuccess" ng-bind="queryResult.orderPayWay | payWayFilter"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 支付时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderPayTime || '- -'" ng-class="queryResult.orderPayTime?'':'msgInvalid'"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 备注 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.remarks"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 订单合同 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd" ng-if="!queryResult.orderContractNum">
+                <div class="row">
+                  <div class="col-xs-12" ng-if="queryResult.contractList.length <= 0">
+                    <span class="msgInvalid"> 请添加纸质合同 </span>
+                  </div>
+                  <ul id="previewImg" class="col-xs-12 contractList-box previewImg" ng-if="queryResult.contractList.length > 0">
+                    <li ng-repeat="item in queryResult.contractList track by $index" class="img-box" ng-click="tblToolbar.viewContractImage($index)" repeat-done>
+                      <img ng-src="{{item.pictureUrl}}" alt="{{$index === 0? '这是第1张图片': ($index === (queryResult.contractList.length - 1) ? '这是最后一张图片': '这是第'+($index+1)+'张图片')}}">
+                    </li>
+                  </ul>
+                </div>
+              </td>
+              <td class="col-xs-10 formCtrlTd" ng-if="queryResult.orderContractNum">
+                <div class="col-xs-12">
+                  <span>  已签订电子合同，可下载查看  </span>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderMoveOutReason">
+              <td class="col-xs-2">
+                <span> 退仓原因 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.orderMoveOutReason"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input ng-if="((!queryResult.orderContractNum) && (queryResult.contractList.length <= 0 ||  queryResult.payState !== 1))" type="button" class="btn btn-long btn-confirm" value="上传纸质合同" id="uploadContract" ng-click="tblToolbar.showUploadBox()">
+                    <input  ng-if="queryResult.orderContractNum" type="button" class="btn btn-long btn-confirm" value="下载合同" id="exportContract" ng-click="tblDetails.exportContract(queryResult.orderID)">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div class="upload-outerbox" ng-class="{'upload-outerbox-show': tblToolbar.uploadView}">
+      <div class="upload-box">
+        <div class="title header">
+          <h3>添加照片</h3>
+          <p class="title-tip msgInvalid">(合同最多可上传8张，可添加，删除，交换图片位置)</p>
+        </div>
+        <div id="drop_area" class="content">
+    			<ul class="preview-box" id="previewbox">
+            <li ng-repeat="(index, item) in tblToolbar.imgInfo" ng-drop="true" ng-drop-success="tblToolbar.onDropComplete($index, $data, $event)"
+            >
+              <img ng-src="{{item.url}}" name="{{item.name}}" ng-drag="{{!item.uploaded}}" ng-drag-data="{{item}}" ng-drag-start="tblToolbar.onDragStart($event)" ng-drag-success="tblToolbar.onDragComplete($event)" alt="图片"/>
+              <i class="delete-img" ng-click="tblToolbar.fileDelFun(index)" ng-if="!item.uploaded"></i>
+              <i class="upload-success" ng-class="{'upload-success-show': item.uploaded}"></i>
+            </li>
+    				<li class="addImgbtn">
+    					<input type="file" id="addfile1" name="file" class="addfile" onchange="angular.element(this).scope().tblToolbar.fileAddFun(event)" multiple=true/>
+    				</li>
+    			</ul>
+          <div class="uploading" ng-if="tblToolbar.uploading">
+            <div class="walk-block-box">
+              <div class="walk-block"></div>
+            </div>
+            <div class="text-tip">图片正在上传，请稍后...</div>
+          </div>
+    		</div>
+        <div id="footer" class="footer">
+    			<div>
+    				<p class="foot-tip msgInvalid">提示：请谨慎选择合同图片，图片一但上传不能修改和删除</p>
+            <div class="warm-prompt">
+              <p class="text-tip" ng-class="{'p-show': tblToolbar.tipShow}"></p>
+              <!-- <p ng-class="{'p-show': tipShow}"> 不能重复添加同一张图片 </p> -->
+            </div>
+    				<div class="btn-box">
+    					<a href="javascript:;" class="btn btn-min btn-cancel"ng-click="tblToolbar.canceluploadContract()">取消</a>
+    					<a href="javascript:;" class="btn btn-min btn-confirm" ng-click="tblToolbar.uploadContract()">上传</a>
+    				</div>
+    			</div>
+    		</div>
+      </div>
+    </div>
+
+    <div class="viewContract-outerbox" ng-class="{'viewContract-outerbox-show': !!tblToolbar.viewUrl}">
+      <div class="prev">
+        <button class="prev-btn" ng-click="tblToolbar.prevContractImage()"></button>
+      </div>
+      <div class="next">
+        <button class="next-btn" ng-click="tblToolbar.nextContractImage()"></button>
+      </div>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

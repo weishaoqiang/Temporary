@@ -1,0 +1,366 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent orderMng-Analy mb20 pt10">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row flt-lf">
+        <div class="left-arrange">
+          <div class="title">城市销售业绩</div>
+        </div>
+      </div>
+      <div class="tblToolbar-row overflow-hidden">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <label>
+                  <span>选择时间段</span>
+                  &nbsp;&nbsp;
+                  <select name="timeTypeSel" id="timeTypeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityTimeType.timeTypeList" ng-model="tblToolbar.cityTimeType.timeTypeVal" ng-change="tblToolbar.cityTimeTypeValChange()">
+                      <!-- <option value=""></option> -->
+                  </select>
+              </label>
+          <div class="item-divider"></div>
+          <label ng-if="tblToolbar.cityTimeType.timeTypeVal.id === 'manual'">
+                  <span>选择时间</span>
+                  &nbsp;&nbsp;
+                  <div class="timeSelect">
+                      <div class="date-picker-input">
+                          <input type="text" class="cityStartDate" name="cityStartDate" id="cityStartDate" placeholder="全部" ng-model="urlParam.cityParam.startDate">
+                          <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerStart($event)"></span>
+                      </div>
+                      <span>-</span>
+                      <div class="date-picker-input">
+                          <input type="text" class="cityEndDate" name="cityEndDate" id="cityEndDate" placeholder="全部" ng-model="urlParam.cityParam.endDate">
+                          <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerEnd($event)"></span>
+                      </div>
+                  </div>
+              </label>
+          <div class="item-divider" ng-if="tblToolbar.cityTimeType.timeTypeVal.id === 'manual'"></div>
+          <label>
+              <span>显示条数：</span>
+              <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityItemNum.itemNumList" ng-model="tblToolbar.cityItemNum.itemNumVal" ng-change="tblToolbar.cityItemNumValChanged()">
+              </select>
+            </label>
+        </div>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="diagram-table sales-table">
+        <thead>
+          <tr>
+            <th ng-repeat="(objName, item) in tblSortable.cityTheadConfig.sortBuffer">
+              <span ng-bind="item.name"></span>
+              <i ng-class="{'fa':true, 'fa-sort':!item.sortState, 'fa-sort-asc':item.sortState&&(item.sortDir==='up'), 'fa-sort-desc':item.sortState&&(item.sortDir==='down')}" ng-click="tblSortable.cityLaunchSort(objName, item)" ng-if="item.canSort"></i>
+              <span ng-if="item.name === '出租m³*月'" class="tip">
+                <i>?</i>
+                <div class="tip-info">
+                    <span class="corner"></span>
+                    <div>计算公式：</div>
+                    <div>租用时长 x 租用立方</div>
+                </div>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.CityDataList" ng-if="tblNormal.CityDataList.length > 0">
+          <td ng-bind="item.name"></td>
+          <!--<td ng-bind="item.cityID | defaultFilter:tblToolbar.cityList"></td>-->
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.newOrderNum">
+            <a ng-href="{{'#/orderMng_index/'+ (item.id || '')+ '/' + (urlParam.cityParam.startDate || '2000-01-01')+ '/' + (urlParam.cityParam.endDate || getToday())}}">{{item.newOrderNum}}</a>
+          </td>
+          <td ng-bind="item.income"></td>
+          <td ng-bind="item.salePrice"></td>
+          <td ng-bind="item.rentVolume"></td>
+          <td ng-bind="item.firstVolume"></td>
+          <td ng-bind="item.renewalVolume"></td>
+          <td ng-bind="item.rentVolumeMonth"></td>
+          <!-- <td ng-bind="item.averageRentTime"></td> -->
+          <td ng-bind="item.rentRate | rentRateFilter"></td>
+          <td ng-bind="item.totalEveDayIncome | cashFilter"></td>
+
+          <!-- <td> <a ng-href="{{'#/orderMng_queryOtherOrder/' + item.id}}">查看详情</a>&nbsp;&nbsp;</td> -->
+        </tr>
+        <tr class="total total-tr" ng-if="tblNormal.CityDataList.length > 0">
+          <td>合计</td>
+          <td>{{tblNormal.CityStat.newOrderNum}}</td>
+          <td>{{tblNormal.CityStat.income}}</td>
+          <td>{{tblNormal.CityStat.salePrice}}</td>
+          <td>{{tblNormal.CityStat.rentVolume}}</td>
+          <td>{{tblNormal.CityStat.firstVolume}}</td>
+          <td>{{tblNormal.CityStat.renewalVolume}}</td>
+          <td>{{tblNormal.CityStat.rentVolumeMonth}}</td>
+          <!-- <td>{{tblNormal.CityStat.averageRentTime}}</td> -->
+          <td>{{tblNormal.CityStat.rentRate | rentRateFilter}}</td>
+          <td>{{tblNormal.CityStat.totalEveDayIncome | cashFilter}}</td>
+        </tr>
+        <tr ng-if="tblNormal.CityDataList.length==0" class="hintNoMsg">
+          <td colspan="12">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+    <div class="border-div" ng-if="tblNormal.CityDataList.length>0"></div>
+    </div>
+    <div class="pull-right mr20">
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportDetailsBtn" style="margin-right:20px;" ng-click="tblToolbar.cityPerListDetailsExport()">导出明细</button>
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportBtn" style="margin-right:20px;" ng-click="tblToolbar.cityPerListExport()">导出汇总</button>
+      <div expagination="" data-config-obj="cityTblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+  </section>
+  <section class="mainContent orderMng-Analy mb20 pt10">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <div class="title">门店销售业绩</div>
+        </div>
+        <div class="right-arrange mr20">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" style="background-color: #efefef;" class="form-control" id="searchGrp" name="searchGrp" placeholder="搜索店名" ng-model="tblToolbar.shopSearchVal" ng-enter="tblToolbar.shopLaunchSearch()">
+            <span class="input-group-btn">
+                  <button class="btn btn-confirm" type="button" ng-click="tblToolbar.shopLaunchSearch()"> 搜索 </button>
+                </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <label>
+                    <span>选择时间段</span>
+                    &nbsp;&nbsp;
+                    <select name="timeTypeSel" id="timeTypeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopTimeType.timeTypeList" ng-model="tblToolbar.shopTimeType.timeTypeVal" ng-change="tblToolbar.shopTimeTypeValChange()">
+                        <!-- <option value="">- 全部 -</option> -->
+                    </select>
+                </label>
+          <div class="item-divider"></div>
+          <label ng-if="tblToolbar.shopTimeType.timeTypeVal.id === 'manual'">
+                    <span>选择时间</span>
+                    &nbsp;&nbsp;
+                    <div class="timeSelect">
+                        <div class="date-picker-input">
+                            <input type="text" class="shopStartDate" name="shopStartDate" id="shopStartDate" placeholder="全部" ng-model="urlParam.shopParam.startDate">
+                            <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerStart($event)"></span>
+                        </div>
+                        <span>-</span>
+                        <div class="date-picker-input">
+                            <input type="text" class="shopEndDate" name="shopEndDate" id="shopEndDate" placeholder="全部" ng-model="urlParam.shopParam.endDate">
+                            <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerEnd($event)"></span>
+                        </div>
+                    </div>
+                </label>
+          <div class="item-divider" ng-if="tblToolbar.shopTimeType.timeTypeVal.id === 'manual'"></div>
+          <label>
+                  <span>选择城市</span>
+                  &nbsp;
+                  <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopCity.cityList" ng-model="tblToolbar.shopCity.cityVal" ng-change="tblToolbar.shopCityValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                </label>
+          <div class="item-divider"></div>
+          <label>
+                <span>显示条数：</span>
+                <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopItemNum.itemNumList" ng-model="tblToolbar.shopItemNum.itemNumVal" ng-change="tblToolbar.shopItemNumValChanged()">
+                </select>
+              </label>
+        </div>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="diagram-table sales-table">
+        <thead>
+          <tr>
+            <th ng-repeat="(objName, item) in tblSortable.shopTheadConfig.sortBuffer">
+              <span ng-bind="item.name"></span>
+              <i ng-class="{'fa':true, 'fa-sort':!item.sortState, 'fa-sort-asc':item.sortState&&(item.sortDir==='up'), 'fa-sort-desc':item.sortState&&(item.sortDir==='down')}" ng-click="tblSortable.shopLaunchSort(objName, item)" ng-if="item.canSort"></i>
+              <span ng-if="item.name === '出租m³*月'" class="tip">
+                <i>?</i>
+                <div class="tip-info">
+                  <span class="corner"></span>
+                  <div>计算公式：</div>
+                  <div>租用时长 x 租用立方</div>
+                </div>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 以下由自己手动插入-->
+          <tr ng-repeat="item in tblNormal.shopDataList" ng-if="tblNormal.shopDataList.length>0">
+            <td ng-bind="item.name"></td>
+            <!--<td ng-bind="item.cityID | defaultFilter:tblToolbar.cityList"></td>-->
+            <td>
+              <input type="hidden" name="dataID" ng-value="item.newOrderNum">
+              <a ng-href="{{'#/orderMng_index/'+ (urlParam.shopParam.cityID || undefined )+ '/' +
+                          (urlParam.shopParam.startDate || '2000-01-01')+'/'+
+                          (urlParam.shopParam.endDate || getToday()) + '/'+ undefined +'/' + (item.id || '')}}">{{item.newOrderNum}}</a>
+            </td>
+            <td ng-bind="item.rentIncome"></td>
+            <td ng-bind="item.salePrice"></td>
+            <td ng-bind="item.rentVolume"></td>
+            <td ng-bind="item.firstVolume"></td>
+            <td ng-bind="item.renewalVolume"></td>
+            <td ng-bind="item.rentVolumeMonth"></td>
+            <td ng-bind="item.rentRate | rentRateFilter"></td>
+            <td ng-bind="item.totalEveDayIncome | cashFilter"></td>
+            <!-- <td>
+                        <a ng-href="{{'#/orderMng_queryOtherOrder/' + item.id}}">查看详情</a>&nbsp;&nbsp;
+                      </td> -->
+          </tr>
+          <tr class="total total-tr" ng-if="tblNormal.shopDataList.length>0">
+            <td>合计</td>
+            <td>{{tblNormal.shopStat.newOrderNum}}</td>
+            <td>{{tblNormal.shopStat.income}}</td>
+            <td>{{tblNormal.shopStat.salePrice}}</td>
+            <td>{{tblNormal.shopStat.rentVolume}}</td>
+            <td>{{tblNormal.shopStat.firstVolume}}</td>
+            <td>{{tblNormal.shopStat.renewalVolume}}</td>
+            <td>{{tblNormal.shopStat.rentVolumeMonth}}</td>
+            <td>{{tblNormal.shopStat.rentRate | rentRateFilter}}</td>
+            <td>{{tblNormal.shopStat.totalEveDayIncome | cashFilter}}</td>
+          </tr>
+          <tr ng-if="tblNormal.shopDataList.length==0" class="hintNoMsg">
+            <td colspan="12">
+              <span class="msgInvalid">- 暂无相关信息 -</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="border-div" ng-if="tblNormal.shopDataList.length>0"></div>
+    </div>
+    <div class="pull-right mr20">
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportBtn" style="margin-right:20px;" ng-click="tblToolbar.shopPerListExport()">导出</button>
+      <div expagination="" data-config-obj="shopTblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+  </section>
+  <section class="mainContent orderMng-Analy mb20 pt10">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <div class="title">销售人员业绩</div>
+        </div>
+        <div class="right-arrange mr20">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" style="background-color: #efefef;" class="form-control" id="searchGrp" name="searchGrp" placeholder="搜索销售人员名字" ng-model="tblToolbar.saleSearchVal" ng-enter="tblToolbar.saleLaunchSearch()">
+            <span class="input-group-btn">
+                  <button class="btn btn-confirm" type="button" ng-click="tblToolbar.saleLaunchSearch()"> 搜索 </button>
+                </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <label>
+                    <span>选择时间段</span>
+                    &nbsp;&nbsp;
+                    <select name="timeTypeSel" id="timeTypeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.saleTimeType.timeTypeList" ng-model="tblToolbar.saleTimeType.timeTypeVal" ng-change="tblToolbar.saleTimeTypeValChange()">
+                        <!-- <option value="">- 全部 -</option> -->
+                    </select>
+                </label>
+          <div class="item-divider"></div>
+          <label ng-if="tblToolbar.saleTimeType.timeTypeVal.id === 'manual'">
+                    <span>选择时间</span>
+                    &nbsp;&nbsp;
+                    <div class="timeSelect">
+                        <div class="date-picker-input">
+                            <input type="text" class="saleStartDate" name="saleStartDate" id="saleStartDate" placeholder="全部" ng-model="urlParam.saleParam.startDate">
+                            <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerStart($event)"></span>
+                        </div>
+                        <span>-</span>
+                        <div class="date-picker-input">
+                            <input type="text" class="saleEndDate" name="saleEndDate" id="saleEndDate" placeholder="全部" ng-model="urlParam.saleParam.endDate">
+                            <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerEnd($event)"></span>
+                        </div>
+                    </div>
+                </label>
+          <div class="item-divider" ng-if="tblToolbar.saleTimeType.timeTypeVal.id === 'manual'"></div>
+          <label>
+                  <span>选择城市</span>
+                  &nbsp;
+                  <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.saleCity.cityList" ng-model="tblToolbar.saleCity.cityVal" ng-change="tblToolbar.saleCityValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                </label>
+          <div class="item-divider"></div>
+          <label>
+                <span>显示条数：</span>
+                <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.saleItemNum.itemNumList" ng-model="tblToolbar.saleItemNum.itemNumVal" ng-change="tblToolbar.saleItemNumValChanged()">
+                </select>
+              </label>
+        </div>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="diagram-table sales-table">
+        <thead>
+          <tr>
+            <th ng-repeat="(objName, item) in tblSortable.saleTheadConfig.sortBuffer">
+              <span ng-bind="item.name"></span>
+              <i ng-class="{'fa':true, 'fa-sort':!item.sortState, 'fa-sort-asc':item.sortState&&(item.sortDir==='up'), 'fa-sort-desc':item.sortState&&(item.sortDir==='down')}" ng-click="tblSortable.saleLaunchSort(objName, item)" ng-if="item.canSort"></i>
+              <span ng-if="item.name === '出租m³*月'" class="tip">
+                <i>?</i>
+                <div class="tip-info">
+                  <span class="corner"></span>
+                  <div>计算公式：</div>
+                  <div>租用时长 x 租用立方</div>
+                </div>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 以下由自己手动插入-->
+          <tr ng-repeat="item in tblNormal.saleDataList" ng-if="tblNormal.saleDataList.length>0">
+            <td ng-bind="item.name"></td>
+            <!--<td ng-bind="item.cityID | defaultFilter:tblToolbar.cityList"></td>-->
+            <td>
+              <input type="hidden" name="dataID" ng-value="item.newOrderNum">
+              <a ng-href="{{'#/orderMng_index/'+ (urlParam.saleParam.cityID || '')+'/' +
+                          (urlParam.saleParam.startDate || '2000-01-01')+'/'+
+                          (urlParam.saleParam.endDate || getToday()) +'/'+ item.id }}">{{item.newOrderNum}}</a>
+            </td>
+            <td ng-bind="item.income"></td>
+            <td ng-bind="item.salePrice"></td>
+            <td ng-bind="item.rentVolume"></td>
+            <td ng-bind="item.firstVolume"></td>
+            <td ng-bind="item.renewalVolume"></td>
+            <td ng-bind="item.rentVolumeMonth"></td>
+            <!-- <td>
+                        <a ng-href="{{'#/orderMng_queryOtherOrder/' + item.id}}">查看详情</a>&nbsp;&nbsp;
+                      </td> -->
+          </tr>
+          <tr class="total total-tr" ng-if="tblNormal.saleDataList.length>0">
+            <td>合计</td>
+            <td>{{tblNormal.saleStat.newOrderNum}}</td>
+            <td>{{tblNormal.saleStat.income}}</td>
+            <td>{{tblNormal.saleStat.salePrice}}</td>
+            <td>{{tblNormal.saleStat.rentVolume}}</td>
+            <td>{{tblNormal.saleStat.firstVolume}}</td>
+            <td>{{tblNormal.saleStat.renewalVolume}}</td>
+            <td>{{tblNormal.saleStat.rentVolumeMonth}}</td>
+          </tr>
+          <tr ng-if="tblNormal.saleDataList.length==0" class="hintNoMsg">
+            <td colspan="12">
+              <span class="msgInvalid">- 暂无相关信息 -</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="border-div" ng-if="tblNormal.saleDataList.length>0"></div>
+    </div>
+    <div class="pull-right mr20">
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportBtn" style="margin-right:20px;" ng-click="tblToolbar.salePerListExport()">导出</button>
+      <div expagination="" data-config-obj="saleTblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+  </section>
+</div>

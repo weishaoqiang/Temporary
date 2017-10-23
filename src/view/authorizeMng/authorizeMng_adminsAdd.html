@@ -1,0 +1,92 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 登录名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" placeholder="请输入登录名" ng-model="formResult.name">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.nameError">* 请输入有效的登录名</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 真实姓名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="remarks" type="text" name="remarks" value="" placeholder="请输入真实姓名" ng-model="formResult.remarks">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.remarksError">* 请输入有效的真实姓名</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 密码 </span>
+                <p ng-if="title.indexOf('编辑')!==-1" class="msgInvalid">(不可修改)</p>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row" ng-if="title.indexOf('编辑')!==-1">
+                  <div class="col-xs-12">
+                    <span>******</span>
+                  </div>
+                </div>
+                <div class="row" ng-if="title.indexOf('添加')!==-1">
+                  <div class="col-xs-4">
+                    <input id="password" type="text" name="password" value="" placeholder="请输入密码" ng-model="formResult.password">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.pwdError">* 请输入有效密码</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 角色 </span><br>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="roleTypeSel" id="roleTypeSel" ng-options="opt.name for opt in tblDetails.roleTypeList" ng-model="tblDetails.roleTypeVal" ng-change="tblDetails.roleTypeValChanged()">
+                      <option value="">-请选择-</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.roleTypeError">* 请选择管理员角色</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

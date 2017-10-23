@@ -1,0 +1,378 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 查询租客详情 </span>
+          <a ng-href="{{'#/clientMng_editRentClient/'+param}}" class="pull-right" ng-if="(adminModules[2].type == 3) || (adminModules[2].type == 4)">编辑</a>
+        </h3>
+      </div>
+      <form id="formOfDetails">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户姓名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.name || '- -'" ng-class="queryResult.name?'':'msgInvalid'"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户性别 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.sex?(queryResult.sex | sexFilter):'- -'" ng-class="queryResult.sex?'':'msgInvalid'"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户属性 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.state?(queryResult.state | clientStateFilter):'- -'" ng-class="queryResult.state?'':'msgInvalid'"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 联系方式 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.phone"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 邮箱 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.email"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 证件类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.certType?(queryResult.certType | certTypeFilter):'- -'" ng-class="queryResult.sex?'':'msgInvalid'"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门禁ID个数 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.locks || '- -'" ng-class="queryResult.locks?'':'msgInvalid'"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 证件号码 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="queryResult.certNumber || '- -'" ng-class="queryResult.certNumber?'':'msgInvalid'"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.certBackUrl && queryResult.certFrontUrl">
+              <td class="col-xs-2">
+                <span> 证件照 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="certPhotoContainer">
+                      <div>
+                        <img ng-src="{{'http://'+queryResult.certFrontUrl}}" alt="">
+                      </div>
+                      <div>
+                        <a class="chkFrontPic" href="javascript:;" ng-click="tblDetails.checkPhoto('FRONT')"> 查看证件照正面 </a>
+                      </div>
+                    </div>
+                    <div class="certPhotoContainer">
+                      <div>
+                        <img ng-src="{{'http://'+queryResult.certBackUrl}}" alt="">
+                      </div>
+                      <div>
+                        <a class="chkFrontPic" href="javascript:;" ng-click="tblDetails.checkPhoto('BACK')"> 查看证件照反面 </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 居住地址 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.address || '- -'" ng-class="queryResult.address?'':'msgInvalid'"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <!-- <div class="panel panel-default" style="margin-bottom:0px;border-bottom:1px solid #f1f3fa;"> -->
+    <div class="block-info" id="collapseFollowRecord">
+      <div class="panel panel-warning" style="margin-bottom:0;">
+        <div class="panel-body" style="padding:0;">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="">
+                <div title-divider="">历史租仓信息</div>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr style="background-color:#E8EAF1;border-top:0px solid #E8EAF1;">
+                <th>
+                  <div>
+                    <span>创建时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>订单编号</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>门店</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>仓位</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>租赁时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>租赁状态</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in tblNormal.orderList" ng-if="tblNormal.orderList.length>0">
+                <td ng-bind="item.createDate"></td>
+                <td>
+                  <a ng-href="{{'../orderMng/index.html#/orderMng_queryOrder/'+ item.orderID}}" ng-bind="item.orderID"></a>
+                </td>
+                <td ng-bind="item.shopName"></td>
+                <td ng-bind="item.orderUnitNames"></td>
+                <td ng-bind="item.orderRentLast + (item.shopType==1?'个月':(item.shopType==2?'天':''))"></td>
+                <td ng-bind="item.orderState | orderStateFilter"></td>
+              </tr>
+              <tr ng-if="tblNormal.orderList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.orderList.length>0">
+            <div expagination="" data-config-obj="tblOrderPagination"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="panel panel-default" style="margin-bottom:0;margin-top:20px;border-bottom:1px solid #f1f3fa;"> -->
+    <div class="block-info" id="collapseCardsInfo">
+      <div class="panel panel-warning" style="margin-bottom:0;">
+        <div class="panel-body" style="padding:0;">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="">
+                <div title-divider="">门禁卡信息</div>
+              </div>
+            </div>
+            <div class="tblToolbar-row">
+              <div class="flex-item" style="margin-left: 20px;">
+                <a class="btn btn-confirm btn-long" ng-href="{{'#/clientMng_addCard/' + param}}" ng-if="(adminModules[2].type == 3) || (adminModules[2].type == 4)">
+                  <i class="fa fa-plus"></i>
+                  &nbsp;
+                  <span>新增门禁卡</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>门店名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>门禁卡ID</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>有效期至</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更多</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in tblNormal.cardsList" ng-if="tblNormal.cardsList.length>0">
+                <td ng-bind="item.shopName"></td>
+                <td ng-bind="item.deviceName"></td>
+                <td ng-bind="item.uid"></td>
+                <td ng-bind="item.overDueDate | dateFilter:'yyyy-MM-dd'"></td>
+                <td>
+                  <!-- <a ng-href='{{"#/clientMng_editCard/" + item.id + "/" + param}}'>编辑</a>&nbsp;&nbsp; -->
+                  <a ng-href="{{'#/clientMng_editCard/' + item.id}}" ng-if="(adminModules[2].type == 3) || (adminModules[2].type == 4)">编辑</a>&nbsp;&nbsp;
+                  <a href="" ng-click="tblNormal.delCard(item.uid)" ng-if="(adminModules[2].type == 3) || (adminModules[2].type == 4)">删除</a>
+                </td>
+              </tr>
+              <tr ng-if="tblNormal.cardsList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.cardsList.length>0">
+            <div expagination="" data-config-obj="tblcardsPagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="panel panel-default" style="margin-bottom:0;margin-top:20px;border-bottom:1px solid #f1f3fa;"> -->
+    <div class="block-info" id="collapseGuardRecord">
+      <div class="panel panel-warning" style="margin-bottom:0;">
+        <div class="panel-body" style="padding:0;">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="">
+                <div title-divider="">门禁出入信息</div>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>开锁时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>门禁所属</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>门店名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>仓位/储物柜编号</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>开门结果</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in tblNormal.guardList" ng-if="tblNormal.guardList.length>0">
+                <td ng-bind="item.unlockTime"></td>
+                <td ng-bind="item.unlockType | unlockTypeFilter"></td>
+                <td ng-bind="item.shopName"></td>
+                <td ng-bind="item.unitName || '- -'" ng-class="item.unitName?'':'msgInvalid'"></td>
+                <td ng-bind="item.result" ng-class="((item.result.indexOf('成功')!==-1)||(item.result.indexOf('通过')!==-1))?'msgSuccess':'msgError'"></td>
+              </tr>
+              <tr ng-if="tblNormal.guardList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.guardList.length>0">
+            <div expagination="" data-config-obj="tblGuardPagination"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+    <div ng-include="'../../template/modalPhoto.html'"></div>
+  </section>
+</div>

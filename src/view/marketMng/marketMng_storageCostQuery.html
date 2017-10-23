@@ -1,0 +1,45 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 存储费用 </span>
+          <!-- <a ng-href="{{'#/threadMng_editThread/' + param}}" class="pull-right" ng-if="(adminModules[10].type == 3) || (adminModules[10].type == 4)">编辑</a> -->
+          <!-- <a ng-href="{{'#/threadMng_editThread/' + param}}" class="pull-right" ng-show="adminModules[2].isHave">编辑</a> -->
+        </h3>
+      </div>
+    </div>
+    <form id="formOfAdding">
+      <table class="table tbl_edit tbl_details tblDetails">
+        <tbody>
+          <tr class="row" ng-repeat="item in tblNormal.dataList">
+            <td class="col-xs-3">
+              <span ng-bind="item.cityID | cityListFilter"></span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-3">
+                  <span ng-bind="item.storeFee"></span>
+                </div>
+                <div class="col-xs-8">
+                  <span>元／立方米／月</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td colspan="3">
+              <div class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-6">
+                  <a class="btn btn-long btn-confirm" id="edit" ng-href="#/marketMng_storageCostEdit">编辑</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </section>
+</div>

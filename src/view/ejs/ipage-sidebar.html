@@ -1,0 +1,245 @@
+<!-- 后台框架都集成了ng -->
+<div class="ipage-sidebar">
+  <ul class="ipage-sidebar-menu">
+    <li class="nav-item" id="viewHomeItem" ng-show="(adminModules[1-1].type != 1)">
+      <a ng-href="{{localLink.homeUrl}}" href="" class="nav-link nav-toggle">
+        <i class="iconfont icon-piechart"></i>
+        <span class="title">仪表盘</span>
+        <!--<span class="selected"></span>-->
+        <!--<span class="arrow open"></span>-->
+      </a>
+    </li>
+    <li class="nav-item" id="viewShopMngItem" ng-show="(adminModules[2-1].type != 1)">
+      <a ng-href="{{localLink.shopMngUrl}}" href="" class="nav-link">
+        <i class="iconfont icon-shop"></i>
+        <span class="title">门店管理</span>
+        <!--<span class="selected"></span>-->
+        <!--<span class="arrow"></span>-->
+      </a>
+    </li>
+    <li class="nav-item" id="viewClientMngItem" ng-show="(adminModules[3-1].type != 1)">
+      <a ng-href="{{localLink.clientMngUrl}}" href="" class="nav-link nav-toggle">
+        <i class="iconfont icon-users"></i>
+        <span class="title">客户管理</span>
+      </a>
+    </li>
+    <li class="nav-item" id="viewThreadMngItem" ng-show="(adminModules[11-1].type != 1)">
+      <a href="" class="nav-link nav-toggle">
+        <i class="iconfont icon-thread"></i>
+        <span class="title">线索管理</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="nav-item " id="subViewThreadRecord">
+          <a ng-href="{{localLink.threadMngUrl}}" href="" class="nav-link ">
+            <span class="title">线索录入</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewDataAnalyse">
+          <a ng-href="{{localLink.threadMngAnalysisUrl}}" href="" class="nav-link ">
+            <span class="title">数据分析</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item" id="viewOrderMngItem" ng-show="(adminModules[4-1].type != 1)">
+      <a href="javascript:;" class="nav-link">
+        <i class="iconfont icon-basketloaded"></i>
+        <span class="title">订单管理</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="nav-item " id="subViewOrderMngr">
+          <a ng-href="{{localLink.orderMngUrl}}" href="" class="nav-link ">
+            <span class="title">业务订单</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewOrderOther">
+          <a ng-href="{{localLink.orderOtherUrl}}" href="" class="nav-link ">
+            <span class="title">其它订单</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subVieworderAnalysis">
+          <a ng-href="{{localLink.orderAnalysisUrl}}" href="" class="nav-link ">
+            <span class="title">数据分析</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item" id="viewAuthorizeMngItem" ng-show="(adminModules[5-1].type != 1)">
+      <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="iconfont icon-badge"></i>
+        <span class="title">授权管理</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="nav-item " id="subViewShopMngr">
+          <a ng-href="{{localLink.authorizeMngrUrl}}" href="" class="nav-link ">
+            <span class="title">门店管理员</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewShopPwd">
+          <a ng-href="{{localLink.authorizePwdUrl}}" href="" class="nav-link ">
+            <span class="title">门店密码</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewAdmins">
+          <a ng-href="{{localLink.authorizeAdminsUrl}}" href="" class="nav-link ">
+            <span class="title">后台管理员</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewRoles">
+          <a ng-href="{{localLink.authorizeRolesUrl}}" href="" class="nav-link ">
+            <span class="title">角色管理</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item" id="viewMarketMngItem" ng-show="(adminModules[9-1].type != 1)">
+      <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="iconfont icon-money"></i>
+        <span class="title">定价管理</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <!-- <li class="nav-item " id="subViewStorageCost">
+          <a ng-href="{{localLink.marketStorageCostUrl}}" href="" class="nav-link ">
+            <span class="title">存储费用</span>
+          </a>
+        </li> -->
+        <li class="nav-item " id="subViewUnit">
+          <a ng-href="{{localLink.marketMiniUnitUrl}}" href="" class="nav-link ">
+            <span class="title">自存仓定价</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewUpdoor">
+          <a ng-href="{{localLink.marketupDoorUrl}}" href="" class="nav-link ">
+            <span class="title">上门搬存定价</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewVoucher">
+          <a ng-href="{{localLink.marketVoucherUrl}}" href="" class="nav-link ">
+            <span class="title">抵用券管理</span>
+          </a>
+        </li>
+        <!-- <li class="nav-item " id="subViewPriceFix">
+          <a ng-href="{{localLink.marketPriceFixUrl}}" href="" class="nav-link ">
+            <span class="title">浮动定价</span>
+          </a>
+        </li> -->
+        <!-- <li class="nav-item" id="subViewQRCode">
+          <a ng-href="{{localLink.qrcodeMngUrl}}" href="" class="nav-link">
+            <span class="title">二维码管理</span>
+          </a>
+        </li> -->
+      </ul>
+    </li>
+    <li class="nav-item" id="viewFinanceMngItem" ng-show="(adminModules[6-1].type != 1)">
+      <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="iconfont icon-notebook"></i>
+        <span class="title">财务管理</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="nav-item " id="subViewReceiptDeal">
+          <a ng-href="{{localLink.financeReceiptUrl}}" href="" class="nav-link ">
+            <span class="title">收款管理</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewRefundDeal">
+          <a ng-href="{{localLink.financeRefundUrl}}" href="" class="nav-link ">
+            <span class="title">退款处理</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewExpenses">
+          <a ng-href="{{localLink.financeExpensesUrl}}" href="" class="nav-link ">
+            <span class="title">支出管理</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewExpensesData">
+          <a ng-href="{{localLink.financeExpensesDataUrl}}" href="" class="nav-link ">
+            <span class="title">数据分析</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item" id="viewInfoMngItem" ng-show="(adminModules[7-1].type != 1)">
+      <a ng-href="{{localLink.infoMngUrl}}" href="" class="nav-link">
+        <i class="iconfont icon-openbook"></i>
+        <span class="title">资讯管理</span>
+        <!--<span class="arrow"></span>-->
+      </a>
+    </li>
+    <li class="nav-item" id="viewBookMngItem" ng-show="(adminModules[8-1].type != 1)">
+      <a ng-href="{{localLink.bookMngUrl}}" href="" class="nav-link">
+        <i class="iconfont icon-call-in"></i>
+        <span class="title">预约管理</span>
+        <!--<span class="arrow"></span>-->
+      </a>
+    </li>
+    <!-- <li class="nav-item" id="viewqrcodeMngItem" ng-show="(adminModules[9-1].type != 1)">
+      <a ng-href="{{localLink.qrcodeMngUrl}}" href="" class="nav-link">
+        <i class="iconfont icon-bulb"></i>
+        <span class="title">活动管理</span>
+      </a>
+    </li> -->
+    <li class="nav-item" id="viewFacilityMngItem" ng-show="(adminModules[10-1].type != 1)">
+      <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="iconfont icon-access"></i>
+        <span class="title">设备管理</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="nav-item " id="subViewEntranceGuard">
+          <a ng-href="{{localLink.facilityGuardUrl}}" href="" class="nav-link ">
+            <span class="title">门禁设备</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewTempHum">
+          <a ng-href="{{localLink.facilityTempHumUrl}}" href="" class="nav-link ">
+            <span class="title">温湿度设备</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewSmoke">
+          <a ng-href="{{localLink.facilitySmokeUrl}}" href="" class="nav-link ">
+            <span class="title">烟感设备</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewAccessCard">
+          <a ng-href="{{localLink.facilityCardUrl}}" href="" class="nav-link ">
+            <span class="title">门禁卡</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewStorageLocker">
+          <a ng-href="{{localLink.facilityLockerUrl}}" href="" class="nav-link ">
+            <span class="title">储物柜</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewStorageGarage">
+          <a ng-href="{{localLink.facilityGarageUrl}}" href="" class="nav-link ">
+            <span class="title">共享储物柜</span>
+          </a>
+        </li>
+        <li class="nav-item " id="subViewAddSpecialCard">
+          <a ng-href="{{localLink.facilityAddSpecialCardUrl}}" href="" class="nav-link " ng-if="(adminModules[9].type == 3) || (adminModules[9].type == 4)">
+            <span class="title">授权工程门禁卡</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item" id="viewOtherMngItem" ng-show="(adminModules[12-1].type != 1)">
+      <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="iconfont icon-bulb"></i>
+        <span class="title">其他</span>
+        <span class="arrow"></span>
+      </a>
+      <ul class="sub-menu">
+        <li class="nav-item" id="subViewQRCode")">
+          <a ng-href="{{localLink.qrcodeMngUrl}}" href="" class="nav-link">
+            <span class="title">二维码管理</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

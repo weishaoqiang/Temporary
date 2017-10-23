@@ -1,0 +1,193 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <!-- <label>
+                <span>选择导出时间段：</span>
+                <select name="timeTypeSel" id="timeTypeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.timeTypeList" ng-model="tblToolbar.timeTypeVal" ng-change="tblToolbar.timeTypeValChanged()">
+                  <option value="">- 全部 -</option>
+                </select>
+            </label> -->
+          <!-- <div class="item-divider"></div> -->
+          <!-- <label>
+            <span>选择阶段：</span>
+            <select name="timeSel" id="timeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.timeList" ng-model="tblToolbar.timeVal" ng-change="tblToolbar.timeValChanged()">
+              <option value="">全部</option>
+            </select>
+          </label> -->
+          <label>
+              <span>选择时间段：</span>
+              <select name="timeTypeSel" id="timeTypeSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.timeTypeList" ng-model="tblToolbar.timeTypeVal" ng-change="tblToolbar.timeTypeValChanged()">
+                <option value="">- 全部 -</option>
+              </select>
+          </label>
+          <div class="item-divider" ng-show="tblToolbar.timeTypeVal.id==='manual'"></div>
+          <label ng-show="tblToolbar.timeTypeVal.id==='manual'">
+            <span>选择时间：</span>
+            <div class="datepickerDiv" style="display:inline-block;">
+              <div>
+                <span class="fa fa-angle-down" ng-click="tblToolbar.showDatepickerStart()"></span>
+                <input id="staticDateStart" ng-model="tblToolbar.startDate" style="margin-right:0;">
+              </div>
+              <span style="color:#E5E7F0;">—</span>
+              <div>
+                <span class="fa fa-angle-down" ng-click="tblToolbar.showDatepickerEnd()"></span>
+                <input id="staticDateEnd" ng-model="tblToolbar.endDate" style="margin-right:0;">
+              </div>
+            </div>
+          </label>
+          <div class="item-divider"></div>
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="客户姓名 / 手机" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+          <a class="btn btn-long btn-confirm" ng-href="#/threadMng_addThread" ng-if="(adminModules[10].type == 2)||(adminModules[10].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span>添加线索</span>
+          </a>
+        </div>
+        <div class="right-arrange">
+          <label>
+            <span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">全部</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+            <span>业务类型：</span>
+            <select name="businessTypeSel" id="businessTypeSel" class="form-control input-inline"
+              ng-options="opt.name for opt in tblToolbar.threadBusinessTypeList"
+              ng-model="tblToolbar.threadBusinessTypeVal" ng-change="tblToolbar.threadBusinessTypeValChanged()">
+              <option value="">全部</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+            <span>状态：</span>
+            <select name="stateTypeSel" id="stateTypeSel" class="form-control input-inline"
+              ng-options="opt.name for opt in tblToolbar.threadStateList"
+              ng-model="tblToolbar.threadStateVal" ng-change="tblToolbar.threadStateValChanged()">
+              <option value="">全部</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+            <span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>客户姓名</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>联系方式</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>业务类型</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>存储物品</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>跟进负责人</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>客服人员</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>来电时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+          <!-- <th><div>
+            <span>更改状态</span>
+        </div></th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.name || '- -'" ng-class="item.name?'':'msgInvalid'" class="width-limited-td"></td>
+          <td ng-bind="item.phone || '- -'" ng-class="item.phone?'':'msgInvalid'"></td>
+          <td ng-bind="(item.businessType | threadBusinessTypeFilter) || '- -'" ng-class="item.businessType?'':'msgInvalid'"></td>
+          <td ng-bind="item.storeItems || '- -'" ng-class="item.storeItems?'':'msgInvalid'" style="width:15% !important;"></td>
+          <td ng-bind="item.managerName || '- -'" ng-class="item.managerName?'':'msgInvalid'" class="width-limited-td"></td>
+          <td ng-bind="item.adminName || '- -'" ng-class="item.adminName?'':'msgInvalid'" class="width-limited-td"></td>
+          <td ng-bind="item.callTime || '- -'" ng-class="item.callTime?'':'msgInvalid'"></td>
+          <td ng-bind="(item.state | threadStateFilter) || '- -'" ng-class="item.state?'':'msgInvalid'"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/threadMng_queryThread/' + item.id}}" ng-if="(adminModules[10].type == 2) || (adminModules[10].type == 4)">查看详情</a>&emsp;
+            <a ng-href="{{'#/threadMng_editThread/' + item.id}}" ng-if="((adminModules[10].type == 3) || (adminModules[10].type == 4)) && (item.state !== 4) ">编辑</a>&emsp;&nbsp;
+            <a id="trackRecordLink" ng-href="{{'#/threadMng_updateRecord/'+item.id +'/'+ item.name +'/'+ item.managerName +'/'+ item.managerID}}">
+              <span>跟进记录</span> <i class="badge-num" ng-class="{'badge-success':item.trackCount, 'badge-warn':(!item.trackCount)}">{{item.trackCount}}</i>
+            </a>
+          </td>
+          <!-- <td>
+          <select name="stateTypeSel" id="stateTypeSel" class="form-control input-inline"
+            ng-options="opt.name for opt in tblToolbar.threadStateList"
+            ng-model="tblNormal.threadStateValBuff[$index]" ng-change="tblNormal.updateThreadState(item.id, item.managerID, (tblNormal.threadStateValBuff[$index]).id)">
+          </select>
+        </td> -->
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right" style="height: 65px;">
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportBtn" style="margin-right:20px" ng-click="tblToolbar.exportTblList()">导出</button>
+      <div expagination="" data-config-obj="tblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+    <div class="nextDatepickerZone" style="display:none;">
+      <input id="trackNextTime" name="trackNextTime" type="text" placeholder="请选择下次跟进时间" style="width: 180px;" ng-focus="tblNormal.showTrackNextTimeDatepicker()" ng-model="tblNormal.trackNextTime">
+      <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;" ng-click="tblNormal.showTrackNextTimeDatepicker()"></span>
+    </div>
+  </section>
+</div>

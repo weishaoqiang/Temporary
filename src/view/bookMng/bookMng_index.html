@@ -1,0 +1,114 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="手机号 / 固话 / 地址" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <label><span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+            <!-- 下拉框组件 -->
+            <!-- <div idropdown style="display:inline-block;vertical-align:middle;"
+              config-id="citySel"
+              config-val="tblToolbar.cityVal"
+              config-list="tblToolbar.cityList"
+              config-val-changed="tblToolbar.cityValChanged()"></div> -->
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>客户姓名</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>联系方式</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>详细地址</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>存储类型</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>创建时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>预约来源</span>
+            </div>
+          </th>
+          <th ng-if="(adminModules[7].type == 3) || (adminModules[7].type == 4)">
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td>
+            <span ng-cloak="" class="" style="display:inline-block;position:relative;">
+            {{item.name}}
+          </span>
+          </td>
+          <td ng-bind="item.phone"></td>
+          <td ng-bind="item.address"></td>
+          <td ng-bind="item.type | storeTypeFilter"></td>
+          <td ng-bind="item.createDate"></td>
+          <td ng-bind="item.srcType | bookSrcTypeFilter"></td>
+          <td ng-if="(adminModules[7].type == 3) || (adminModules[7].type == 4)">
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <select name="citySel" class="form-control input-small input-inline" ng-if="(adminModules[7].type == 3) || (adminModules[7].type == 4)" ng-options="opt.name for opt in tblNormal.bookStateList" ng-model="tblNormal.bookStateValBuffer[$index]" ng-change="tblNormal.bookStateValChanged(item.id, (tblNormal.bookStateValBuffer[$index]).id)">
+          </select>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

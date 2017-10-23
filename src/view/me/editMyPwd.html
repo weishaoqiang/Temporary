@@ -1,0 +1,60 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 修改登录密码 </span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 新密码 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <!-- <input id="pwd" type="password" name="pwd" value="" placeholder="请输入新密码" ng-model="formResult.pwd"> -->
+                    <input id="pwd" type="{{tblDetails.pwdType}}" name="pwd" value="" placeholder="请输入新密码" ng-model="formResult.pwd">
+                    <i class="pwd-visiblilty fa" ng-class="{'fa-visible':tblDetails.visible, 'fa-invisible':(!tblDetails.visible) }" ng-click="tblDetails.toggleVisibility()"></i>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.pwdError">* 请输入有效的新密码</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 重复新密码 </span><br>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="repwd" type="{{tblDetails.pwdType}}" name="repwd" value="" placeholder="请重复输入新密码" ng-model="formResult.repwd">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.repwdError">* 请重复有效的新密码</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

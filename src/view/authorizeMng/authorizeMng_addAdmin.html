@@ -1,0 +1,197 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 管理员名称 </span><br>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" placeholder="请输入门店管理员姓名" ng-model="formResult.name">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.nameError">* 请输入有效的管理员姓名</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 手机号 </span><br>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="phone" type="text" name="name" value="" placeholder="请输入门店管理员的手机号" ng-model="formResult.phone">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.phoneError">* 请输入有效的管理员手机号</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 选择角色 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="citySel" id="citySel" ng-options="opt.name for opt in tblDetails.roleTypeList" ng-model="tblDetails.roleTypeVal" ng-change="tblDetails.roleTypeValChanged()">
+                      <option value="">-请选择-</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.roleIDError">* 请选择角色</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 选择城市 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="citySel" id="citySel" ng-options="opt.name for opt in tblDetails.cityList" ng-model="tblDetails.cityVal" ng-change="tblDetails.cityValChanged()" style="width:114px;">
+                      <option value="">-请选择-</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.cityIDError">* 请选择城市</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 授权门店 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-8">
+                    <span class="label label-vks" ng-repeat="item in dropdownSel.chsnList">{{item.shopName}}
+                      <span class="fa fa-close" ng-click="dropdownSel.removeItem(item.shopID)"></span>
+                    </span>
+                  </div>
+                  <!-- <div class="col-xs-4">
+                    <span class='msgError' ng-if='valiResult.shopsError'>* 请选择要授权的门店</span>
+                  </div> -->
+                  <div class="col-xs-4">
+                    <div class="btn-group dropdown pull-right" style="padding-left:20px;border-left:2px solid #E8EAF1;">
+                      <button id="btnForAddShop" type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="width:114px;">
+                        <span>添加门店</span>
+                        <span class="caret" style="margin-left:10px;"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <div class="input-group">
+                            <span class="fa fa-search"></span>
+                            <input type="search" class="form-control" placeholder="门店名称..." ng-model="dropdownSel.keyword">
+                            <span class="input-group-btn">
+                              <input type="button" class="btn btn-confirm" value="搜索" ng-click="dropdownSel.searchShops(tblDetails.cityVal, dropdownSel.keyword)">
+                            </span>
+                          </div>
+                        </li>
+                        <li class="opt" ng-repeat="item in dropdownSel.shopList" ng-click="dropdownSel.addShops(item.id, item.name)" ng-show="dropdownSel.shopList.length>0">
+                          <a id="{{item.id}}" href="javascript:;" ng-bind="item.name"></a>
+                        </li>
+                        <li style="text-align:center;" ng-show="!dropdownSel.shopList.length">
+                          <br>
+                          <span class="msgInvalid" ng-show="tblDetails.cityVal.id"> 暂无内容 </span>
+                          <span class="msgInvalid" ng-show="!tblDetails.cityVal.id"> -请先选择城市- </span>
+                          <br>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-show="viewTag==='EDIT'">
+      <!-- <div hrdivider><span>门禁卡信息&nbsp;<span class="fa fa-angle-down"></span></span></div> -->
+      <div title-divider="">门禁卡信息</div>
+      <div class="">
+        <div class="table-toolbar tblToolbar">
+          <div class="row">
+            <div class="col-xs-6">
+              <a class="btn btn-long btn-confirm" ng-href="{{'#/authorizeMng_addCard/' + param}}" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">
+                <i class="fa fa-plus"></i>&nbsp;
+                <span>新增门禁卡</span>
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <div class="pull-right">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <table class="table table-hover table-bordered tblNormal">
+          <thead>
+            <tr>
+              <th>
+                <div>
+                  <span>门禁卡ID</span>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <span>对应门禁设备名</span>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <span>有效期至</span>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <span>更多</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in tblNormal.cardsList" ng-if="tblNormal.cardsList.length>0">
+              <td ng-bind="item.uid"></td>
+              <td ng-bind="item.deviceName"></td>
+              <td ng-bind="item.overDueDate | dateFilter:'yyyy-MM-dd'"></td>
+              <td>
+                <a ng-href="{{'#/authorizeMng_editCard/' + item.id}}" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">编辑</a>&emsp;
+                <a href="" ng-click="tblNormal.delCard(item.uid)" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">删除</a>
+              </td>
+            </tr>
+            <tr ng-if="tblNormal.cardsList.length==0" class="hintNoMsg">
+              <td colspan="8">
+                <span class="msgInvalid">- 暂无相关信息 -</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

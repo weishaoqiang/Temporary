@@ -1,0 +1,61 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="export-container">
+      <div class="irow">
+        <div class="icol-left">
+          <div class="pull-right">
+            选择城市:
+          </div>
+        </div>
+        <div class="icol-right">
+          <div idropdown="" config-id="citySel" config-list="tblNormal.cityList" config-val="tblNormal.cityVal" config-val-changed="tblNormal.cityValChanged()" config-search="tblNormal.getCityList(keyword)"></div>
+          <!-- <div idropdown data-id="city-sel" data-list-obj="cityList"></div> -->
+        </div>
+      </div>
+      <div class="irow">
+        <div class="icol-left">
+          <div class="pull-right">
+            选择门店:
+          </div>
+        </div>
+        <div class="icol-right">
+          <div idropdown="" config-id="shopSel" config-list="tblNormal.shopList" config-val="tblNormal.shopVal" config-val-changed="tblNormal.shopValChanged()" config-search="tblNormal.getShopList(keyword)"></div>
+          <!-- <div idropdown data-id="shop-sel" data-list-obj="shopList"></div> -->
+        </div>
+      </div>
+      <div class="irow">
+        <div class="icol-left">
+          <div class="pull-right">
+            选择起始日期:
+          </div>
+        </div>
+        <div class="icol-right">
+          <div class="date-picker-input">
+            <input type="text" name="startDate" value="" id="startDate" style="width: 100%; text-align:center;height:32px;border:none;" placeholder="请选择起始日期" ng-click="tblNormal.showDatepickerStart($event)">
+            <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerStart($event)"></span>
+          </div>
+        </div>
+      </div>
+      <div class="irow">
+        <div class="icol-left">
+          <div class="pull-right">
+            选择结束日期:
+          </div>
+        </div>
+        <div class="icol-right">
+          <div class="date-picker-input">
+            <input type="text" name="endDate" value="" id="endDate" style="width: 100%; text-align:center;height:32px;border:none;" placeholder="请选择终止日期" ng-click="tblNormal.showDatepickerEnd()">
+            <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerEnd()"></span>
+          </div>
+        </div>
+      </div>
+      <div class="irow">
+        <div style="text-align: center;">
+          <button type="button" name="export" class="btn btn-confirm" style="width:99.99%; font-size:16px; height:46px;" ng-click="tblNormal.exportOrderList()">导出订单</button>
+        </div>
+      </div>
+    </div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

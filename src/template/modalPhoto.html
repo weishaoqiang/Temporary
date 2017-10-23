@@ -1,0 +1,32 @@
+
+<!-- Modal -->
+<div class="modal fade" id="myModalPhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-close">&times;</div>
+      <!--<div class="modal-header">-->
+        <!--&lt;!&ndash;<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-if="!modalBasic.header.hasLink"><span aria-hidden="true">&times;</span></button>&ndash;&gt;-->
+        <!--<a ng-if="modalBasic.header.hasLink" class="editLink" ng-click="modalBasic.header.linkFunc()">编辑</a>-->
+        <!--<div class="modal-title" id="myModalLabel" ng-bind="modalBasic.header.content"></div>-->
+      <!--</div>-->
+      <div class="modal-body">
+        <!-- 内容-->
+        <!--<div ng-bind="modalBasic.body.content"></div>-->
+        <img ng-src="{{modalPhoto.body.imgSrc}}" alt=""/>
+      </div>
+      <!--<div class="modal-footer">-->
+        <!--&lt;!&ndash;<button type="button" class="btn btn-success" ng-click="tblDetails.modal.confirm()">继续添加</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button type="button" class="btn btn-primary" ng-click="tblDetails.modal.cancel()">返回</button>&ndash;&gt;-->
+        <!--<button type="button" ng-class="item.styleList" ng-repeat="item in modalBasic.footer.btn" ng-click="item.func()" ng-bind="item.name"></button>-->
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+<script>
+  $(".modal-close").on('click', function(){
+    $("#myModalPhoto").off(); //先解绑所有事件
+    $("#myModalPhoto").modal('hide').on('hidden.bs.modal', function(e){
+      //window.history.go(-1);
+    });
+  });
+</script>

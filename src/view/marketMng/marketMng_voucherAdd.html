@@ -1,0 +1,158 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row" ng-if="viewTag==='Add'">
+              <td class="col-xs-2">
+                <span> 数量 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="amount" type="text" name="amount" value="" placeholder="请输入抵用券数量" ng-model="formResult.amount">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.couponsNumError">* 请输入抵用券数量，只能输入整数</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="viewTag==='Edit'">
+              <td class="col-xs-2">
+                <span> 优惠码 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <span ng-bind="formResult.couponsCode"></span>
+                  </div>
+                  <div class="col-xs-10"><span class="msgInvalid">（不可更改）</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 金额 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span>
+                    <input id="cash" type="text" name="cash" value="" placeholder="请输入金额" ng-model="formResult.cash">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.couponsAmountError">* 请输入有效的金额</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 开始时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="startDate" name="startDate" class="laydate-time" style="width: 120px;" type="text" placeholder="请选择开始时间" ng-model="formResult.startDate" ng-click="startDatePicker.showOpenDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: none;" ng-click="startDatePicker.showOpenDate()"></span>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.startDateError">* 请选择开始时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 结束时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="endDate" name="endDate" class="laydate-time" style="width: 120px;" type="text" placeholder="请选择结束时间" ng-model="formResult.endDate" ng-click="endDatePicker.showOpenDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: none;" ng-click="endDatePicker.showOpenDate()"></span>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.endDateError">* 请选择结束时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 选择范围 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="cityIDSel" id="cityIDSel" ng-options="opt.name for opt in tblDetails.cityList" ng-model="tblDetails.cityVal" ng-change="tblDetails.cityValChanged()">
+                    <option value="">-请选择城市-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.cityNameError">* 请选择抵用券使用范围 </span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="viewTag==='Edit'">
+              <td class="col-xs-2">
+                <span> 使用状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="formResult.couponsState"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="viewTag==='Edit'">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <tr class="row" ng-if="viewTag==='Edit'">
+              <td class="col-xs-2">
+                <span> 创建人 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="formResult.adminName"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="viewTag==='Edit'">
+              <td class="col-xs-2">
+                <span> 创建时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="formResult.createDate"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

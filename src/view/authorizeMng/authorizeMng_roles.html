@@ -1,0 +1,86 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <!-- <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="管理员名称" ng-model="tblToolbar.searchVal">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div> -->
+      <div class="tblToolbar-row">
+        <div class="">
+          <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/authorizeMng_rolesAdd" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span> 添加角色 </span>
+          </a>
+        </div>
+        <div class="right-arrange">
+          <!-- <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline"
+              ng-options="opt.name for opt in tblToolbar.itemNumList"
+              ng-model="tblToolbar.itemNumVal"
+              ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label> -->
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th style="min-width: 100px;">
+            <div>
+              <span>角色名称</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>角色权限</span>
+            </div>
+          </th>
+          <th style="min-width: 120px;">
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.roleName"></td>
+          <!-- <td style="text-align:left;"> -->
+          <td style="padding-left:80px;text-align:left;">
+            <!-- <td > -->
+            <span class="role-auth-label" ng-repeat="module in item.modules"> {{module.moduleName}} <span ng-if="(module.type != 1)">(<span ng-if="(module.type == 2)">查看</span><span ng-if="(module.type == 3)">编辑</span><span ng-if="(module.type == 4)">查看、编辑</span>)</span>
+            </span>
+          </td>
+          <td>
+            <a ng-href="{{'../authorizeMng/index.html#/authorizeMng_rolesEdit/' + item.roleID}}" ng-click="tblNormal.recordItem(item)" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">编辑</a>
+            <!-- <a href="javascript:;" ng-click="tblNormal.delRole(item.id, item.shopName)">删除</a> -->
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <div class="pull-right">
+      <div expagination data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div> -->
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

@@ -1,0 +1,162 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent splLayout">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row" style="margin-bottom: 0;">
+        <div class="right-arrange">
+          <label>
+                        <span>选择城市 </span>
+                        &nbsp;&nbsp;
+                        <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+                            <option value="">-全部-</option>
+                        </select>
+                    </label>
+          <div class="item-divider"></div>
+          <label>
+                        <span>项目类型 </span>
+                        &nbsp;&nbsp;
+                        <select name="proSel" id="proSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.isVankeList" ng-model="tblToolbar.isVankeVal" ng-change="tblToolbar.isVankeValChanged()">
+                            <option value="">-全部-</option>
+                        </select>
+                    </label>
+          <div class="item-divider"></div>
+          <label>
+                        <span>门店选择 </span>
+                        &nbsp;&nbsp;
+                        <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+                            <option value="">-全部-</option>
+                        </select>
+                    </label>
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" style="background-color: #efefef;" class="form-control" id="searchGrp" name="searchGrp" placeholder="可搜索订单号、客户姓名、手机号" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+                            <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+                        </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row" style="margin-bottom: 0;">
+        <div class="right-arrange">
+          <label>
+                        <span>订单状态 </span>
+                        &nbsp;&nbsp;
+                        <select name="orderStateSel" id="orderStateSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.orderStateList" ng-model="tblToolbar.orderStateVal" ng-change="tblToolbar.orderStateValChanged()">
+                            <option value="">-全部-</option>
+                        </select>
+                    </label>
+          <div class="item-divider"></div>
+          <label>
+                        <span>选择过期时间 </span>
+                        &nbsp;&nbsp;
+                        <select name="DueTimeSel" id="DueTimeSel" class="form-control input-inline" ng-options="opt1.name for opt1 in tblToolbar.overDueDateList" ng-model="tblToolbar.overDueDateVal" ng-change="tblToolbar.isOverDueDateValChanged()">
+                            <option value="">-全部-</option>
+                        </select>
+                    </label>
+          <div class="item-divider"></div>
+          <label>
+                        <span>创建时间 </span>
+                        &nbsp;&nbsp;
+                        <div class="timeSelect">
+                            <div class="date-picker-input">
+                                <input type="text" class="startDate" name="startDate" id="startDate" placeholder="全部" ng-model="tblToolbar.startDate">
+                                <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerStart($event)"></span>
+                            </div>
+                            <span>-</span>
+                            <div class="date-picker-input">
+                                <input type="text" class="endDate" name="endDate" id="endDate" placeholder="全部" ng-model="tblToolbar.endDate">
+                                <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;cursor:pointer;" ng-click="tblNormal.showDatepickerEnd()"></span>
+                            </div>
+                        </div>
+                    </label>
+          <div class="item-divider"></div>
+          <label>
+                        <button type="button" class="filterBtn btn btn-min btn-confirm" id="filtertBtn" ng-click="tblToolbar.itemFilter()">筛选</button>
+                    </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>订单编号</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>客户姓名</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>手机号</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>门店</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>仓位名</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>租赁期限</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>创建时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>收款金额(元)</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>订单状态</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/orderMng_queryOrder/' + item.id}}">{{item.id}}</a>
+          </td>
+          <td ng-bind="item.userName"></td>
+          <td ng-bind="item.userPhone"></td>
+          <td ng-bind="item.shopName"></td>
+          <td ng-bind="item.unitName" class="break-word"></td>
+          <td ng-bind="item.rentLast + (item.shopType!=2?'个月':(item.shopType==2?'天':''))"></td>
+          <td ng-bind="item.createDate.slice(0, 10)"></td>
+          <td ng-bind="item.actualPay | currency:'￥' : number : 2 "></td>
+          <td>
+            <span ng-bind="item.state | orderStateFilter" style="color: {{item.state | orderColorStateFilter}};"></span>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="10">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <button type="button" class="exportBtn btn btn-min btn-confirm flt-lf" id="exportBtn" style="margin-right:20px" ng-click="tblToolbar.exportTblList()">导出</button>
+      <div expagination="" data-config-obj="tblPagination" class="flt-rt"></div>
+    </div>
+    <div class="clear"></div>
+  </section>
+</div>

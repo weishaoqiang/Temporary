@@ -1,0 +1,265 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span> 仓位详情 </span>
+          <a ng-href="{{'#/shopMng_editUnit/'+param+'/shop/'+shopID}}" class="pull-right" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>
+        </h3>
+      </div>
+      <form id="formOfDetails">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位名称 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.name"></span>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.orderID">
+              <td class="col-xs-2">
+                <span> 订单编号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <a ng-href="{{'../orderMng/index.html#/orderMng_queryOrder/'+ queryResult.orderID}}" ng-bind="queryResult.orderID"></a>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.userName">
+              <td class="col-xs-2">
+                <span> 客户姓名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <a ng-href="{{'../clientMng/index.html#/clientMng_queryRentClient/'+ queryResult.userID}}" ng-bind="queryResult.userName"></a>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位区域 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.regionName"></span>
+              </td>
+            </tr>
+            <tr class="row" ng-if="queryResult.type!==13">
+              <td class="col-xs-2">
+                <span> 仓型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.type | unitTypeFilter"></span>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位大小(m) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span>长:&nbsp;</span><span class="multi-text-elem" ng-bind="queryResult.length"></span>&nbsp;&nbsp;
+                <span>宽:&nbsp;</span><span class="multi-text-elem" ng-bind="queryResult.width"></span>&nbsp;&nbsp;
+                <span>高:&nbsp;</span><span class="multi-text-elem" ng-bind="queryResult.height"></span>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位容积 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.volume + ' m³'"></span>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 剩余仓位容积 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.residualVolume?(queryResult.residualVolume + ' m³'):'- - '" ng-class="{'msgInvalid':(!queryResult.residualVolume)}"></span>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopType===1">
+              <td class="col-xs-2">
+                <span> 标准单价(元/月) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span style="font-weight: bolder;" ng-bind="'￥ ' + queryResult.price"></span>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 锁类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.lockType | unitLockTypeFilter"></span>
+              </td>
+            </tr>
+            <tr class="row" ng-show="queryResult.type===13">
+              <td class="col-xs-2">
+                <span> 设备SN码 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.remarks"></span>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 仓位状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.unitState | unitStateFilter"></span>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(queryResult.lockType | unitLockTypeFilter)==='威金利锁'">
+              <td class="col-xs-2">
+                <span> 存储状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.unitIsEmpty | unitStoreStateFilter" ng-class="((queryResult.unitIsEmpty | unitStoreStateFilter)==='未知')?'msgInvalid':''"></span>
+              </td>
+            </tr>
+            <tr class="row" ng-show="(queryResult.lockType | unitLockTypeFilter)==='威金利锁'">
+              <td class="col-xs-2">
+                <span> 门锁状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <span ng-bind="queryResult.unitIsOpen  | unitLockStateFilter" ng-class="((queryResult.unitIsEmpty | unitLockStateFilter)==='未知')?'msgInvalid':''"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div class="panel panel-default" style="margin-bottom:0px;border-bottom:1px solid #f1f3fa;">
+      <a id="followRecord" class="panel-body" style="color:inherit;padding-left:30px;padding-right:45px;height:50px;line-height:20px;position:relative;display:block;cursor:pointer;text-decoration:none;" data-toggle="collapse" ng-click="tblDetails.togglePanel('#followRecord', '#collapseFollowRecord')">
+        <span>当前租客信息</span>
+        <span class="fa fa-chevron-circle-down" style="font-size:16px;color:#C8CAD1;position:absolute;z-index:2;top:50%;transform:translateY(-50%);right:40px;"></span>
+      </a>
+    </div>
+    <div class="collapse in" id="collapseFollowRecord">
+      <div class="panel panel-warning" style="margin-bottom:0;">
+        <div class="panel-body" style="padding:0;">
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr style="background-color:#E8EAF1;border-top:0px solid #E8EAF1;">
+                <th>
+                  <div>
+                    <span>客户名</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>订单编号</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>业务类型</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>存储场景</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>租用容积</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>客户类型</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in tblNormal.currentOrderList" ng-if="tblNormal.currentOrderList.length>0">
+                <td ng-bind="item.userName"></td>
+                <td>
+                  <a ng-href="{{'../orderMng/index.html#/orderMng_queryOrder/'+ item.orderID}}" ng-bind="item.orderID"></a>
+                </td>
+                <td ng-bind="item.orderBusinessType | orderBusinessTypeFilter"></td>
+                <td ng-bind="item.orderStorageType | orderStorageTypeFilter"></td>
+                <td ng-bind="item.orderRentVolume + ' m³'"></td>
+                <td ng-bind="item.userType | rentClientTypeFilter"></td>
+              </tr>
+              <tr ng-if="tblNormal.currentOrderList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span>暂无相关信息</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default" style="margin-top:40px;margin-bottom:0px;border-bottom:1px solid #f1f3fa;">
+      <a id="followRecord" class="panel-body" style="color:inherit;padding-left:30px;padding-right:45px;height:50px;line-height:20px;position:relative;display:block;cursor:pointer;text-decoration:none;" data-toggle="collapse" ng-click="tblDetails.togglePanel('#followRecord', '#collapseFollowRecord')">
+        <span>历史出租信息</span>
+        <span class="fa fa-chevron-circle-down" style="font-size:16px;color:#C8CAD1;position:absolute;z-index:2;top:50%;transform:translateY(-50%);right:40px;"></span>
+      </a>
+    </div>
+    <div class="collapse in" id="collapseFollowRecord">
+      <div class="panel panel-warning" style="margin-bottom:0;">
+        <div class="panel-body" style="padding:0;">
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr style="background-color:#E8EAF1;border-top:0px solid #E8EAF1;">
+                <th>
+                  <div>
+                    <span>订单创建时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>订单结束时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>订单编号</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>租赁时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>租赁状态</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in tblNormal.orderList" ng-if="tblNormal.orderList.length>0">
+                <td ng-bind="item.createDate | dateFilter:'yyyy-MM-dd'"></td>
+                <td ng-bind="item.orderEndDate | dateFilter:'yyyy-MM-dd'"></td>
+                <td>
+                  <a ng-href="{{'../orderMng/index.html#/orderMng_queryOrder/'+ item.orderID}}" ng-bind="item.orderID"></a>
+                </td>
+                <td ng-bind="item.orderRentLast + (tblDetails.shopType==2?'天':(tblDetails.shopType==1?'个月':''))"></td>
+                <td ng-bind="item.orderState | orderStateFilter"></td>
+              </tr>
+              <tr ng-if="tblNormal.orderList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span>暂无相关信息</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.orderList.length>0">
+            <div expagination="" data-config-obj="tblOrderPagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+</div>

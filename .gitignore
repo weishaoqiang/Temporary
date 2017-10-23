@@ -1,0 +1,17 @@
+# ignore node_modules
+node_modules
+
+# ignore logs
+npm-debug.log
+*.log
+
+# ignore dist code
+admin
+admin/*
+
+# ignore %APPDATA%
+%APPDATA%
+
+# ignore svn
+/.svn/*
+.gitattributes

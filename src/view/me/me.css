@@ -1,0 +1,11 @@
+.pwd-visiblilty {
+  font-size: 20px !important;
+  line-height: 32px;
+  padding: 1px 2px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  color: #bbb;
+}
+.pwd-visiblilty:hover {
+  cursor: pointer;
+}

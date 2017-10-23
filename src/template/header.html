@@ -1,0 +1,18 @@
+
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <i class="fa fa-home"></i>
+      </li>
+      <li>
+        <!-- <a href="../shopMng/index.html#/shopMng_index" ng-click="pathObj.skipToHome()">万物仓</a> -->
+        <a href="../home/index.html#/home_index" ng-click="pathObj.skipToHome()">万物仓</a>
+      </li>
+      <li ng-repeat-start="item in pathObj.pathBuf">
+        <i class="fa fa-angle-right"></i>
+      </li>
+      <li ng-repeat-end="">
+        <a ng-href="{{item.url}}" ng-bind="item.name" ng-click="globalPath.popOthers($index)"></a>
+      </li>
+    </ul>
+  </div>

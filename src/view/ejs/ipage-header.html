@@ -1,0 +1,27 @@
+<div class="ipage-logo">
+  <a ng-href="{{localLink.homeUrl}}">
+    <div class="logo-default"></div>
+  </a>
+  <div id="menu-toggler" class="menu-toggler" ng-click="pageFrame.header.sidebarToggle()"></div>
+</div>
+<div class="ipage-header-menu-wrapper pull-right">
+  <ul class="ipage-header-menu">
+    <li class="dropdown dropdown-admin" ng-click="pageFrame.ddAdmin.toggle($event)">
+      <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+        <div class="admin-portrait"></div>
+        <span class="admin-name" ng-bind="globalAdmin.name"></span>
+        <!-- <span class="admin-name" ng-bind="globalAdmin.name"></span> -->
+        <!-- <span class="username username-hide-on-mobile" ng-bind="globalAdmin.name">  </span> -->
+        <i ng-class="{'fa':true, 'fa-angle-down':!pageFrame.ddAdmin.ddState, 'fa-angle-up':pageFrame.ddAdmin.ddState}"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-default pull-right">
+        <li>
+          <a ng-href="{{localLink.editMyPwdUrl}}"><i class="iconfont icon-edit"></i> 修改登录密码 </a>
+        </li>
+        <li>
+          <a href="javascript:;" ng-click="pageFrame.ddAdmin.exitSys()"><i class="iconfont icon-exit"></i> 退出 </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

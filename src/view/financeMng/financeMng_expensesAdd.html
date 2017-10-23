@@ -1,0 +1,210 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 城市 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="citySel" id="citySel" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+                      <!-- <option value="">- 全国 -</option> -->
+                    </select>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="msgError" ng-show="valiResult.cityIDError">* 请选择城市</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4 tblToolbar">
+                    <!-- <select name="shopSel" id="shopSel" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+                    <option value="">-请选择门店-</option> -->
+                  <!-- </select> -->
+                    <div class="btn-group dropdown">
+                    <span id="btnForAddShop" class="btn dropdown-toggle form-control" data-toggle="dropdown" style="background-color: #E8EAF1; border: 0 none;">
+                      <span ng-bind="(!!tblToolbar.shopName ? tblToolbar.shopName:'- 请选择门店 -')"></span>
+                      <span class="caret" style="margin-left:10px;"></span>
+                    </span>
+                    <div class="dropdown-menu">
+                      <div class="input-group">
+                        <span class="fa fa-search"></span>
+                        <input type="search" class="form-control" placeholder="门店名称..." ng-model="tblToolbar.keyword" ng-enter="tblToolbar.searchShops(tblToolbar.keyword)">
+                        <span class="input-group-btn">
+                          <input type="button" class="btn btn-confirm" value="搜索" ng-click="tblToolbar.searchShops(tblToolbar.keyword)">
+                        </span>
+                      </div>
+                      <ul class="dropdown-menu-items">
+                        <li class="opt" ng-repeat="item in tblToolbar.shopList" ng-click="tblToolbar.shopValChanged(item.id,item.name)" ng-show="tblToolbar.shopList.length>0">
+                          <a id="{{item.id}}" href="javascript:;" ng-bind="item.name"></a>
+                        </li>
+                        <li style="text-align:center;" ng-show="!tblToolbar.shopList.length">
+                          <br>
+                            <span class="msgInvalid" ng-show="tblDetails.cityVal.id"> 暂无内容 </span>
+                          <br>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 金额 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span>
+                    <input id="cash" type="text" name="cash" value="" placeholder="请输入金额" ng-model="formResult.amount">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.amountError">* 请输入有效的金额</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 费用类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4 tblToolbar">
+                    <!-- <select name="expenseSel" id="expenseSel" ng-options="opt.name for opt in tblToolbar.expenseList" ng-model="tblToolbar.expenseVal" ng-change="tblToolbar.expenseValChanged()">
+                    <option value="">- 请选择费用类型 -</option>
+                    </select> -->
+                    <div class="btn-group dropdown">
+                    <span id="btnForAddExpense" class="btn dropdown-toggle form-control" data-toggle="dropdown" style="background-color: #E8EAF1; border: 0 none;">
+                      <span ng-bind="(!!tblToolbar.expenseName ? tblToolbar.expenseName:'- 请选择费用类型 -')"></span>
+                      <span class="caret" style="margin-left:10px;"></span>
+                    </span>
+                    <div class="dropdown-menu">
+                      <div class="input-group">
+                        <span class="fa fa-search"></span>
+                        <input type="search" class="form-control" placeholder="费用类型..." ng-model="tblToolbar.expensekey" ng-enter="tblToolbar.searchExpense(tblToolbar.expensekey)">
+                        <span class="input-group-btn">
+                          <input type="button" class="btn btn-confirm" value="搜索" ng-click="tblToolbar.searchExpense(tblToolbar.expensekey)">
+                        </span>
+                      </div>
+                      <ul class="dropdown-menu-items">
+                        <li class="opt" ng-repeat="item in tblToolbar.expenseList" ng-click="tblToolbar.expenseValChanged(item.id,item.feeName)" ng-show="tblToolbar.expenseList.length>0">
+                          <a id="{{item.id}}" href="javascript:;" ng-bind="item.feeName"></a>
+                        </li>
+                        <li style="text-align:center;" ng-show="!tblToolbar.expenseList.length">
+                          <br>
+                            <span class="msgInvalid"> 暂无内容 </span>
+                          <br>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="msgError" ng-show="valiResult.feeTypeIDError">* 请选择费用类型</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 分摊周期 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-3 sel-time" style="margin-left: 16px;">
+                    <input id="startDate" name="startDate" class="laydate-time" style="width: 120px;" type="text" placeholder="请选择开始时间" ng-model="formResult.startDate" ng-click="startDatePicker.showOpenDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: none;" ng-click="startDatePicker.showOpenDate()"></span>
+                  </div>
+                  <div class="col-xs-1" style="height: 32px; line-height: 32px;text-align: center;">
+                    <span>至</span>
+                  </div>
+                  <div class="col-xs-3 sel-time">
+                    <input id="endDate" name="endDate" class="laydate-time" style="width: 120px;" type="text" placeholder="请选择结束时间" ng-model="formResult.endDate" ng-click="endDatePicker.showOpenDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: none;" ng-click="endDatePicker.showOpenDate()"></span>
+                  </div>
+                  <div class="col-xs-5">
+                    <span class="msgError" ng-show="(valiResult.startDateError || valiResult.endDateError)">* 请输入完整的分摊周期</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 支出时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4 sel-time" style="margin-left: 16px;">
+                    <input id="payDate" name="payDate" class="laydate-time" style="width: 120px;" type="text" placeholder="请选择支付时间" ng-model="formResult.payDate" ng-click="payDatePicker.showOpenDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;float: none;" ng-click="payDatePicker.showOpenDate()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.payDateError">* 请选择支出时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 报销人 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="cash" type="text" name="cash" value="" placeholder="报销人姓名" ng-model="formResult.useName">
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="msgError" ng-show="valiResult.useNameError">* 请输入报销人名单</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 事项说明 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <textarea name="remarks" id="remarks" rows="4" cols="100" placeholder="请选填备注内容" value="" style="padding: 0;resize:none; outline:none;border: 0 none;" ng-model="formResult.matterContent" class="ng-pristine ng-valid ng-touched"></textarea>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" ng-if="(adminModules[5].type == 3)||(adminModules[5].type == 4)" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

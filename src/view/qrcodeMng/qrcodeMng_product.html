@@ -1,0 +1,92 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="qrcode-section-left">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="活动名称" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+                  <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+                </span>
+          </div>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+                <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+                </select>
+              </label>
+        </div>
+      </div>
+    </div>
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>活动名称</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>创建时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>活动关注人数</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>操作</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.name"></td>
+          <td ng-bind="item.createDate"></td>
+          <td ng-bind="item.users"></td>
+          <td>
+            <a ng-href="{{'#/qrcodeMng_detail/' + item.id+'/' + item.name + '/' + item.content}}">详情</a>&nbsp;&nbsp;
+            <a href="javascript:;" ng-click="showQRCode(item.ticket,item.name)">二维码</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+  </section>
+  <section class="qrcode-section-right" ng-if="(adminModules[10].type == 3) || (adminModules[10].type == 4)">
+    <div class="qrcode-img-area">
+      <span ng-if="!qrcode_loading">
+              下方输入活动名称与活动内容, 点击生成二维码
+            </span>
+      <span ng-if="qrcode_loading">Loading...</span>
+      <img ng-if="qrcode_url!==''" style="height:100%;width:100%;display:block;position:absolute;z-indx=1;" ng-src="{{qrcode_url}}">
+    </div>
+    <input style="margin-top:35px;" class="input-qrcode" placeholder="请输入活动名称" ng-model="activity_form.name">
+    <input class="input-qrcode" placeholder="请输入活动内容" ng-model="activity_form.content">
+    <a class="qrcode-button" href="javascript:void(0)" ng-click="addActivity()">生成二维码</a>
+  </section>
+  <div class="qrcode-mask" ng-if="qrcode_ispopUP">
+    <div>
+      <i class="iconfont icon-close" ng-click="hideQRCode()"></i>
+      <img ng-src="{{qrcode_pop}}">
+      <p>{{qrcode_pop_name}}</p>
+    </div>
+  </div>
+</div>

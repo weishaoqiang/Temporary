@@ -1,0 +1,75 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <p>活动内容: {{content}}</p>
+  <div class="table-toolbar tblToolbar">
+    <div class="tblToolbar-row">
+      <div class=""></div>
+      <div class="right-arrange">
+        <label><span>显示条数：</span>
+              <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+              </select>
+          </label>
+      </div>
+    </div>
+  </div>
+  <table class="table table-hover table-bordered tblNormal">
+    <thead>
+      <tr>
+        <th>
+          <div>
+            <span>用户昵称</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>性别</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>关注时间</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>国家</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>省份</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>城市</span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 以下由自己手动插入-->
+      <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+        <td ng-bind="item.nickname"></td>
+        <td ng-bind="item.sex|sexFilter"></td>
+        <td ng-bind="item.createDate"></td>
+        <td ng-bind="item.country"></td>
+        <td ng-bind="item.province"></td>
+        <td ng-bind="item.city"></td>
+      </tr>
+      <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+        <td colspan="8">
+          <span class="msgInvalid">- 暂无相关信息 -</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pull-right">
+    <div expagination="" data-config-obj="tblPagination"></div>
+  </div>
+  <div class="clear"></div>
+
+
+
+</div>

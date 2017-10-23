@@ -1,0 +1,77 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-statics table-statics-diagram">
+      <div class="table-toolbar tblToolbar">
+        <div class="tblToolbar-row">
+          <div class="left-arrange">
+            <div class="title">温度统计</div>
+          </div>
+          <div class="right-arrange">
+          </div>
+        </div>
+        <div class="tblToolbar-row content-box-header">
+          <div class="left-arrange">
+          </div>
+          <div class="right-arrange">
+            <div class="timePeriod tempTimePeriod" ng-click="timePeriod.tempChanged($event)">
+              <a href="javascript:;" class="timePeriodPrev">昨天</a>
+              <a href="javascript:;" class="timePeriodToday">今天</a>
+            </div>
+            <div class="datepickerDiv">
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="tempDatepicker.showDate()"></span>
+                <input ng-click="tempDatepicker.showDate()" id="tempDate" ng-model="tblToolbar.tempDate" style="margin-right:0;">
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="content">
+        <div id="tempDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-body">
+              <div id="tempDiagram" style="width:100%;height:500px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-statics table-statics-diagram">
+      <div class="table-toolbar tblToolbar">
+        <div class="tblToolbar-row">
+          <div class="left-arrange">
+            <div class="title">湿度统计</div>
+          </div>
+          <div class="right-arrange">
+          </div>
+        </div>
+        <div class="tblToolbar-row content-box-header">
+          <div class="left-arrange">
+          </div>
+          <div class="right-arrange">
+            <div class="timePeriod humTimePeriod" ng-click="timePeriod.humChanged($event)">
+              <a href="javascript:;" class="timePeriodPrev">昨天</a>
+              <a href="javascript:;" class="timePeriodToday">今天</a>
+            </div>
+            <div class="datepickerDiv">
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="humDatepicker.showDate()"></span>
+                <input ng-click="humDatepicker.showDate()" id="humDate" ng-model="tblToolbar.humDate" style="margin-right:0;">
+              </div>
+            </div>
+        </div>
+      </div>
+      </div>
+      <div class="content">
+        <div id="humDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-body">
+              <div id="humDiagram" style="width:100%;height:500px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

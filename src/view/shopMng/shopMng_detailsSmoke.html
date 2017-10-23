@@ -1,0 +1,41 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-statics table-statics-diagram">
+      <div class="table-toolbar tblToolbar">
+        <div class="tblToolbar-row">
+          <div class="left-arrange">
+            <div class="title">烟感统计 <span class="msgInvalid">(0%FT为正常值，56%FT为报警值)</span></div>
+          </div>
+          <div class="right-arrange">
+          </div>
+        </div>
+        <div class="tblToolbar-row content-box-header">
+          <div class="left-arrange">
+          </div>
+          <div class="right-arrange">
+            <div class="timePeriod smokeTimePeriod" ng-click="timePeriod.smokeChanged($event)">
+              <a href="javascript:;" class="timePeriodPrev">昨天</a>
+              <a href="javascript:;" class="timePeriodToday">今天</a>
+            </div>
+            <div class="datepickerDiv">
+              <div class="">
+                <span class="fa fa-angle-down" ng-click="smokeDatepicker.showDate()"></span>
+                <input ng-click="smokeDatepicker.showDate()" id="smokeDate" ng-model="tblToolbar.smokeDate" style="margin-right:0;">
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="content">
+        <div id="smokeDiagramBox" class="statics-diagram">
+          <div class="content-box">
+            <div class="content-box-body">
+              <div id="smokeDiagram" style="width:100%;height:500px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

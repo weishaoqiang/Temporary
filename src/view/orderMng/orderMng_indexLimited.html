@@ -1,0 +1,137 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <label><span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider" ng-show="tblToolbar.cityVal.id"></div>
+          <label ng-show="tblToolbar.cityVal.id"><span>选择门店：</span>
+            <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+              <!-- <option value=''>-请选择-</option> -->
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <table class="table table-hover table-bordered tblNormal">
+        <thead>
+          <tr>
+            <th>
+              <div>
+                <span>订单编号</span>
+                <!-- <input type="hidden" value="{{item.inputValue}}"/> -->
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>客户姓名</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>手机号</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>门店</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>仓位名</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>仓位容积（m³）</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>租赁期限</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>创建时间</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>收款金额(元)</span>
+              </div>
+            </th>
+            <th ng-if="param !=='new'">
+              <div>
+                <span>剩余天数</span>
+              </div>
+            </th>
+            <th>
+              <div>
+                <span>订单状态</span>
+              </div>
+            </th>
+            <!-- <th><div>
+            <span>更多</span>
+        </div></th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 以下由自己手动插入-->
+          <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+            <td>
+              <input type="hidden" name="dataID" ng-value="item.id">
+              <a ng-href="{{'#/orderMng_queryOrder/' + item.id}}" ng-if="(adminModules[3].type == 2) || (adminModules[3].type == 4)">{{item.id}}</a>
+            </td>
+            <td ng-bind="item.userName"></td>
+            <td ng-bind="item.userPhone"></td>
+            <td ng-bind="item.shopName"></td>
+            <td ng-bind="item.unitName"></td>
+            <td ng-bind="item.unitVolume"></td>
+            <td ng-bind="item.rentLast + (item.shopType==1?'个月':(item.shopType==2?'天':''))"></td>
+            <td ng-bind="item.createDate.slice(0, 10)"></td>
+            <td ng-bind="item.actualPay | currency:'￥' : number : 2 "></td>
+            <!-- <td>
+          <span ng-bind="item.rentLast + '个月'"></span>
+          <span ng-cloak ng-class="(item.orderRemainingDate<=0?'msgError':'msgSuccess')">{{item.orderRemainingDate<=0?'(已超期':'(剩余'}}</span><span ng-bind="item.orderRemainingDate +'天)'" ng-class="(item.orderRemainingDate<=0?'msgError':'msgSuccess')"></span>
+        </td> -->
+            <td ng-if="param !=='new'" ng-bind="item.orderRemainingDate + '天'" class="msgError"></td>
+            <td ng-bind="item.state | orderStateFilter"></td>
+            <!-- <td>
+          <input type="hidden" name="dataID" ng-value="item.id">
+          <a ng-href="{{'#/orderMng_queryOrder/' + item.id}}" ng-if="(adminModules[3].type == 2) || (adminModules[3].type == 4)">查看详情</a>
+        </td> -->
+          </tr>
+          <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+            <td colspan="9">
+              <span class="msgInvalid">- 暂无相关信息 -</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pull-right">
+        <div expagination="" data-config-obj="tblPagination"></div>
+      </div>
+      <div class="pull-right" style="margin-right: 20px;">
+        <a class="btn-confirm" style="font-size:12px; text-decoration:none; display:inline-block; width:80px;height:33px; margin-bottom:20px; border-radius:4px; line-height:33px; text-align:center;" ng-show="tblNormal.exportDataListUrl && tblNormal.dataList.length"
+          ng-href="{{tblNormal.exportDataListUrl}}">导出</a>
+      </div>
+      <div class="clear"></div>
+
+    </div>
+  </section>
+</div>

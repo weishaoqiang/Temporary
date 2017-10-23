@@ -1,0 +1,304 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户姓名 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" placeholder="请输入客户姓名" ng-model="formResult.name">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.nameError">* 请输入有效的客户姓名</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 联系方式 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="phone" type="text" name="phone" value="" placeholder="请输入手机号" ng-model="formResult.phone">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="(valiResult.phoneError && !tblDetails.phoneExist)">* 请输入有效的联系方式</span></div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="tblDetails.phoneExist">* 客户已存在,请勿重复录入</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户性别 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="sexSel" id="sexSel" ng-options="opt.name for opt in tblDetails.sexList" ng-model="tblDetails.sexVal" ng-change="tblDetails.sexValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.sexError">* 请选择客户性别</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 选择城市 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="cityIDSel" id="cityIDSel" ng-options="opt.name for opt in tblDetails.cityList" ng-model="tblDetails.cityVal" ng-change="tblDetails.cityValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.cityIDError">* 请选择城市</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户地址 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input type="text" id="address" name="address" value="" placeholder="请输入客户地址" style="width:98%;" ng-model="formResult.address">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.addressError">* 请输入有效的地址</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 物品类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="storeTypeSel" id="storeTypeSel" ng-options="opt.name for opt in tblDetails.storeItemTypeList" ng-model="tblDetails.storeTypeVal" ng-change="tblDetails.storeTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.storeTypeError">* 请选择物品类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 物品描述 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input type="text" id="storeItems" name="storeItems" value="" placeholder="请输入存储物品" style="width:98%;" ng-model="formResult.storeItems">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.storeItemsError">* 请补充输入有效的物品描述</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="userTypeSel" id="userTypeSel" ng-options="opt.name for opt in tblDetails.threadClientTypeList" ng-model="tblDetails.userTypeVal" ng-change="tblDetails.userTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.userTypeError">* 请选择客户类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 业务类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="businessTypeSel" id="businessTypeSel" ng-options="opt.name for opt in tblDetails.threadBusinessTypeList" ng-model="tblDetails.businessTypeVal" ng-change="tblDetails.businessTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.businessTypeError">* 请选择业务类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 客户来源 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="srcIDSel" id="srcIDSel" ng-options="opt.content for opt in tblDetails.threadClientSrcList" ng-model="tblDetails.srcIDVal" ng-change="tblDetails.srcIDValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.srcIDError">* 请选择客户来源</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.srcIDVal.id == 1">
+              <td class="col-xs-2">
+                <span> 搜索关键词 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input type="text" id="keyword" name="keyword" value="" placeholder="请输入搜索关键词" ng-model="formResult.keyword">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.keywordError">* 请输入有效的搜索关键词</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 跟进负责人 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div idropdown="" config-id="managerIDSel" config-iswitharg='true' config-list-item-namestr="'managerName'" config-list-item-idstr="'managerID'" config-list="tblDetails.managerList" config-pagination-cfg="tblPagination" config-empty-hintmsg="tblDetails.cityVal.id?'- 暂无数据 -':'- 请先选择城市 -'"
+                      config-val="tblDetails.managerVal" config-val-changed="tblDetails.managerValChanged()" config-search="tblDetails.searchManagerList(keyword)" config-has-classified-title="true" config-lf-classified-title="'姓名'" config-rt-classified-title="'跟进数'"></div>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.managerIDError">* 请指派门店管理员</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan="2"></td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 来电时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="callTime" name="callTime" type="text" placeholder="请选择来电时间" style="width: 140px;" ng-focus="tblDetails.showDatepicker()" ng-model="formResult.callTime">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;" ng-click="tblDetails.showDatepicker()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.callTimeError">* 请选择来电时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="viewTag === 'add'">
+              <td class="col-xs-2">
+                <span> 状态（默认） </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span class="msgInvalid" style="font-size:14px;"> 持续跟进 </span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="viewTag === 'edit'">
+              <td class="col-xs-2">
+                <span> 状态 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="stateSel" id="stateSel" ng-options="opt.name for opt in tblDetails.threadStateList" ng-model="tblDetails.stateVal" ng-change="tblDetails.stateChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.stateError">* 请选择线索状态</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.stateVal.id == 4">
+              <td class="col-xs-2">
+                <span> 订单号 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="orderID" type="text" name="orderID" value="" placeholder="请输入订单号" ng-model="formResult.orderID">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.orderIDError">* 请输入有效的订单号(8或9位)</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.stateVal.id == 5">
+              <td class="col-xs-2">
+                <span> 关闭原因 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="reasonTypeSel" id="reasonTypeSel" ng-options="opt.name for opt in tblDetails.giveUpReasonTypeList" ng-model="tblDetails.giveUpReasonTypeVal" ng-change="tblDetails.giveUpReasonTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.giveUpReasonTypeError">* 请选择关闭原因</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.stateVal.id == 5">
+              <td class="col-xs-2">
+                <span> 原因描述 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="reason" type="text" name="reason" value="" placeholder="请输入关闭原因" style="color:#ff580f;" ng-model="formResult.giveUpReason">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.giveUpReasonError">* 请补充输入有效的原因描述</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 备注(选填) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <!-- <input type="text" name="remarks" id="remarks" value="" placeholder="请选填备注内容" ng-model="formResult.remarks"> -->
+                    <textarea name="remarks" id="remarks" rows="4" cols="31" placeholder="请选填备注内容" value="" style="padding: 10px;" ng-model="formResult.remarks"></textarea>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

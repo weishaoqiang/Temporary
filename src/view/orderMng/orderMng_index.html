@@ -1,0 +1,119 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <div class="table-toolbar tblToolbar">
+    <div class="tblToolbar-row">
+      <div class="">
+      </div>
+      <div class="right-arrange">
+        <div class="input-group input-medium tblToolbar-search">
+          <span class="fa fa-search"></span>
+          <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="订单号 / 客户姓名 / 手机号" ng-model="tblToolbar.searchVal">
+          <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+        </div>
+      </div>
+    </div>
+    <div class="tblToolbar-row">
+      <div class="">
+      </div>
+      <div class="right-arrange">
+        <label>
+            <span>选择城市：</span>
+            <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+        <div class="item-divider" ng-show="tblToolbar.cityVal.id"></div>
+        <label ng-show="tblToolbar.cityVal.id">
+            <span>选择门店：</span>
+            <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+        <div class="item-divider"></div>
+        <label>
+            <span>订单状态：</span>
+            <select name="orderStateSel" id="orderStateSel" class="form-control input-inline" ng-options="opt.orderStateName for opt in tblToolbar.orderStateList" ng-model="tblToolbar.orderStateVal" ng-change="tblToolbar.orderStateValChanged()">
+              <option value="">-全部-</option>
+            </select>
+          </label>
+        <div class="item-divider"></div>
+        <label>
+            <span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover table-bordered tblNormal">
+    <thead>
+      <tr>
+        <th>
+          <div>
+            <span>订单编号</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>客户姓名</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>手机号</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>租赁期限</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>订单状态</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>创建日期</span>
+          </div>
+        </th>
+        <th>
+          <div>
+            <span>更多</span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 以下由自己手动插入-->
+      <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+        <td ng-bind="item.id"></td>
+        <td ng-bind="item.userName"></td>
+        <td ng-bind="item.userPhone"></td>
+        <td ng-bind="item.rentLast + (item.shopType!=2?'个月':(item.shopType==2?'天':''))"></td>
+        <td ng-bind="item.state | orderStateFilter"></td>
+        <td ng-bind="item.createDate.slice(0, 16)"></td>
+        <td>
+          <input type="hidden" name="dataID" ng-value="item.id">
+          <a ng-href="{{'#/orderMng_queryOrder/' + item.id}}">查看详情</a>
+          <!-- <a ng-href="{{'#/orderMng_editOrder/' + item.id}}" ng-show="adminModules[3].isHave">编辑</a> -->
+        </td>
+      </tr>
+      <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+        <td colspan="8">
+          <span class="msgInvalid">- 暂无相关信息 -</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pull-right">
+    <div expagination="" data-config-obj="tblPagination"></div>
+  </div>
+  <div class="clear"></div>
+  </section>
+</div>

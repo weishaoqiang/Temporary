@@ -1,0 +1,128 @@
+<!-- 收款管理 -->
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="订单编号、名称、手机号" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <label>
+              <span>选择城市</span>
+              &nbsp;
+              <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+          </label>
+          <div class="item-divider"></div>
+          <label>
+              <span>选择门店</span>
+              &nbsp;
+              <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>订单编号</span>
+              <!-- <input type="hidden" value="{{item.inputValue}}"/> -->
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>客户名称</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>手机号码</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>门店</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>收款金额(元)</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>订单创建时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>支付方式</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>收款状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.id"></td>
+          <td ng-bind="item.userName"></td>
+          <td ng-bind="item.userPhone"></td>
+          <!-- ng-bind="item.managers.length>0?(item.managers.join('，')):'- -'" -->
+          <td ng-bind="(item.shopName.length>0?item.shopName:'-无门店信息-')" ng-class="item.shopName.length>0?'':'msgInvalid'"></td>
+          <td ng-bind="'￥' + item.actualPay"></td>
+          <td ng-bind="item.createDate | dateFilter:'yyyy-MM-dd'"></td>
+          <td ng-bind="item.payWay | payWayFilter"></td>
+          <td><span class="msgError" ng-bind="item.payState | payStateFilter"></span></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/financeMng_receiptDetails/' + item.id}}" ng-if="(adminModules[5].type == 2)||(adminModules[5].type == 4)">查看详情</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="9">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+  </section>
+</div>

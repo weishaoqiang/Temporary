@@ -1,0 +1,48 @@
+<div class="idropdown-sel">
+  <button type="button" name="button" class='idropdown-btn'
+    ng-click="dropdownsel.showMenu($event)">
+    <span class="caret"></span>
+    <span ng-bind="dropdownsel.result.name"></span>
+  </button>
+
+  <div class="idropdown-menu" ng-show="dropdownsel.state" ng-click="dropdownsel.clickSelMenu($event)">
+    <div class="search-group" ng-show="dropdownsel.hasSearch">
+      <span class="fa fa-search"></span>
+      <input type="text" name="keyword" value="" class="search-group-text" ng-model="dropdownsel.keyword" placeholder="请输入关键字.."><button type="button" name="button" class="search-group-btn btn-confirm"
+        ng-click="dropdownsel.search({keyword: dropdownsel.keyword})">查找</button>
+    </div>
+
+    <div class="classified-title-ctnr" ng-if="dropdownsel.hasClassifiedTitle">
+      <div class="classified-title">
+        <span ng-bind="dropdownsel.lfClassifiedTitle"></span>
+        <span ng-bind="dropdownsel.rtClassifiedTitle"></span>
+      </div>
+    </div>
+    <ul>
+      <!-- <li ng-show="!dropdownsel.list.length" class="msgInvalid" style="font-size:12px;text-align:center;">-暂无数据-</li> -->
+      <li ng-show="!dropdownsel.list.length" class="msgInvalid" style="font-size:12px;text-align:center;"
+        ng-bind-html="dropdownsel.emptyHintMsg | AsHtmlFilter"></li>
+      <li id="" ng-show="dropdownsel.list.length" ng-click="dropdownsel.chooseItem({id:'', name:'- 请选择 -'})">- 请选择 -</li>
+      <!-- 不带参列表项 -->
+      <li id="{{item.id}}"
+        ng-if="!dropdownsel.isWithArg"
+        ng-repeat="item in dropdownsel.list"
+        ng-click="dropdownsel.chooseItem({id:item[dropdownsel.itemIdStr], name:item[dropdownsel.itemNameStr]})">{{item[dropdownsel.itemNameStr]}}</li>
+      <!-- 带参列表项 -->
+      <li id="{{item.id}}"
+        ng-if="dropdownsel.isWithArg"
+        ng-repeat="item in dropdownsel.list"
+        ng-click="dropdownsel.chooseItem({id:item[dropdownsel.itemIdStr], name:item[dropdownsel.itemNameStr]})">
+        <span style="float:left;">{{item[dropdownsel.itemNameStr]}}</span>
+        <span style="float:right;" ng-bind-html="item.arg | AsHtmlFilter"></span>
+      </li>
+    </ul>
+
+    <div class="pagination-ctnr">
+      <div class="pull-right" ng-if="dropdownsel.hasPagination">
+        <div expagination="" data-config-obj="paginationCfg"></div>
+      </div>
+    </div>
+  </div>
+
+</div>

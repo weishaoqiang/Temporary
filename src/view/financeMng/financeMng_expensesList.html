@@ -1,0 +1,152 @@
+<!-- 收款管理 -->
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <div ng-bind="title"></div>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="报销人姓名" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="left-arrange">
+          <a class="btn btn-long {{itemObj.classTxt || 'btn-confirm'}}" ng-href="#/financeMng_expensesAdd" ng-if="(adminModules[5].type == 3) || (adminModules[5].type == 4)">
+            <i class="fa fa-plus"></i>&nbsp;
+            <span>新增支出</span>
+          </a>
+        </div>
+        <div class="right-arrange">
+          <label>
+              <span>选择城市</span>
+              &nbsp;
+              <select name="citySel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.cityList" ng-model="tblToolbar.cityVal" ng-change="tblToolbar.cityValChanged()">
+                <option value="">- 全国 -</option>
+              </select>
+          </label>
+          <!-- <div class="item-divider"></div>
+          <label>
+              <span>选择门店</span>
+              &nbsp;
+              <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+          </label> -->
+          <div class="item-divider"></div>
+          <label>
+            <div class="btn-group dropdown">
+              <span id="btnForAddShop" type="button" class="btn dropdown-toggle form-control" data-toggle="dropdown">
+                <span ng-bind="(!!tblToolbar.shopName ? tblToolbar.shopName:'- 所有门店 -')"></span>
+                <span class="caret" style="margin-left:10px;"></span>
+              </span>
+              <div class="dropdown-menu">
+                  <div class="input-group">
+                    <span class="fa fa-search"></span>
+                    <input type="search" class="form-control" placeholder="门店名称..." ng-model="tblToolbar.keyword" ng-enter="tblToolbar.searchShops(tblToolbar.keyword)">
+                    <span class="input-group-btn">
+                      <input type="button" class="btn btn-confirm" value="搜索" ng-click="tblToolbar.searchShops(tblToolbar.keyword)">
+                    </span>
+                  </div>
+                <ul class="dropdown-menu-items">
+                  <li class="opt" ng-repeat="item in tblToolbar.shopList" ng-click="tblToolbar.shopValChanged(item.id,item.name)" ng-show="tblToolbar.shopList.length>0">
+                    <a id="{{item.id}}" href="javascript:;" ng-bind="item.name"></a>
+                  </li>
+                  <li style="text-align:center;" ng-show="!tblToolbar.shopList.length">
+                    <br>
+                      <span class="msgInvalid" ng-show="tblDetails.cityVal.id"> 暂无内容 </span>
+                    <br>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>城市</span>
+              <!-- <input type="hidden" value="{{item.inputValue}}"/> -->
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>门店</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>金额（元）</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>分摊周期</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>报销人</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>支出时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.cityName"></td>
+          <td ng-bind="(!!item.shopName ? item.shopName : '城市支出费用')" ng-class="(!item.shopName ? 'msgInvalid':'')"></td>
+          <td ng-bind="item.amount"></td>
+          <!-- ng-bind="item.managers.length>0?(item.managers.join('，')):'- -'" -->
+          <td ng-bind="item.startDate+'&nbsp;&nbsp;至&nbsp;&nbsp;'+item.endDate"></td>
+          <td ng-bind="item.useName"></td>
+          <td ng-bind="item.payDate | dateFilter:'yyyy-MM-dd'"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'#/financeMng_expensesDetails/' + item.id}}" ng-if="(adminModules[5].type == 2)||(adminModules[5].type == 4)">详情</a>
+            &nbsp;&nbsp;
+            <a ng-href="{{'#/financeMng_expensesEdit/' + item.id}}" ng-if="(adminModules[5].type == 3)||(adminModules[5].type == 4)">编辑</a>
+            &nbsp;&nbsp;
+            <a href="javascript:;" ng-if="(adminModules[5].type == 3)||(adminModules[5].type == 4)" ng-click="tblNormal.deleteItem(item.id)">删除</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="9">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

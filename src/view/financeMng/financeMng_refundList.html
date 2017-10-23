@@ -1,0 +1,117 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <div class="input-group input-medium tblToolbar-search">
+            <span class="fa fa-search"></span>
+            <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="订单编号" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+            <span class="input-group-btn">
+              <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class="">
+        </div>
+        <div class="right-arrange">
+          <label><span>退款状态：</span>
+            <select name="refundStateSel" id="citySel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.refundStateList" ng-model="tblToolbar.refundStateVal" ng-change="tblToolbar.refundStateValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>订单编号</span>
+              <!-- <input type="hidden" value="{{item.inputValue}}"/> -->
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>客户名称</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>门店</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>仓位</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>退款金额</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>退款方式</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>退款状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>退款日期</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td ng-bind="item.orderID"></td>
+          <td ng-bind="item.userName"></td>
+          <td ng-bind="item.shopName"></td>
+          <td ng-bind="item.unitName"></td>
+          <td ng-bind="'￥' + item.refundAmount"></td>
+          <td ng-bind="item.refundType | refundTypeFilter"></td>
+          <td ng-bind="item.refundState | refundStateFilter"></td>
+          <td ng-bind="item.refundDate?(item.refundDate | dateFilter:'yyyy-MM-dd'):'- -' " ng-class="item.refundDate?'':'msgInvalid'"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a href="javascript:;" style="margin-right:12px;" ng-click="tblNormal.refreshRefundItem($event, $index, item.refundID)" ng-show="item.refundState==2 || item.refundState==3">刷新</a>
+            <a ng-href="{{'#/financeMng_refundDetails/' + item.refundID}}" ng-if="(adminModules[5].type == 2)||(adminModules[5].type == 4)">查看详情</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+  </section>
+</div>

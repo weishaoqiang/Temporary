@@ -1,0 +1,966 @@
+<div class="addShopView">
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <!-- 添加门店 -->
+            <tr class="row" ng-show="viewTag === 'addShop'">
+              <td class="col-xs-2">
+                <span> 门店类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="shopTypeSel" id="shopTypeSel" ng-options="opt.name for opt in tblDetails.shopTypeList" ng-model="tblDetails.shopTypeVal" ng-change="tblDetails.shopTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.shopTypeValError">* 请选择门店类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="viewTag === 'editShop'">
+              <td class="col-xs-2">
+                <span> 门店类型 </span><br>
+                <span class="msgInvalid"> (不可更改) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span ng-bind="formResult.shopType | shopTypeFilter"></span>
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店名称 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="name" type="text" name="name" value="" placeholder="请输入门店名称" ng-model="formResult.name">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.nameError">* 请输入有效的门店名称</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 所在城市 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="citySel" id="citySel" ng-options="opt.name for opt in tblDetails.cityList" ng-model="tblDetails.cityVal" ng-change="tblDetails.cityValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.cityValError">* 请选择所在城市</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 项目类型 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="isVankeSel" id="isVankeSel" ng-options="opt.name for opt in tblDetails.isVankeList" ng-model="tblDetails.isVankeVal" ng-change="tblDetails.isVankeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.isVankeValError">* 请选择项目类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店地址 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="address" type="text" name="address" value="" placeholder="请输入门店地址" ng-model="formResult.address">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.addressError">* 请输入有效的门店地址</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店位置(经度/纬度) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div id="mapContainer" class=""></div>
+                    <div>
+                      <button id="btnForCoordinate" class="btn btn-confirm" ng-click="tblDetails.getCoordinate(formResult.address)">根据地址查找经纬度</button>
+                    </div>
+                    <div style="margin-top:8px;">
+                      <div class="" style="float:left;min-width:50%;">
+                        <span>经度：</span><input id="longitude" type="text" name="longitude" value="" placeholder="门店经度" style="max-width:80px;text-align:center;" readonly ng-model="formResult.longitude">
+                      </div>
+                      <!-- <div style="clear:both;"></div> -->
+                      <div class="" style="float:left;">
+                        <span>纬度：</span><input id="latitude" type="text" name="latitude" value="" placeholder="门店纬度" style="max-width:80px;text-align:center;" readonly ng-model="formResult.latitude">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.coordinateError">* 请根据地址查找获取门店经纬度</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店图片 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="previewContainer">
+                      <img ng-src="{{tblDetails.picUrl}}" alt="占位图">
+                    </div>
+                    <div class="btnsContainer">
+                      <div id="maskForInput" ng-click="tblDetails.trigChsnFile()"> 添加图片 </div>
+                      <input type="file" id="shopPhotoUL" name="files" value="">
+                      <div> 图片尺寸:&nbsp;750px&nbsp;x&nbsp;320px </div>
+                      <div class="fileStr" ng-show="tblDetails.picName">
+                        <span class="resultTip" ng-show="tblDetails.uploadSuccess">成功上传文件:&nbsp;</span>
+                        <span class="resultTip" ng-show="!tblDetails.uploadSuccess">上传文件失败:&nbsp;</span>
+                        <span class="msgSuccess" ng-bind="tblDetails.picName"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.photoUrlError">* 请添加图片</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-12 td-divider" colspan='2'>
+                <span></span>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-2">
+                <span> 建筑面积(管理面积)(㎡) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="buildingArea" type="text" name="buildingArea" value="" placeholder="请输入建筑面积" ng-model="formResult.buildingArea">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.buildingAreaError">* 请输入有效的建筑面积</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-2">
+                <span> 实际可使用面积(㎡) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="availableArea" type="text" name="availableArea" value="" placeholder="请输入门实际可使用面积" ng-model="formResult.availableArea">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.availableAreaError">* 请输入有效的可使用面积</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-2">
+                <span> 可租出面积(㎡) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="rentableArea" type="text" name="rentableArea" value="" placeholder="请输入可租出面积" ng-model="formResult.rentableArea">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.rentableAreaError">* 请输入有效的可租出面积</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-2">
+                <span> 合作方收入分成比例 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <input id="incomeRatio" type="text" style="width: 260px;" name="incomeRatio" value="" placeholder="请用0：0比例表示" ng-model="formResult.incomeRatio">
+                    <span class="null-data">(描述：万物仓：其他合作方)</span>
+                  </div>
+                  <div class="col-xs-6" style="text-align: center;"><span class="msgError" ng-if="valiResult.incomeRatioError">* 请输入有效的合作方收入分成比例</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-2">
+                <span> 工程总费用(元) </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="projectTotalFree" type="text" name="projectTotalFree" value="" placeholder="请输入工程总费用" ng-model="formResult.projectTotalFree">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.projectTotalFreeError">* 请输入有效的工程总费用</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan='2'>
+                <span></span>
+              </td>
+            </tr>
+            <!-- 智能柜 -->
+            <tr class="row" ng-show="tblDetails.shopTypeVal.id == 2">
+              <td class="col-xs-2" rowspan="2">
+                <p> 储物柜价格 </p>
+                <span class="msgInvalid"> 注：价格以天数计算 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd" style="padding-right: 0;">
+                <div class="row">
+                  <div class="col-xs-11 visible_sm_input_container rentprice_container">
+                    <b>小柜：</b>
+                    <span>
+                    1天 <input type="text" id="sm_day_price" name="sm_day_price" value="" ng-model="lockerPrice.smDayPrice"> <i>元/天</i>
+                  </span>
+                    <span>
+                    1周 <input type="text" id="sm_1week_price" name="sm_1week_price" value="" ng-model="lockerPrice.sm1WeekPrice"> <i>元/天</i>
+                  </span>
+                    <span>
+                    1个月 <input type="text" id="sm_1month_price" name="sm_1month_price" value="" ng-model="lockerPrice.sm1MonthPrice"> <i>元/天</i>
+                  </span>
+                    <span>
+                    3个月 <input type="text" id="sm_3month_price" name="sm_3month_price" value="" ng-model="lockerPrice.sm3MonthPrice"> <i>元/天</i>
+                  </span>
+                  </div>
+                  <div class="col-xs-1" style="padding-left: 0;">
+                    <span class="msgError" style="float: right;" ng-show="valiResult.smallRentPriceError">* 请检查</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.shopTypeVal.id == 2">
+              <td class="col-xs-10 formCtrlTd" style="padding-right: 0;">
+                <div class="row">
+                  <div class="col-xs-11 visible_sm_input_container rentprice_container">
+                    <b>大柜：</b>
+                    <span>
+                    1天 <input type="text" id="lg_day_price" name="lg_day_price" value="" ng-model="lockerPrice.lgDayPrice"> <i>元/天</i>
+                  </span>
+                    <span>
+                    1周 <input type="text" id="lg_1week_price" name="lg_1week_price" value="" ng-model="lockerPrice.lg1WeekPrice"> <i>元/天</i>
+                  </span>
+                    <span>
+                    1个月 <input type="text" id="lg_1month_price" name="lg_1month_price" value="" ng-model="lockerPrice.lg1MonthPrice"> <i>元/天</i>
+                  </span>
+                    <span>
+                    3个月 <input type="text" id="lg_3month_price" name="lg_3month_price" value="" ng-model="lockerPrice.lg3MonthPrice"> <i>元/天</i>
+                  </span>
+                  </div>
+                  <div class="col-xs-1" style="padding-left: 0;">
+                    <span class="msgError" style="float: right;" ng-show="valiResult.largeRentPriceError">* 请检查</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- 车库智能柜 -->
+            <!--<tr class="row" ng-show="tblDetails.shopTypeVal.id == 3">-->
+            <tr class="row" ng-if="tblDetails.shopTypeVal.id == 3">
+              <td class="col-xs-2">
+                <p> 储物柜价格 </p>
+                <span class="msgInvalid"> 注：价格以月数计算 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd" style="padding-right: 0;">
+                <div class="row">
+                  <div class="col-xs-11 visible_sm_input_container rentprice_container">
+                    <span>
+                    每月(元) <input type="text" id="ga_1mon_price" name="ga_1mon_price" value="" ng-model="gaLockerPrice.ga1MonPrice">
+                  </span>
+                    <span>
+                    1年(元) <input type="text" id="ga_1year_price" name="ga_1year_price" value="" ng-model="gaLockerPrice.ga1YearPrice">
+                  </span>
+                  </div>
+                  <div class="col-xs-1" style="padding-left: 0;">
+                    <span class="msgError" style="float: right;" ng-show="valiResult.gaRentPriceError">* 请检查</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 门店单价 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span><input id="standPrice" type="text" name="standPrice" value="" placeholder="请输入标准单价" ng-model="formResult.standPrice">
+                  </div>
+                  <div class="col-xs-8"><span class='msgError' ng-show='valiResult.standPriceError'>* 请输入有效的门店单价</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 最短租期 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <!-- 自存仓和智能柜 门店 -->
+                    <select ng-show="tblDetails.shopTypeVal.id!=3" name="minRentPeriodSel" id="minRentPeriodSel" ng-options="opt.name for opt in tblDetails.minRentPeriodList" ng-model="tblDetails.minRentPeriodVal" ng-change="tblDetails.minRentPeriodValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                    <!-- 车库智能柜 门店 -->
+                    <span ng-show="tblDetails.shopTypeVal.id==3">1个月</span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.minRentPeriodValError">* 请选择最短租期</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 开业时间 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="openDate" name="openDate" type="text" style="width:100px;" placeholder="请选择开业时间" ng-model="formResult.openDate" ng-click="openDatepicker.showOpenDate()">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;" ng-click="openDatepicker.showOpenDate()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.openDateError">* 请选择开业时间</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row" ng-show="tblDetails.shopTypeVal.id == 2">
+              <td class="col-xs-2">
+                <span> 设备SN码 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="deviceSN" type="text" name="deviceSN" value="" placeholder="请输入设备SN码" ng-model="formResult.deviceSN">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.deviceSNError">* 请输入有效的设备SN码</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span ng-show="(tblDetails.shopTypeVal.id!=1)&&(tblDetails.shopTypeVal.id!=2)&&(tblDetails.shopTypeVal.id!=3)"> 进仓&nbsp;/&nbsp;进柜方式 </span>
+                <span ng-show="tblDetails.shopTypeVal.id==1"> 进仓方式 </span>
+                <span ng-show="(tblDetails.shopTypeVal.id==2) || (tblDetails.shopTypeVal.id==3)"> 进柜方式 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select name="shopLockTypeSel" id="shopLockTypeSel" ng-options="opt.name for opt in tblDetails.shopLockTypeList" ng-model="tblDetails.shopLockTypeVal" ng-change="tblDetails.shopLockTypeValChanged()">
+                    <option value="">-请选择-</option>
+                  </select>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.shopLockTypeValError">* 请选择锁类型</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-12 td-divider" colspan='2'>
+                <span></span>
+              </td>
+            </tr>
+            <!-- 门店新增字段 start -->
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 月度场租 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span><input id="monthlyRent" type="text" name="monthlyRent" value="" placeholder="请输月度场租费用" ng-model="formResult.monthlyRent">
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 月度电费 </span>
+              </td>
+              <td class="col-xs-10">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span><input id="monthlyElecFee" type="text" name="monthlyElecFee" value="" placeholder="请输月度电费费用" ng-model="formResult.monthlyElecFee">
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 年带宽费 </span>
+              </td>
+              <td class="col-xs-10">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span><input id="yearNetFee" type="text" name="yearNetFee" value="" placeholder="请输年带宽费用" ng-model="formResult.yearNetFee">
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 年保险费 </span>
+              </td>
+              <td class="col-xs-10">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <span>￥</span><input id="yearInsuFee" type="text" name="yearInsuFee" value="" placeholder="请输年保险费用" ng-model="formResult.yearInsuFee">
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 工程分摊月份(月) </span>
+              </td>
+              <td class="col-xs-10">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="proFeeApporteMonth" type="text" name="proFeeApporteMonth" value="" placeholder="请输工程分摊月份" ng-model="formResult.proFeeApporteMonth">
+                  </div>
+                  <div class="col-xs-8"></div>
+                </div>
+              </td>
+            </tr>
+            <!-- 门店新增字段 end -->
+            <tr class="row" ng-show="tblDetails.shopTypeVal.id == 1 || tblDetails.shopTypeVal.id == 5">
+              <td class="col-xs-2">
+                <span> 备注 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-10">
+                    <textarea name="remarks" id="remarks" rows="4" cols="100" placeholder="请选填备注内容" value="" style="padding: 10px; resize:none; outline:none;border: 0 none;" ng-model="formResult.remarks"></textarea>
+                    <!-- <input id="remark" type="text" name="remark" value="" placeholder="备注" ng-model="formResult.remark"> -->
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="false"></span></div>
+                </div>
+              </td>
+            </tr>
+            <!-- 保存和取消按钮 -->
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-show="viewTag==='editShop'">
+      <div class="block-info area">
+        <!-- <div hrdivider><span>区域信息&nbsp;<span class="fa fa-angle-down"></span></span></div> -->
+        <div title-divider="">区域信息</div>
+        <div id="regionScope">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="" style="margin-left: 20px;">
+                <a href="javascript:;" class="btn btn-long btn-confirm" ng-click="aboutRegion.addRegion()" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">
+                  <i class="fa fa-plus"></i>&nbsp;&nbsp;<span>新增区域</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal tblRegionList">
+            <thead>
+              <tr>
+                <th>
+                  <div><span>区域名称</span></div>
+                </th>
+                <th>
+                  <div><span>更多</span></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-show="aboutRegion.regionList.length>0" ng-repeat="item in aboutRegion.regionList">
+                <td>
+                  <span ng-bind="item.name"></span>
+                  <input type="hidden" value="{{item.id}}">
+                </td>
+                <td>
+                  <a href="javascript:;" ng-click="aboutRegion.editRegion(item)" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>&nbsp;&nbsp;&nbsp;
+                  <a href="javascript:;" ng-click="aboutRegion.delRegion(item)" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">删除</a>
+                </td>
+              </tr>
+              <tr ng-show="!aboutRegion.regionList.length">
+                <td colspan="2">暂无区域数据</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="block-info unit">
+        <!-- <div hrdivider><span>仓位信息&nbsp;<span class="fa fa-angle-down"></span></span></div> -->
+        <div title-divider="">仓位信息</div>
+        <div class="">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="" style="margin-left: 20px;">
+                <a class="btn btn-long btn-confirm" ng-href="{{'#/shopMng_addUnit/shop/'+param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span>新增仓位</span>
+                </a>
+              </div>
+              <div class="right-arrange">
+                <label><span>显示条数：</span>
+                  <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>仓位名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>仓位区域</span>
+                  </div>
+                </th>
+                <th ng-show="queryResult.shopType!==3">
+                  <div>
+                    <span>仓位类型</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>仓位大小(m)</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>仓位容积(m³)</span>
+                  </div>·
+                </th>
+                <th ng-if="queryResult.shopType === 1">
+                  <div>
+                    <span>仓位价格</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>锁类型</span>
+                  </div>
+                </th>
+                <th ng-if="queryResult.shopType === 3">
+                  <div>
+                    <span>设备SN码</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>仓位状态</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更多</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+                <td ng-bind="item.name"></td>
+                <td ng-bind="item.regionName"></td>
+                <td ng-bind="item.type | unitTypeFilter" ng-show="queryResult.shopType!==3"></td>
+                <td ng-bind="item.length + 'x' + item.width + 'x' + item.height"></td>
+                <td ng-bind="item.volume"></td>
+                <td ng-bind="item.price" ng-if="queryResult.shopType === 1"></td>
+                <td ng-bind="item.lockType | unitLockTypeFilter"></td>
+                <td ng-if="queryResult.shopType === 3" ng-bind="item.remarks"></td>
+                <td ng-bind="item.unitState | unitStateFilter"></td>
+                <td>
+                  <input type="hidden" name="dataID" ng-value="item.id">
+                  <a ng-href="{{'#/shopMng_queryUnit/' + item.unitID + '/shop/' + param}}" ng-if="(adminModules[1].type == 2) || (adminModules[1].type == 4)">查看</a>&emsp;
+                  <a ng-href="{{'#/shopMng_editUnit/' + item.unitID + '/shop/' + param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>
+                </td>
+              </tr>
+              <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.dataList.length>0">
+            <div expagination="" data-config-obj="tblPagination"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+
+      <div class="block-info lock-info" ng-if="queryResult.shopType == 1">
+        <!-- <div hrdivider><span>门禁信息&nbsp;<span class="fa fa-angle-down"></span></span></div> -->
+        <div title-divider="" style="margin-top:-18px;">门禁信息</div>
+        <div>
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="" style="margin-left: 20px;">
+                <a class="btn btn-long btn-confirm" ng-href="{{'#/shopMng_addLock/'+param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span>新增门禁</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal" style="margin-bottom:10px;">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>设备名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备SN</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备状态</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更多</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in aboutLock.dataList" ng-if="aboutLock.dataList.length>0">
+                <td ng-bind="item.deviceName"></td>
+                <td ng-bind="item.deviceCode"></td>
+                <td ng-bind="item.state | guardDeviceStateFilter" class="{{item.state===1?'msgSuccess':'msgError'}}"></td>
+                <td>
+                  <input type="hidden" name="dataID" ng-value="item.id">
+                  <a ng-href="{{'#/shopMng_editLock/'+item.id+'/shop/'+param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>&emsp;
+                  <a href="" ng-click="aboutLock.delLock(item.deviceCode)" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">删除</a>
+                </td>
+              </tr>
+              <tr ng-if="aboutLock.dataList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="block-info temperature">
+        <!-- <div hrdivider><span>仓位信息&nbsp;<span class="fa fa-angle-down"></span></span></div> -->
+        <div title-divider="">温湿度设备</div>
+        <div class="">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="" style="margin-left: 20px;">
+                <a class="btn btn-long btn-confirm" ng-href="{{'#/shopMng_addTempHum/' + param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span>新增设备</span>
+                </a>
+              </div>
+              <div class="right-arrange">
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>设备名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备SN</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备状态</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>温度</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>湿度</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更新时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更多</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in aboutTempHum.TempHumList" ng-if="aboutTempHum.TempHumList.length>0">
+                <td ng-bind="item.deviceName"></td>
+                <td ng-bind="item.deviceSN"></td>
+                <td ng-bind="item.onlineState | wjlDeviceStateFilter"
+                  class="{{item.onlineState===1?'msgSuccess':'msgError'}}"></td>
+                <td ng-bind="item.temperature"></td>
+                <td ng-bind="item.humidity"></td>
+                <td ng-bind="item.updateDate"></td>
+                <td>
+                  <input type="hidden" name="dataID" ng-value="item.id">
+                  <a ng-href="{{'#/shopMng_detailsTempHum/' + item.id}}" ng-if="(adminModules[1].type == 2) || (adminModules[1].type == 4)">查看</a>&emsp;
+                  <a ng-href="{{'#/shopMng_editTempHum/' + item.id + '/' + param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>&emsp;
+                  <a href="javascript:;" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)" ng-click="aboutTempHum.delete(item.id)">删除</a>
+                </td>
+              </tr>
+              <tr ng-if="aboutTempHum.TempHumList==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.dataList.length>0">
+            <div expagination="" data-config-obj="tblPagination"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="block-info smoke">
+        <!-- <div hrdivider><span>仓位信息&nbsp;<span class="fa fa-angle-down"></span></span></div> -->
+        <div title-divider="">烟感设备</div>
+        <div class="">
+          <div class="table-toolbar tblToolbar">
+            <div class="tblToolbar-row">
+              <div class="" style="margin-left: 20px;">
+                <a class="btn btn-long btn-confirm" ng-href="{{'#/shopMng_addSmoke/'+ param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span>新增设备</span>
+                </a>
+              </div>
+              <div class="right-arrange">
+                <label><span>显示条数：</span>
+                  <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>设备名称</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备SN</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>设备状态</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>烟浓度</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更新时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更多</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in aboutSmoke.smokeList" ng-if="aboutSmoke.smokeList.length>0">
+                <td ng-bind="item.deviceName"></td>
+                <td ng-bind="item.deviceSN"></td>
+                <td ng-bind="item.onlineState | wjlDeviceStateFilter"
+                  class="{{item.onlineState===1?'msgSuccess':'msgError'}}"></td>
+                <td ng-bind="item.smoke"></td>
+                <td ng-bind="item.updateDate"></td>
+                <td>
+                  <input type="hidden" name="dataID" ng-value="item.id">
+                  <a ng-href="{{'#/shopMng_detailsSmoke/' + item.id}}" ng-if="(adminModules[1].type == 2) || (adminModules[1].type == 4)">查看</a>&emsp;
+                  <a ng-href="{{'#/shopMng_editSmoke/' + item.id + '/' + param}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>
+                  &emsp;
+                  <a href="javascript:;" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)" ng-click="aboutSmoke.delete(item.id)">删除</a>
+                </td>
+              </tr>
+              <tr ng-if="aboutSmoke.smokeList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="tblNormal.dataList.length>0">
+            <div expagination="" data-config-obj="tblPagination"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="block-info lock-car" ng-if="false">
+        <div hrdivider=""><span>门禁卡信息&nbsp;<span class="fa fa-angle-down"></span></span>
+        </div>
+        <div class="">
+          <div class="table-toolbar tblToolbar">
+            <div class="row">
+              <div class="col-xs-6">
+              </div>
+              <div class="col-xs-6">
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered tblNormal" style="margin-bottom:10px;">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <span>姓名</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>门禁卡ID</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>对应门禁设备名</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>截止时间</span>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>更多</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in aboutUnLock.dataList" ng-if="aboutUnLock.dataList.length>0">
+                <td ng-bind="item.userName"></td>
+                <td ng-bind="item.uid"></td>
+                <td ng-bind="item.deviceName"></td>
+                <td ng-bind="item.overDueDate"></td>
+                <td>
+                  <input type="hidden" name="dataID" ng-value="item.id">
+                  <a ng-href="{{'../clientMng/index.html#/clientMng_editCard/' + item.id + '/' + param + '/' + formResult.shopID}}" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">编辑</a>&emsp;
+                  <a href="" ng-click="aboutUnLock.delUnlocker(item.uid)" ng-if="(adminModules[1].type == 3) || (adminModules[1].type == 4)">删除</a>
+                </td>
+              </tr>
+              <tr ng-if="aboutUnLock.dataList.length==0" class="hintNoMsg">
+                <td colspan="8">
+                  <span class="msgInvalid">- 暂无相关信息 -</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right mt-20" ng-if="aboutUnLock.dataList.length>0">
+            <div expagination="" data-config-obj="tblCardPagination"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title" id="myModalLabel" ng-bind="modalBasic.header.content"></div>
+          </div>
+          <div class="modal-body">
+            <div ng-bind="modalBasic.body.content" ng-show="modalBasic.body.contentType==='text'"></div>
+            <!-- <div ng-show="modalBasic.body.contentType==='text'">
+              <div><button class="btn btn-confirm" style="width:90%;height:50px;margin-top:10px;margin-bottom:20px;" ng-click="aboutRegion.addRegion()">立即添加区域</button></div>
+              <div><button class="btn btn-confirm" style="width:90%;height:50px;margin-top:10px;margin-bottom:20px;" ng-click="aboutRegion.addRegion()">立即添加门禁</button></div>
+            </div> -->
+            <div ng-show="modalBasic.body.contentType==='dom'">
+              <div class="addRegionContainer">
+                <div class="row">
+                  <div class="col-xs-8">
+                    <input id="regionName" type="text" placeholder="请输入{{modalBasic.header.content.indexOf('编辑')!==-1?'新的':''}}区域名称,如：A区域" ng-model="aboutRegion.regionName">
+                  </div>
+                  <div class="col-xs-4">
+                    <button class="btn btn-confirm btnAdd" ng-click="aboutRegion.save()">
+                      {{modalBasic.header.content.indexOf('编辑')!==-1?'修改':'添加'}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-left:20px;margin-top:4px;">
+                <div class="modalMsg" ng-bind="aboutRegion.msgTip" ng-show="aboutRegion.msgTipShow" ng-class="(aboutRegion.msgTip.indexOf('成功')!==-1?'msgSuccess':'msgError')"></div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" ng-class="item.styleList" ng-repeat="item in modalBasic.footer.btn" ng-click="item.func()" ng-bind="item.name"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

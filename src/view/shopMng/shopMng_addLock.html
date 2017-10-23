@@ -1,0 +1,64 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 设备名称 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="deviceName" type="text" name="deviceName" value="" placeholder="请输入设备名称" ng-model="formResult.deviceName">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.deviceNameError">* 请输入有效的设备名称</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 设备SN码 </span>
+                <div class="msgInvalid" ng-show="title.indexOf('编辑')!==-1">(不可更改)</div>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row" ng-show="title.indexOf('编辑')===-1">
+                  <div class="col-xs-4">
+                    <input id="deviceCode" type="text" name="deviceCode" value="" placeholder="请输入设备SN码" ng-model="formResult.deviceCode">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.deviceCodeError">* 请输入有效的设备SN码</span></div>
+                </div>
+                <div class="row" ng-show="title.indexOf('编辑')!==-1">
+                  <div class="col-xs-12">
+                    <span ng-bind="formResult.deviceCode"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

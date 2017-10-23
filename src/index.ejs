@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- BEGIN HEAD -->
+
+<head>
+  <meta charset="utf-8" />
+  <title>万物仓</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <!-- start: 禁止页面缓存 -->
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <!-- end -->
+  <!-- <meta content="width=device-width, initial-scale=1" name="viewport"/> -->
+  <meta content="万物仓后台管理系统" name="description" />
+  <meta content="万物仓" name="author" />
+  <link rel="icon" href="./img/favicon.ico" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<!-- END HEAD -->
+
+<body id="loginBody" style="background-color: #9A9471;">
+  <div class="background"></div>
+  <div class="container">
+    <div class="subContainer">
+      <div class="loginTitle">
+        <!-- <img src="./img/loginTitleText.png" style="max-width:100%" alt=""/> -->
+      </div>
+      <div class="loginContent">
+        <form id="formOfLogin">
+          <input type="text" name="userName" id="userName" placeholder="请输入用户名" autocomplete="off" /><br/>
+          <input type="password" name="userPwd" id="userPwd" placeholder="请输入密码" autocomplete="off" /><br/>
+          <input type="text" name="verCode" id="verCode" placeholder="请输入验证码" autocomplete="off" />
+          <span id="verCodePic" style="position:relative;transform:translateX(4px)">
+            <img src="" alt="" style="width:130px;height:35px;"/>
+          </span>
+          <div style="clear:both;"></div>
+          <div class="remDiv">
+            <span class="remComp">
+                            <span class="remIcon"></span>
+            <span class="remTip">记住我</span>
+            <!-- <div style="clear:both;"></div> -->
+            </span>
+            <span id="verCodeChange" style="float:right;margin-right:4px;">换一张</span>
+          </div>
+          <div style="clear:both;"></div>
+          <input type="button" value="登 录" /><br/>
+          <div style="clear:both;"></div>
+          <div class="msgDiv">登录失败，请重新输入正确的用户名和密码</div>
+        </form>
+      </div>
+    </div>
+    <div class="loginFooter">&copy;2016&nbsp;深圳万物仓仓储有限公司版权所有</div>
+  </div>
+
+  <script src="./js/jquery.js"></script>
+  <script>
+    //登录页逻辑处理
+    $(function() {
+      //设置全局程序的运行模式
+      //DEBUGTEST -- 调试目录(src)+测试服务器(114)
+      //DEBUGRUN  -- 调试目录(src)+运行服务器(120)
+      //RUNTEST   -- 运行目录(admin)+测试服务器(114)
+      //RUNRUN    -- 运行目录(admin)+运行服务器(120)
+      // console.log(window.location.hostname);
+      window.localStorage.setItem("globalFlag", "__SYS_RUN_MODE__");
+      switch (window.localStorage.getItem('globalFlag')) {
+        case 'DEBUGTEST':
+          console.log('DEBUGTEST');
+        case 'RUNTEST':
+          console.log('RUNTEST');
+          // window.sessionStorage.setItem("hostURL", '114.55.66.232:80');
+          window.sessionStorage.setItem("hostURL", '114.55.66.232:8666');
+          break;
+        case 'DEBUGRUN':
+          console.log('DEBUGRUN');
+        case 'RUNRUN':
+          console.log('RUNRUN');
+          switch (window.location.hostname) {
+            case 'www.youminfo.com':
+              window.sessionStorage.setItem("hostURL", 'www.youminfo.com');
+              break;
+            case 'youminfo.com':
+              window.sessionStorage.setItem("hostURL", 'youminfo.com');
+              break;
+            case '120.27.157.191':
+              window.sessionStorage.setItem("hostURL", '120.27.157.191:80');
+              break;
+            default:
+              break;
+          }
+          break;
+        default:
+          console.log("default");
+          // window.sessionStorage.setItem("hostURL", '114.55.66.232:80');
+          window.sessionStorage.setItem("hostURL", '114.55.66.232:8666');
+          break;
+      }
+      //登录前清除sessionStorage中的模块定位标志
+      window.sessionStorage.removeItem('viewLocation');
+      window.localStorage.removeItem('sessionID');
+      window.localStorage.removeItem('vks-web-adminID');
+      //验证码设置
+      $("#verCodePic>img").attr('src', 'http://' + window.sessionStorage.getItem("hostURL") + '/api/verCode');
+      $("#verCodeChange").on('click', function() {
+        $("#verCodePic>img").attr('src', '');
+        $("#verCodePic>img").attr('src', 'http://' + window.sessionStorage.getItem("hostURL") + '/api/verCode');
+      });
+      //初始化记住我选择框
+      var remFlag = window.localStorage.getItem('remFlag');
+      if (remFlag) {
+        //如果上一次设置了"记住我"，则打勾
+        $(this).find('span.remIcon').removeClass('unrem').addClass('rem');
+      } else {
+        $(this).find('span.remIcon').removeClass('rem').addClass('unrem');
+      }
+      //"记住我"单选框
+      $("span.remComp").on('click', function() {
+        console.log(this);
+        remFlag = !remFlag;
+        if (remFlag) {
+          $(this).find('span.remIcon').removeClass('unrem').addClass('rem');
+        } else {
+          $(this).find('span.remIcon').removeClass('rem').addClass('unrem');
+        }
+      });
+
+      //监听两个输入框的focus事件以及监听输入框的"回车"按键事件
+      $("#userName, #userPwd, #verCode").focus(function() {
+        $("div.msgDiv").slideUp('fast');
+      }).keydown(function(event) {
+        var e = window.event || arguments[0];
+        //console.log(e.keyCode);
+        //回车
+        if (e.keyCode == 13) {
+          verifyFeedback();
+        }
+      });
+      //验证服务器反馈消息
+      var verifyFeedback = function() {
+        //获取用户名和输入密码
+        var userName = $("#userName");
+        var userPwd = $("#userPwd");
+        var verCode = $("#verCode");
+        var userObj = {
+          name: userName.val(),
+          password: userPwd.val(),
+          verCode: verCode.val()
+        };
+        //发送AJAX验证请求
+        $.post('http://' + window.sessionStorage.getItem("hostURL") + '/api/loginAdmin', userObj, function(ret) {
+          //服务器验证账号密码成功
+          if (ret.success) {
+            //将"记住我"标识保存到localStorage
+            window.localStorage.setItem('remFlag', remFlag);
+            window.localStorage.setItem('adminName', userObj.name);
+            //如果设置了记住我
+            if (remFlag) {
+              window.localStorage.setItem('adminPwd', userObj.password);
+              //设置全局的运行模式, 但是会变成字符串
+            } else {
+              //如果没有设置记住我，则要将数据清除
+              window.localStorage.removeItem('adminPwd');
+            }
+            window.localStorage.setItem('sessionID', ret.data.sessionID);
+            window.localStorage.setItem('vks-web-adminID', ret.data.adminID);
+            //保存权限
+            var originModules = ret.data.modules;
+            console.log(originModules);
+            var modules = [];
+            var indexModuleID = 0;
+            var indexArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+            indexArr.forEach(function(i) {
+              for (var j in originModules) {
+                if (originModules[j].moduleID == i) {
+                  indexModuleID = (indexModuleID === 0) ? (originModules[j].isHave ? i : 0) : indexModuleID;
+                  modules.push(originModules[j]);
+                  break;
+                }
+              }
+            });
+
+            window.sessionStorage.setItem('adminModules', JSON.stringify(modules));
+            //跳转页面
+            // window.location.href = "./view/home/index.html";
+            var indexMngName = '';
+            var indexIDName = '';
+            switch (indexModuleID) {
+              case 1:
+                indexMngName = "home";
+                indexIDName = "viewHomeItem";
+                break;
+              case 2:
+                indexMngName = "shopMng";
+                indexIDName = "viewShopMngItem";
+                break;
+              case 3:
+                indexMngName = "clientMng";
+                indexIDName = "subViewClientMgr";
+                break;
+              case 4:
+                indexMngName = "orderMng";
+                indexIDName = "viewOrderMngItem";
+                break;
+              case 5:
+                indexMngName = "authorizeMng";
+                indexIDName = "subViewShopMngr";
+                break;
+              case 6:
+                indexMngName = "financeMng";
+                indexIDName = "subViewRefundDeal";
+                break;
+              case 7:
+                indexMngName = "infoMng";
+                indexIDName = "viewInfoMngItem";
+                break;
+              case 8:
+                indexMngName = "bookMng";
+                indexIDName = "viewBookMngItem";
+                break;
+              case 9:
+                indexMngName = "marketMng";
+                indexIDName = "viewMarketMngItem";
+                break;
+              case 10:
+                indexMngName = "facilityMng";
+                indexIDName = "viewFacilityMngItem";
+                break;
+              case 11:
+                indexMngName = "threadMng";
+                indexIDName = "subViewThreadRecord";
+                break;
+              case 12:
+                indexMngName = "otherMng";
+                indexIDName = "viewOtherMngItem";
+                break;
+            }
+            window.location.href = "./view/" + indexMngName + "/index.html";
+            window.sessionStorage.setItem('viewLocation', indexIDName);
+          } else {
+            //服务器验证账号密码失败
+            //提示登录失败，重新登录
+            //$("div.msgDiv").css("visibility", "visible");
+            $("div.msgDiv").html(ret.message);
+            $("div.msgDiv").slideDown('fast');
+            if (ret.message.indexOf('验证码') === -1) {
+              userPwd.val("");
+            } else {
+              verCode.val("");
+              if (ret.message.indexOf('验证码错误') !== -1) {
+                //更新验证码
+                $("#verCodePic>img").attr('src', 'http://' + window.sessionStorage.getItem("hostURL") + '/api/verCode');
+              }
+            }
+            console.log("login failed");
+            //登录失败就要清除掉
+            window.localStorage.removeItem('adminName');
+            window.localStorage.removeItem('adminPwd');
+            window.localStorage.removeItem('sessionID');
+            window.localStorage.removeItem('vks-web-adminID');
+          }
+        });
+      };
+      //给"登录"按钮绑定click事件
+      $("#loginBody input[type='button']").on('click', verifyFeedback);
+      //检查是否设置了之前"记住我"
+      if (window.localStorage.getItem('remFlag')) {
+        $("#userName").val(window.localStorage.getItem('adminName'));
+        $("#userPwd").val(window.localStorage.getItem('adminPwd'));
+      }
+    });
+  </script>
+</body>
+
+</html>

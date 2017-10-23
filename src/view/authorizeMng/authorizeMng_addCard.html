@@ -1,0 +1,68 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="panel panel-warning">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h3 class="panel-title text-primary">
+          <span ng-bind="title"></span>
+        </h3>
+      </div>
+      <form id="formOfAdding">
+        <table class="table tbl_edit tbl_details tblDetails">
+          <tbody>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span ng-show="viewTag === 'ADD'"> 门禁卡ID </span>
+                <div ng-show="viewTag === 'EDIT'">
+                  <span> 门禁卡ID </span><br>
+                  <span class="msgInvalid"> (不可更改) </span>
+                </div>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row" ng-show="viewTag === 'ADD'">
+                  <div class="col-xs-4">
+                    <input id="uid" type="text" name="uid" value="" placeholder="请输入门禁卡ID" ng-model="formResult.uid">
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.uidError">* 请输入有效的门禁卡ID</span></div>
+                </div>
+                <div class="row" ng-show="viewTag === 'EDIT'">
+                  <div class="col-xs-12">
+                    <span ng-bind="queryResult.uid"></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="col-xs-2">
+                <span> 截止日期 </span>
+              </td>
+              <td class="col-xs-10 formCtrlTd">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input id="endDate" name="endDate" type="text" placeholder="请选择截止日期" style="width: 120px;" ng-focus="tblDetails.showDatepickerEnd()" ng-model="formResult.overDueDate">
+                    <span class="laydate-icon" style="border:0;width:30px;padding-right:0;display:inline-block;vertical-align:middle;" ng-click="tblDetails.showDatepickerEnd()"></span>
+                  </div>
+                  <div class="col-xs-8"><span class="msgError" ng-show="valiResult.overDueDateError">* 请选择截止日期</span></div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10">
+                    <input type="button" class="btn btn-long btn-confirm" value="保存" id="save" ng-click="tblDetails.save()">
+                    <input type="button" class="btn btn-long btn-cancel" value="返回" id="cancel" ng-click="tblDetails.cancel()">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>

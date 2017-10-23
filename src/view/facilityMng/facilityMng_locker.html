@@ -1,0 +1,103 @@
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent">
+    <div class="table-toolbar tblToolbar">
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="input-group input-medium tblToolbar-search">
+          <span class="fa fa-search"></span>
+          <input type="search" class="form-control" id="searchGrp" name="searchGrp" placeholder="所属门店名 / SN号" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
+          <span class="input-group-btn">
+            <button class="btn btn-confirm" type="button" ng-click="tblToolbar.launchSearch()"> 搜索 </button>
+          </span>
+        </div>
+      </div>
+      <div class="tblToolbar-row">
+        <div class=""></div>
+        <div class="right-arrange">
+          <label><span>设备状态：</span>
+            <select name="shopTypeSel" id="shopTypeSel" class="form-control input-small input-inline" ng-options="opt.name for opt in tblToolbar.lockerStateList" ng-model="tblToolbar.stateVal" ng-change="tblToolbar.stateValChanged()">
+              <option value="">-请选择-</option>
+            </select>
+          </label>
+          <div class="item-divider"></div>
+          <label><span>显示条数：</span>
+            <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover table-bordered tblNormal">
+      <thead>
+        <tr>
+          <th>
+            <div>
+              <span>储物柜所属门店</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>设备SN号</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>设备状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>状态更新时间</span>
+            </div>
+          </th>
+          <th>
+            <div>
+              <span>更多</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 以下由自己手动插入-->
+        <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
+          <td>
+            <a ng-href="{{'../shopMng/index.html#/shopMng_queryShop/'+item.id}}" ng-bind="item.name || '- -'" ng-class="item.name?'':'msgInvalid'"></a>
+          </td>
+          <td ng-bind="item.deviceSN || '- -'" ng-class="item.deviceSN?'':'msgInvalid'"></td>
+          <td ng-bind="(item.deviceStatus | wjlDeviceStateFilter) || '- -'" ng-class="item.deviceStatus===0?'msgInvalid':(item.deviceStatus===1)?'msgSuccess':'msgError'"></td>
+          <td ng-bind="(item.updateDate) || '- -'" ng-class="item.updateDate?'':'msgInvalid'"></td>
+          <td>
+            <input type="hidden" name="dataID" ng-value="item.id">
+            <a ng-href="{{'../shopMng/index.html#/shopMng_queryShop/' + item.id}}" ng-if="(adminModules[9].type == 2) || (adminModules[9].type == 4)">查看</a>&nbsp;&nbsp;
+            <a ng-href="{{'../shopMng/index.html#/shopMng_editShop/' + item.id}}" ng-if="(adminModules[9].type == 3) || (adminModules[9].type == 4)">编辑</a>&nbsp;&nbsp;
+            <a href="" ng-click="tblNormal.generateQRCode(item.name, item.deviceSN)" ng-if="(adminModules[9].type == 4)">生成二维码</a>
+          </td>
+        </tr>
+        <tr ng-if="tblNormal.dataList.length==0" class="hintNoMsg">
+          <td colspan="8">
+            <span class="msgInvalid">- 暂无相关信息 -</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-right">
+      <div expagination="" data-config-obj="tblPagination"></div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="qrcode-mask" ng-show="tblNormal.qrShowState">
+      <div class="qrcode-container">
+        <i class="iconfont icon-close" ng-click="tblNormal.qrHide()"></i>
+        <div class="scode-container">
+          <div id="scode" src="" alt=""></div>
+          <p class="qrcode-name"> {{ tblNormal.qrcodeName }} </p>
+          <p class="qrcode-short-link"> {{tblNormal.qrCodeShortLink}} </p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

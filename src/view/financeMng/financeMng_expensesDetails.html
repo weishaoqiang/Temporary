@@ -1,0 +1,146 @@
+
+<div>
+  <header ng-include="'../../template/header.html'"></header>
+  <section class="mainContent add-page">
+    <div class="panel panel-warning">
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title text-primary flt-lf">
+          <span> 支出详情</span>
+        </h3>
+        <a class="flt-rt" ng-href="{{'#/financeMng_expensesEdit/'+id}}" ng-if="(adminModules[5].type == 3)||(adminModules[5].type == 4)">编辑</a>
+      </div>
+    </div>
+    <form id="formOfAdding">
+      <table class="table tbl_edit tbl_details tblDetails">
+        <tbody>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>城市</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.expensesDetails.cityName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>门店</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="(!!tblNormal.expensesDetails.shopName ? tblNormal.expensesDetails.shopName : '城市支出费用')"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>金额</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-8">
+                  <span ng-bind="'￥'+tblNormal.expensesDetails.amount"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>分摊周期</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-8">
+                  <span ng-bind="tblNormal.expensesDetails.startDate"></span>
+                  &nbsp;
+                  <span>至</span>
+                  &nbsp;
+                  <span ng-bind="tblNormal.expensesDetails.endDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>费用类型</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.expensesDetails.feeType"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>支出时间</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-4">
+                  <span ng-bind="tblNormal.expensesDetails.payDate"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-12 td-divider" colspan="2"></td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>报销人</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                <span ng-bind="tblNormal.expensesDetails.useName"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>财务录入</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span ng-bind="tblNormal.expensesDetails.createBy"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-2">
+              <span>事项说明</span>
+            </td>
+            <td class="col-xs-10 formCtrlTd">
+              <div class="row">
+                <div class="col-xs-12">
+                  <span ng-bind="(!!tblNormal.expensesDetails.matterContent ? tblNormal.expensesDetails.matterContent : '暂无说明')" ng-class="{msgInvalid: !tblNormal.expensesDetails.matterContent}"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="row">
+            <td class="col-xs-12" colspan="2">
+              <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10">
+                  <input type="button" class="btn btn-long btn-cancel" value="返回" id="save" ng-click="tblNormal.back()">
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <div ng-include="'../../template/modalBasic.html'"></div>
+  </section>
+</div>
