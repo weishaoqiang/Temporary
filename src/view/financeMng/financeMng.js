@@ -376,7 +376,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
     };
     $scope.tblDetails.getRefundDetails($scope.param);
   }])
-  .controller('financeMngReceiptList_ctrl', ['$scope', '$rootScope', '$routeParams', '$http', '$timeout', '$q', 'itemNumList', 'RememberSer', 'TblPagination', function($scope, $rootScope, $routeParams, $http, $timeout, $q, itemNumList, RememberSer, TblPagination) {
+  .controller('financeMngReceiptList_ctrl', ['$scope', '$rootScope', '$routeParams', '$http', '$timeout', '$q', 'itemNumList', 'contractStateList', 'RememberSer', 'TblPagination', function($scope, $rootScope, $routeParams, $http, $timeout, $q, itemNumList, contractStateList, RememberSer, TblPagination) {
     $scope.globalPath.initPath({
       'name': '收款管理',
       'url': '../../..' + window.location.pathname + '#/financeMng_receiptList'
@@ -442,7 +442,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
         }
         self.getShopList(self.cityVal.id);
         // console.log(self.cityVal.id);
-        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '');
+        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '', self.contractStateVal.id);
       },
       // 门店之变化
       shopValChanged: function() {
@@ -453,7 +453,17 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
           }
         }
         // console.log(self.shopVal.id);
-        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '');
+        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '', self.contractStateVal.id);
+      },
+      contractStateValChanged: function() {
+        var self = this;
+        if (!self.contractStateVal) {
+          self.contractStateVal = {
+            id: '',
+          }
+        }
+        console.log(self.contractStateVal.id);
+        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '', self.contractStateVal.id);
       },
       itemNumValChanged: function() {
         var self = this;
@@ -462,11 +472,11 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
             id: '',
           }
         }
-        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '');
+        $scope.tblNormal.getReceiptList(self.cityVal.id, self.shopVal.id, self.itemNumVal.id, 1, 1, '', self.contractStateVal.id);
       },
       launchSearch: function() {
         var self = this;
-        $scope.tblNormal.getReceiptList('', '', self.itemNumVal.id, 1, 1, self.searchVal);
+        $scope.tblNormal.getReceiptList('', '', self.itemNumVal.id, 1, 1, self.searchVal, '');
       },
       cityList: '',
       cityVal: {
@@ -476,15 +486,19 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
       shopVal: {
         id: '',
       },
+      contractStateVal: {
+        id: '',
+      },
       itemNumList: itemNumList,
       itemNumVal: itemNumList[1],
+      contractStateList: contractStateList,
       searchVal: "",
     };
     $scope.tblNormal = {
       // 获取未确认订单
-      getReceiptList: function(cityID, shopID, pageSize, curPage, sortType, key) {
+      getReceiptList: function(cityID, shopID, pageSize, curPage, sortType, key, contractState) {
         var self = this;
-        var url = 'http://' + $rootScope.globalURL.hostURL + '/api/queryNotReceiptOrderListBKMgr?cityID=' + cityID + '&shopID=' + shopID + '&pageSize=' + pageSize + '&curPage=' + curPage + '&sortType=' + sortType + '&orderColumn=createDate' + '&key=' + key;
+        var url = 'http://' + $rootScope.globalURL.hostURL + '/api/queryNotReceiptOrderListBKMgr?cityID=' + cityID + '&shopID=' + shopID + '&pageSize=' + pageSize + '&curPage=' + curPage + '&sortType=' + sortType + '&orderColumn=createDate' + '&key=' + key + '&isExistContract=' + contractState;
         // console.log(url);
         $http.post(url)
           .success(function(ret) {
@@ -506,7 +520,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
     $scope.tblPagination.hookAfterChangePage = function(pageNum) {
       var self = this;
       var tblToolbar = $scope.tblToolbar;
-      $scope.tblNormal.getReceiptList(tblToolbar.cityVal.id, tblToolbar.shopVal.id, tblToolbar.itemNumVal.id, pageNum, 1, '');
+      $scope.tblNormal.getReceiptList(tblToolbar.cityVal.id, tblToolbar.shopVal.id, tblToolbar.itemNumVal.id, pageNum, 1, '', $scope.tblToolbar.contractStateVal.id);
     };
     $q.all([$scope.tblToolbar.getCityList(), $scope.tblToolbar.getShopList()])
       .then(function(flagBuf) {
@@ -521,9 +535,9 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
               $scope.tblToolbar.shopVal.id,
               $scope.tblToolbar.itemNumVal.id,
               $scope.tblPagination.curPage,
-              1, '');
+              1, '', $scope.tblToolbar.contractStateVal.id);
           } else {
-            $scope.tblNormal.getReceiptList('', '', $scope.tblToolbar.itemNumVal.id, 1, 1, '');
+            $scope.tblNormal.getReceiptList('', '', $scope.tblToolbar.itemNumVal.id, 1, 1, '','');
           }
         }
       });

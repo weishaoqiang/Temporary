@@ -885,6 +885,13 @@ const CstFilterList = {
   },{
     id: 2,
     name: '已使用'
+  }],
+  'contractState':[{
+    id: 0,
+    name: '未签订'
+  }, {
+    id: 1,
+    name: '已签订'
   }]
 };
 function FilterFactoryClass() {

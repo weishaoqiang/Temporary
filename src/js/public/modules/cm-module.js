@@ -404,6 +404,15 @@ cmModule.service('RememberSer', ['$route', 'TblPagination', function($route, Tbl
                   }
                 }
                 break;
+              case 'contractStateVal':
+                var promotionStateList = $scope.tblToolbar.contractStateList;
+                for (var i in contractStateList) {
+                  if (contractStateList[i].id === obj[attr].id) {
+                    ($scope.tblToolbar)[attr] = contractStateList[i];
+                    break;
+                  }
+                }
+                break;
               case 'startDate':
                 var startDate = $scope.tblToolbar.startDate;
                 ($scope.tblToolbar)['startDate'] = obj['startDate'];
