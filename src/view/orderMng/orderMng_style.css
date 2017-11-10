@@ -672,3 +672,56 @@
 .viewer-container .viewer-toolbar > li:hover {
   background-color: rgba(39, 39, 39, 0.8);
 }
+/************************************************
+ *首页添搜索店下拉框的样式
+ ***********************************************/
+.dropdown-menu {
+  top: 38px;
+  border-radius: 0;
+  min-width: 220px;
+  height: 200px;
+  overflow-y: scroll;
+}
+.dropdown-menu .fa-search {
+  position: absolute;
+  font-size: 14px;
+  top: 7px;
+  left: 12px;
+  z-index: 100;
+  color: #c9c9c9;
+}
+.dropdown-menu input[type='search'] {
+  padding-left: 34px;
+  line-height: 22px;
+  border-top-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+}
+.dropdown-menu input[type='text'] {
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+.dropdown-menu .input-group {
+  margin-left: 10px;
+}
+.dropdown-menu .input-group-btn .btn {
+  margin-right: 6px;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.dropdown-menu li {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.dropdown-menu li a {
+  color: inherit !important;
+}
+#btnForAddShop {
+  background-color: #fff;
+  border: 1px solid #c2cad8;
+  margin-right: 0;
+}
+.shopContent {
+  padding-left: 0;
+}
+.shopContent .tipMsg {
+  color: #a9a9a9;
+}

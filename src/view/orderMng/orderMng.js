@@ -101,7 +101,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
         return promise;
       },
       // 获取门店
-      getShopList: function() {
+      getShopList: function(key) {
         var self = this;
         var deferred = $q.defer();
         var promise = deferred.promise;
@@ -114,10 +114,14 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
         console.log(cityID);
         $http.get('http://' + $rootScope.globalURL.hostURL +
             '/api/getShopsByCity?cityID=' + cityID +
-            '&pageSize=100&curPage=1&sortType=1&orderColumn=openDate')
+            '&pageSize=1000&curPage=1&sortType=1&orderColumn=openDate&key='+ key)
           .success(function(ret) {
             if (ret.success) {
               console.log(ret);
+              ret.data.data.unshift({
+                name: '-全部-',
+                id: ""
+              });
               self.shopList = ret.data.data;
               deferred.resolve(true);
             } else {
@@ -127,6 +131,21 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
             console.log("Fail! Messgae is: " + msg);
           });
         return promise;
+      },
+      // 通过id找到门店名
+      getShopNameById: function(shopID) {
+        var shopName, self = this;
+        // console.log(self.shopList);
+        console.log(shopID);
+        for(var i = 0; i< self.shopList.length; i++) {
+          if( self.shopList[i].id === shopID){
+             self.selectShopName = self.shopList[i].name;
+             console.log(self.selectShopName);
+             return false;
+          }
+        }
+        self.selectShopName = '';
+        return false;
       },
       cityValChanged: function() {
         var self = this;
@@ -138,27 +157,30 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
             id: ''
           };
         }
-        self.getShopList();
+        self.getShopList('');
         self.searchVal = '';
         $scope.urlParam['cityID'] = self.cityVal.id;
         // 从url带过来的参数在重新选择城市的时候要重置为空
         //console.log(urlParam);
         //$scope.tblNormal.getOrderList(self.cityVal.id, '', self.orderStateVal.id, self.itemNumVal.id, 1, '');
       },
-      shopValChanged: function() {
+      shopValChanged: function(id, name) {
         //Get intentClientList
-
+        console.log(id);
         var self = this;
         if (!self.shopVal) {
           self.shopVal = {
             id: ''
           };
+        } else {
+          self.shopVal.id = id;
         }
         self.searchVal = '';
         // $scope.urlParam
         $scope.getUrlParam['shopID'] = '';
         // console.log($scope.getUrlParam.shopID+'==============');
         $scope.urlParam['shopID'] = self.shopVal.id;
+        self.selectShopName = name;
 
       },
       orderStateValChanged: function() {
@@ -215,8 +237,9 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       itemFilter: function() {
         var self = this;
         // console.log($scope.urlParam);
-        $window.location.hash = '#/orderMng_index/';
-        $scope.tblNormal.getOrderList(dealParam().cityID, $scope.urlParam.shopID, $scope.urlParam.orderState, $scope.urlParam.isVanke, $scope.urlParam.overDueDate, dealParam().startDate, dealParam().endDate, $scope.urlParam.pageSize, 1, '', '');
+        // $window.location.hash = '#/orderMng_index/';
+        // $scope.tblNormal.getOrderList(dealParam().cityID, dealParam().shopID, $scope.urlParam.orderState, $scope.urlParam.isVanke, $scope.urlParam.overDueDate, dealParam().startDate, dealParam().endDate, $scope.urlParam.pageSize, 1, '', '');
+        $scope.tblNormal.getOrderList($scope.urlParam.cityID, $scope.urlParam.shopID, $scope.urlParam.orderState, $scope.urlParam.isVanke, $scope.urlParam.overDueDate, $scope.urlParam.startCreateDate, $scope.urlParam.endCreateDate, $scope.urlParam.pageSize, 1, '', '');
         // window.sessionStorage.setItem('orderMngIndexroutePar','');
       },
       exportTblList: function() {
@@ -258,6 +281,8 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       startDate: '',
       endDate: '',
       managerID: dealParam().managerID,
+      shopKeyword:'',
+      selectShopName: '-全部-',
     };
     $scope.tblToolbar.itemNumVal = $scope.tblToolbar.itemNumList[1];
     $scope.tblNormal = {
@@ -271,6 +296,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
             //console.log(ret);
             if (ret.success) {
               $scope.tblNormal.dataList = ret.data.data;
+              console.log($scope.tblNormal.dataList);
               $scope.tblPagination.initPagination(ret);
             }
           }).error(function(msg) {
@@ -330,10 +356,11 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       var tblToolbar = $scope.tblToolbar;
       $scope.urlParam['curPage'] = pageNum;
       //console.log($scope.getUrlParam);
+      // console.log(pageNum );
       $scope.tblNormal.getOrderList(dealParam().cityID, dealParam().shopID, $scope.urlParam.orderState, $scope.urlParam.isVanke, $scope.urlParam.overDueDate, dealParam().startDate, dealParam().endDate, $scope.urlParam.pageSize, pageNum, $scope.urlParam.key, dealParam().managerID);
     };
 
-    $q.all([$scope.tblToolbar.getCityList(), $scope.tblToolbar.getShopList()])
+    $q.all([$scope.tblToolbar.getCityList(), $scope.tblToolbar.getShopList('')])
       .then(function(flagBuf) {
         var flag = true;
         for (var i in flagBuf) {
@@ -355,6 +382,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
               key: $scope.tblToolbar.searchVal,
               managerID: $scope.getUrlParam.managerID, // 管理员id
             };
+            $scope.tblToolbar.getShopNameById($scope.tblToolbar.shopVal.id);
             $scope.tblNormal.getOrderList($scope.tblToolbar.cityVal.id,
               $scope.tblToolbar.shopVal.id,
               $scope.tblToolbar.orderStateVal.id,

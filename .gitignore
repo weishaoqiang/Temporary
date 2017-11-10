@@ -17,4 +17,4 @@ admin/*
 .gitattributes
 
 # ignore view css
-/src/view/*/.css
+/src/view/*/*.css

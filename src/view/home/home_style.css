@@ -58,6 +58,7 @@
 }
 .table-statics .statics-label-olive {
   background-color: #bbd192;
+  min-width: 231px;
 }
 .table-statics .statics-label-yellow {
   background-color: #FFD700;
@@ -78,7 +79,7 @@
   left: -1%;
 }
 .table-statics .statics-label-large {
-  height: 110px;
+  height: 116px;
   color: #343337;
   position: relative;
   z-index: 1;
@@ -92,6 +93,10 @@
   position: relative;
   z-index: 2;
 }
+.table-statics .statics-label-large .text .data-item {
+  font-size: 12px;
+  color: #565e54;
+}
 .table-statics .statics-label-large:not(:last-child) {
   padding: 10px 20px 0 0;
 }
@@ -101,6 +106,9 @@
 .table-statics .statics-label-large:not(:last-child) .text {
   float: right;
   margin-top: 16px;
+}
+.table-statics .statics-label-large:not(:last-child) .text .data-item {
+  display: inline-block;
 }
 .table-statics .statics-label-large:last-child {
   display: -webkit-box;
