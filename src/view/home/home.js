@@ -192,6 +192,9 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
               self.allVolume = ret.data.allVolume;
               self.countRentRate = Number((ret.data.countRentRate * 100).toFixed(4));
               self.volumeRentRate = Number((ret.data.volumeRentRate * 100).toFixed(4));
+              self.carCabinetRentRate = Number((ret.data.carCabinetRentRate * 100).toFixed(4));
+              self.warehouseRentRate = Number((ret.data.warehouseRentRate * 100).toFixed(4));
+              self.storeCabinetRentRate = Number((ret.data.storeCabinetRentRate * 100).toFixed(4));
             }
           }).error(function(msg) {
             console.log("Fail! Messgae is: " + msg);

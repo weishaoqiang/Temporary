@@ -20,13 +20,43 @@
                         </select>
                     </label>
           <div class="item-divider"></div>
-          <label>
+          <!-- <label>
                         <span>门店选择 </span>
                         &nbsp;&nbsp;
                         <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.shopList" ng-model="tblToolbar.shopVal" ng-change="tblToolbar.shopValChanged()">
                             <option value="">-全部-</option>
                         </select>
-                    </label>
+                    </label> -->
+                <label>
+                    <span>门店选择 </span>
+                    &nbsp;&nbsp;
+                    <div class="btn-group dropdown">
+                      <button id="btnForAddShop" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span>{{tblToolbar.selectShopName}}</span>
+                        <span class="caret" style="margin-left:10px;"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <div class="input-group">
+                            <span class="fa fa-search"></span>
+                            <input type="search" class="form-control" placeholder="门店名称..." ng-model="tblToolbar.shopKeyword">
+                            <span class="input-group-btn">
+                              <input type="button" class="btn btn-confirm" value="搜索" ng-click="tblToolbar.getShopList(tblToolbar.shopKeyword)">
+                            </span>
+                          </div>
+                        </li>
+                        <li class="opt" ng-repeat="item in tblToolbar.shopList" ng-click="tblToolbar.shopValChanged(item.id, item.name)" ng-show="tblToolbar.shopList.length>0">
+                          <a id="{{item.id}}" href="javascript:;" ng-bind="item.name"></a>
+                        </li>
+                        <li style="text-align:center;" ng-show="!tblToolbar.shopList.length">
+                          <br>
+                          <span class="msgInvalid" ng-show="tblDetails.cityVal.id"> 暂无内容 </span>
+                          <span class="msgInvalid" ng-show="!tblDetails.cityVal.id"> -请先选择城市- </span>
+                          <br>
+                        </li>
+                      </ul>
+                    </div>
+              </label>
           <div class="input-group input-medium tblToolbar-search">
             <span class="fa fa-search"></span>
             <input type="search" style="background-color: #efefef;" class="form-control" id="searchGrp" name="searchGrp" placeholder="可搜索订单号、客户姓名、手机号" ng-model="tblToolbar.searchVal" ng-enter="tblToolbar.launchSearch()">
@@ -122,6 +152,11 @@
           </th>
           <th>
             <div>
+              <span>合同状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
               <span>订单状态</span>
             </div>
           </th>
@@ -141,6 +176,7 @@
           <td ng-bind="item.rentLast + (item.shopType!=2?'个月':(item.shopType==2?'天':''))"></td>
           <td ng-bind="item.createDate.slice(0, 10)"></td>
           <td ng-bind="item.actualPay | currency:'￥' : number : 2 "></td>
+          <td ng-bind="item.isHaveContract | contractStateFilter"></td>
           <td>
             <span ng-bind="item.state | orderStateFilter" style="color: {{item.state | orderColorStateFilter}};"></span>
           </td>

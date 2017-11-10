@@ -46,13 +46,18 @@
           <!-- <div class="number" ng-cloak="">{{tblStatics.capacityRentRate}}</div><div style="clear:both;"></div> -->
           <div class="number" ng-cloak="">{{tblStatics.volumeRentRate}}%</div>
           <div style="clear:both;"></div>
-          <div class="text" style="text-align:right;">
+          <div class="text" style="text-align:right; margin-top: 0px;">
             <div class="" style="display:inline-block;">
               容积出租率
             </div>
             <div class="" style="float:right;">
               ({{tblStatics.rentVolume}} / {{tblStatics.allVolume}})
             </div>
+          </div>
+          <div class="text" style="text-align:right;  margin-top: 0px;">
+              <div class="data-item">自存仓:{{tblStatics.warehouseRentRate}}%</div>&nbsp;
+              <div class="data-item">智能柜:{{tblStatics.carCabinetRentRate}}%</div>&nbsp;
+              <div class="data-item">共享储物柜:{{tblStatics.storeCabinetRentRate}}%</div>
           </div>
         </div>
         <div class="statics-label-large statics-label-yellow">
