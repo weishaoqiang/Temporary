@@ -62,6 +62,7 @@
 
   .statics-label-olive {
     background-color: #bbd192;
+    min-width: 231px;
   }
 
   .statics-label-yellow {
@@ -88,7 +89,7 @@
   }
 
   .statics-label-large {
-    height: @staticsLabelLargeHeight;
+    height: @staticsLabelLargeHeight+6;
     color: #343337;
     position: relative;
     z-index: 1;
@@ -102,6 +103,10 @@
     .text {
       position: relative;
       z-index: 2;
+      .data-item {
+        font-size: 12px;
+        color: #565e54;
+      }
     }
 
     &:not(:last-child) {
@@ -114,6 +119,9 @@
       .text {
         float: right;
         margin-top: 16px;
+        .data-item {
+          display: inline-block;
+        }
       }
     }
 

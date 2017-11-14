@@ -35,6 +35,14 @@
               </select>
           </label>
           <div class="item-divider"></div>
+          <label>
+              <span>合同状态</span>
+              &nbsp;
+              <select name="shopSel" id="shopSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.contractStateList" ng-model="tblToolbar.contractStateVal" ng-change="tblToolbar.contractStateValChanged()">
+                <option value="">-请选择-</option>
+              </select>
+          </label>
+          <div class="item-divider"></div>
           <label><span>显示条数：</span>
             <select name="itemNumSel" id="itemNumSel" class="form-control input-inline" ng-options="opt.name for opt in tblToolbar.itemNumList" ng-model="tblToolbar.itemNumVal" ng-change="tblToolbar.itemNumValChanged()">
             </select>
@@ -84,6 +92,11 @@
           </th>
           <th>
             <div>
+              <span>合同状态</span>
+            </div>
+          </th>
+          <th>
+            <div>
               <span>收款状态</span>
             </div>
           </th>
@@ -105,6 +118,7 @@
           <td ng-bind="'￥' + item.actualPay"></td>
           <td ng-bind="item.createDate | dateFilter:'yyyy-MM-dd'"></td>
           <td ng-bind="item.payWay | payWayFilter"></td>
+          <td ng-bind="item.isHaveContract | contractStateFilter"></td>
           <td><span class="msgError" ng-bind="item.payState | payStateFilter"></span></td>
           <td>
             <input type="hidden" name="dataID" ng-value="item.id">

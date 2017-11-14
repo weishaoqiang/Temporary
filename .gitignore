@@ -15,3 +15,6 @@ admin/*
 # ignore svn
 /.svn/*
 .gitattributes
+
+# ignore view css
+/src/view/*/*.css

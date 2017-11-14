@@ -18,7 +18,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
           .success(function(ret) {
             if (ret.success) {
               self.managerList = ret.data.data;
-              console.log(self);
+              console.log(self.managerList);
               if (fn) {
                 // 执行载入的函数
                 fn(ret);
@@ -385,6 +385,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
           $scope.managerID,
           $scope.startDate,
           $scope.endDate);
+          console.log($scope.managerID);
       },
       // timeValChanged: function(){
       //     if(!this.timeVal){
