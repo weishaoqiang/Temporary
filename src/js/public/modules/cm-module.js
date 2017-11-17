@@ -475,7 +475,7 @@ cmModule.service('CheckSer', [function() {
       chkAddress: { // 校验地址
         ruleName: 'addressRule'
       },
-      chkPhone: { // 校验手机号
+      chkPhone: { // 校验手机号和
         ruleName: 'phoneRule'
       },
       chkDate: { // 校验日期
@@ -548,7 +548,9 @@ cmModule.service('CheckSer', [function() {
       notEmptyRule: /^(.){1,}$/,
       nameRule: /^(.){1,}$/,
       addressRule: /^(.){1,}$/,
-      phoneRule: /^1[0-9]{10}$/,
+      // phoneRule: /^1[0-9]{10}$/,
+      phoneRule: /(^1[0-9]{10}$)|(^([0,4,8][0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$)/, // 验证固话和手机号码
+      // fixedLineRlue: /^([0,4,8][0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/;
       dateRule: /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/,
       dateTimeRule: /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/,
       numRule: /^[0-9]{1,}$/,
