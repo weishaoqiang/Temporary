@@ -112,7 +112,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
         $scope.endDate = '';
         break;
       case '30d':
-        var pathName = '过去7日新增线索客户';
+        var pathName = '过去30日新增线索客户';
         $scope.time = '30d';
         $scope.startDate = '';
         $scope.endDate = '';
@@ -131,6 +131,16 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
     if ($scope.managerID) {
       pathName += '  （指定跟踪负责人）';
     }
+    /* 模态窗引入 */
+    $scope.modalBasic = {
+      "header": {},
+      "body": {
+        "content": ''
+      },
+      "footer": {
+        "btn": []
+      }
+    };
     $scope.exportParam = {
       cityID: $scope.cityID,
       state: $scope.state,
@@ -484,7 +494,26 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
       itemListExport: function(cityID, state, businessType, key, timeType, managerID, startDate, endDate) {
         var url = 'http://' + $rootScope.globalURL.hostURL + '/api/exportThreadUserListBKMgr?cityID=' + cityID + '&pageSize=20&curPage=1&state=' + state + '&businessType=' + businessType + '&key=' + key + '&timeType=' + timeType + '&managerID=' + managerID + "&startDate=" + startDate + '&endDate=' + endDate;
         //   console.log(timeType);
-        $window.location.href = url;
+        if (self.dataList && self.dataList.length > 0) {
+          $window.location.href = url;
+        }else {
+          $scope.modalBasic.header.content = '导出数据为空';
+          $scope.modalBasic.body.content = '请重新选择导出条件';
+          $scope.modalBasic.footer.btn = [{
+              "name": '确定',
+              "styleList": ['btn', 'btn-confirm'],
+              'func': function() {
+                $("#myModal").off(); //先解绑所有事件
+                $("#myModal").modal('hide').on('hidden.bs.modal', function(e) {});
+              }
+            }];
+          $timeout(function() {
+            $("#myModal").modal({
+              show: true,
+              backdrop: 'static' //点击周围区域时不会隐藏模态框
+            });
+          }, 0);
+        }
       },
 
       // 获取跟进负责人候选列表
@@ -2235,7 +2264,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
     $scope.param = $routeParams.param;
     console.log($scope.param);
     $rootScope.globalPath.initPath({
-      'name': '查询线索详情',
+      'name': '查看线索详情',
       'url': '../../..' + window.location.pathname + '#/threadMng_queryThread/' + $scope.param
     }, 'LV2');
     $scope.queryResult = {};

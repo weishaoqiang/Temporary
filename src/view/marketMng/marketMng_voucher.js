@@ -97,6 +97,7 @@ angular.module('mngApp.marketVoucher', ['ngRoute'])
       self.stateVal = {
         id: ''
       }
+      console.log(self.searchVal);
       $scope.tblNormal.getInfoList(self.cityVal.id, self.itemNumVal.id, 1, self.searchVal,self.stateVal.id);
     },
     itemNumList: itemNumList,
@@ -124,7 +125,7 @@ angular.module('mngApp.marketVoucher', ['ngRoute'])
   $scope.tblNormal = {
     getInfoList: function(cityID, pageSize, curPage, key, state) {
       var self = this;
-      $http.post('http://' + $rootScope.globalURL.hostURL + '/api/getCouponsListBKMgr?cityID='+cityID +'&pageSize=' + pageSize + '&curPage=' + curPage + '&couponsID=' + key + '&state='+ state)
+      $http.get('http://' + $rootScope.globalURL.hostURL + '/api/getCouponsListBKMgr?cityID='+cityID +'&pageSize=' + pageSize + '&curPage=' + curPage + '&couponsID=' + key + '&state='+ state)
         .success(function(ret) {
           angular.forEach(ret.data.data,function(item,index){
             item.passDue = false;

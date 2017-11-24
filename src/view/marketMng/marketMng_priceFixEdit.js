@@ -306,6 +306,7 @@ angular.module('mngApp.marketPriceFixEdit', ['ngRoute'])
           .success(function(ret) {
             if (ret.success) {
               var data = ret.data.data;
+              console.log(data);
               if (curPage === 1) {
                 $scope.shopPreList = data;
               } else {
@@ -370,7 +371,7 @@ angular.module('mngApp.marketPriceFixEdit', ['ngRoute'])
       changeCity: function(item) {
         $scope.currentCity = item;
         this.getShopList($scope.currentCity.id, $scope.urlParam.pageSize, $scope.urlParam.curPage);
-        this.getPriceList($scope.currentCity.id, $scope.urlParam.pageSize, $scope.urlParam.curPage, '');
+        this.getPriceList($scope.currentCity.id, $scope.urlParam.pageSize, $scope.urlParam.curPage, $scope.id);
       },
       checkAll: function(list) {
         var shopIDList = [];

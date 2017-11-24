@@ -51,7 +51,6 @@ cmModule.run(['$rootScope',  '$cacheFactory', 'GLOBAL_PATH', function($rootScope
       $("li#viewHomeItem").addClass('open active start');
     }
   };
-
   $rootScope.globalPath = GLOBAL_PATH;
 
   $rootScope.$on('$locationChangeStart', function(evt, toUrl, fromUrl) {
@@ -115,6 +114,14 @@ cmModule.run(['$rootScope',  '$cacheFactory', 'GLOBAL_PATH', function($rootScope
 // Breadcrumb service
 cmModule.service('GLOBAL_PATH', ['$rootScope', function($rootScope) {
   return {
+    testlog: function() {
+      console.log('hello world');
+    },
+    defineWinEvent: function() {
+      var evt = window.event || arguments.callee.caller.arguments[1]; // 获取event对象
+      var eventObj = evt.target || evt.srcElement; // 获取触发事件的源对象
+      return eventObj;
+    },
     initPath: function(pathObj, level) {
       var self = this;
       //如果是要后退
@@ -156,15 +163,16 @@ cmModule.service('GLOBAL_PATH', ['$rootScope', function($rootScope) {
         self.savePath();
       }
     },
-    popOthers: function(index) {
+    popOthers: function(index, evt) {
       var self = this;
       var len = $rootScope.pathObj.pathBuf.length;
       console.log(index);
       console.log(len);
+      console.log(self.defineWinEvent());
       if (len > 1) {
         //如果点击的不是最后一个，才标志为后退
         if (len !== index + 1) {
-          if (window.event.target.nodeName === 'A') {
+          if (self.defineWinEvent().nodeName === 'A') {
             window.sessionStorage.setItem('backFlag', 'true');
           }
         }

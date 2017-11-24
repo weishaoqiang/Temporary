@@ -56,7 +56,7 @@
         <tr ng-repeat="item in tblNormal.dataList" ng-if="tblNormal.dataList.length>0">
           <td ng-bind="item.managerName"></td>
           <td ng-bind="item.managerPhone"></td>
-          <td ng-bind="(item.managerShops.length>0)?item.managerShops.join('，'):'- - '" ng-class="(item.managerShops.length>0)?'':'msgInvalid'"></td>
+          <td ng-bind="(item.managerShops.length>0)?item.managerShops.join('，'):'-无门店- '" ng-class="(item.managerShops.length>0)?'':'msgInvalid'"></td>
           <td>
             <a ng-href="{{'../authorizeMng/index.html#/authorizeMng_editAdmin/' + item.managerID}}" style="margin-right:12px;" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">编辑</a>
             <a href="javascript:;" ng-click="tblNormal.delManager(item.managerID, item.managerName)" ng-if="(adminModules[4].type == 3) || (adminModules[4].type == 4)">删除</a>

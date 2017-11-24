@@ -35,6 +35,16 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       key: '',
       managerID: $scope.getUrlParam.managerID, // 管理员id
     };
+    /* 模态窗引入 */
+    $scope.modalBasic = {
+      "header": {},
+      "body": {
+        "content": ''
+      },
+      "footer": {
+        "btn": []
+      }
+    };
     /* 初始化页面之前先处理参数 */
     var dealParam = function() {
       var obj = {
@@ -305,7 +315,26 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       },
       itemListExport: function(cityID, shopID, orderState, key, managerID, overDueDate, beforeCreateDate, afterCreateDate, isVanke) {
         var url = 'http://' + $rootScope.globalURL.hostURL + '/api/exportOrderListBKMgr?cityID=' + cityID + '&shopID=' + shopID + '&state=' + orderState + '&sortType=1&orderColumn=createDate&key=' + key + '&managerID=' + managerID + '&overDueDate=' + overDueDate + '&beforeCreateDate=' + beforeCreateDate + '&afterCreateDate=' + afterCreateDate + '&isVanke=' + isVanke;
-        $window.location.href = url;
+        if($scope.tblNormal.dataList &&　$scope.tblNormal.dataList.length> 0){
+          $window.location.href = url;
+        } else {
+          $scope.modalBasic.header.content = '导出数据为空';
+          $scope.modalBasic.body.content = '请重新选择导出条件';
+          $scope.modalBasic.footer.btn = [{
+              "name": '确定',
+              "styleList": ['btn', 'btn-confirm'],
+              'func': function() {
+                $("#myModal").off(); //先解绑所有事件
+                $("#myModal").modal('hide').on('hidden.bs.modal', function(e) {});
+              }
+            }];
+          $timeout(function() {
+            $("#myModal").modal({
+              show: true,
+              backdrop: 'static' //点击周围区域时不会隐藏模态框
+            });
+          }, 0);
+        }
       },
       showDatepickerStart: function(evt) {
         laydate({
@@ -1595,7 +1624,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       }
     }, function(error) {});
   }])
-  .controller('orderMngDataAnaly_ctrl', ['$scope', '$rootScope', '$http', '$q', '$window', 'orderStateList', 'itemNumList', 'RememberSer', 'TblPagination', 'dateSer', 'timeTypeList', function($scope, $rootScope, $http, $q, $window, orderStateList, itemNumList, RememberSer, TblPagination, dateSer, timeTypeList) {
+  .controller('orderMngDataAnaly_ctrl', ['$scope', '$rootScope', '$http', '$q', '$window', 'orderStateList', 'itemNumList', 'RememberSer', 'TblPagination', 'dateSer', 'timeTypeList', '$timeout', function($scope, $rootScope, $http, $q, $window, orderStateList, itemNumList, RememberSer, TblPagination, dateSer, timeTypeList, $timeout) {
     $rootScope.globalPath.initPath({
       'name': '数据分析',
       'url': '../../..' + window.location.pathname + '#/orderMng_DataAnaly'
@@ -1960,7 +1989,16 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
         $scope.getAllData();
       },
     };
-
+    /* 模态窗引入 */
+    $scope.modalBasic = {
+      "header": {},
+      "body": {
+        "content": ''
+      },
+      "footer": {
+        "btn": []
+      }
+    };
     $scope.tblToolbar = {
       getCityList: function() {
         var self = this;
@@ -2116,26 +2154,31 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       cityPerListExport: function() {
         var cityParam = $scope.urlParam.cityParam;
         var type = 'exportCityOrderSaleListBKMgr';
+        var data = $scope.tblNormal.CityDataList;
         var param = 'startDate=' + cityParam.startDate + '&endDate=' + cityParam.endDate;
-        $scope.tblNormal.itemListExport(type, param);
+        $scope.tblNormal.itemListExport(type, param, data);
       },
       cityPerListDetailsExport: function() {
         var cityParam = $scope.urlParam.cityParam;
         var type = 'exportCityOrderSaleDetailListBKMgr';
+        var data = $scope.tblNormal.CityDataList;
         var param = 'startDate=' + cityParam.startDate + '&endDate=' + cityParam.endDate;
-        $scope.tblNormal.itemListExport(type, param);
+        $scope.tblNormal.itemListExport(type, param, data);
       },
       shopPerListExport: function() {
+        console.log();
         var shopParam = $scope.urlParam.shopParam;
         var type = 'exportShopOrderSaleListBKMgr';
+        var data = $scope.tblNormal.shopDataList;
         var param = 'cityID=' + shopParam.cityID + '&startDate=' + shopParam.startDate + '&endDate=' + shopParam.endDate;
-        $scope.tblNormal.itemListExport(type, param);
+        $scope.tblNormal.itemListExport(type, param, data);
       },
       salePerListExport: function() {
         var saleParam = $scope.urlParam.saleParam;
         var type = 'exportMgrOrderSaleListBKMgr';
+        var data = $scope.tblNormal.saleDataList;
         var param = 'cityID=' + saleParam.cityID + '&startDate=' + saleParam.startDate + '&endDate=' + saleParam.endDate;
-        $scope.tblNormal.itemListExport(type, param);
+        $scope.tblNormal.itemListExport(type, param, data);
       },
       // 三个pageSize选择分别定义
       cityItemNum: {
@@ -2259,9 +2302,29 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
           });
       },
       // 导出数据的方法
-      itemListExport: function(type, param) {
+      itemListExport: function(type, param, data) {
         var url = 'http://' + $rootScope.globalURL.hostURL + '/api/' + type + '?' + param;
-        $window.location.href = url;
+        if(data && data.length > 0) {
+          $window.location.href = url;
+        } else {
+          console.log('导出数据为空');
+          $scope.modalBasic.header.content = '导出数据为空';
+          $scope.modalBasic.body.content = '请重新选择导出条件';
+          $scope.modalBasic.footer.btn = [{
+              "name": '确定',
+              "styleList": ['btn', 'btn-confirm'],
+              'func': function() {
+                $("#myModal").off(); //先解绑所有事件
+                $("#myModal").modal('hide').on('hidden.bs.modal', function(e) {});
+              }
+            }];
+          $timeout(function() {
+            $("#myModal").modal({
+              show: true,
+              backdrop: 'static' //点击周围区域时不会隐藏模态框
+            });
+          }, 0);
+        }
       },
       // 选择时间
       showDatepickerStart: function(evt) {

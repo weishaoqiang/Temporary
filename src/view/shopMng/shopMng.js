@@ -44,7 +44,16 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
       exportshopType: '',
       exportKey: ''
     };
-
+    /* 模态窗引入 */
+    $scope.modalBasic = {
+      "header": {},
+      "body": {
+        "content": ''
+      },
+      "footer": {
+        "btn": []
+      }
+    };
     $scope.tblToolbar = {
       getCityList: function() {
         var self = this;
@@ -152,7 +161,26 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
     $scope.tblNormal = {
       itemListExport: function(cityID, shopType, key) {
         var url = 'http://' + $rootScope.globalURL.hostURL + '/api/exportShopsByCityBKMgr?cityID=' + cityID + '&sortType=1&orderColumn=openDate&shopType=' + shopType + '&key=' + key;
-        $window.location.href = url;
+        if($scope.tblSortable.dataList && $scope.tblSortable.dataList.length > 0) {
+          $window.location.href = url;
+        } else {
+          $scope.modalBasic.header.content = '导出数据为空';
+          $scope.modalBasic.body.content = '请重新选择导出条件';
+          $scope.modalBasic.footer.btn = [{
+              "name": '确定',
+              "styleList": ['btn', 'btn-confirm'],
+              'func': function() {
+                $("#myModal").off(); //先解绑所有事件
+                $("#myModal").modal('hide').on('hidden.bs.modal', function(e) {});
+              }
+            }];
+          $timeout(function() {
+            $("#myModal").modal({
+              show: true,
+              backdrop: 'static' //点击周围区域时不会隐藏模态框
+            });
+          }, 0);
+        }
       }
     };
     $scope.tblToolbar.itemNumVal = $scope.tblToolbar.itemNumList[1];

@@ -105,6 +105,9 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
           backdrop: 'static' //点击周围区域时不会隐藏模态框
         });
       },
+      // delManager:function(id, adminName) {
+      //   console.log(id, adminName);
+      // },
     };
 
     $scope.tblPagination = new TblPagination();

@@ -12,7 +12,7 @@
         <i class="fa fa-angle-right"></i>
       </li>
       <li ng-repeat-end="">
-        <a ng-href="{{item.url}}" ng-bind="item.name" ng-click="globalPath.popOthers($index)"></a>
+        <a ng-href="{{item.url}}" ng-bind="item.name" ng-click="globalPath.popOthers($index,$event)"></a>
       </li>
     </ul>
   </div>

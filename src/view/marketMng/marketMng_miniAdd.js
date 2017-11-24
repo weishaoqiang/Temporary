@@ -160,8 +160,10 @@ angular.module('mngApp.marketMiniAdd', ['ngRoute'])
         }
       },
       stepEvent: function(type) {
+        console.log(123);
         var self = this;
         if (type === 'next') {
+          console.log($scope.step);
           if ($scope.step === 4) {
             return;
           } else {
@@ -335,6 +337,7 @@ angular.module('mngApp.marketMiniAdd', ['ngRoute'])
         $http.get('http://' + $rootScope.globalURL.hostURL + '/api/addPromotionObjBKMgr?promotionID=' + id + "&shopID=" + shopIDList)
           .success(function(ret) {
             if (ret.success) {
+              console.log(1234566545);
               var data = ret.data.data;
               $scope.step = 4;
               $scope.modalBasic.header.content = '提示';
