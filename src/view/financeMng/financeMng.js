@@ -545,7 +545,14 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
   .controller('financeMngReceiptDetails_ctrl', ['$scope', '$rootScope', '$routeParams', '$http', '$q','$timeout', '$location', '$window','payWayList', function($scope, $rootScope, $routeParams, $http, $q, $timeout, $location, $window, payWayList) {
     $scope.param = $routeParams.param;
     $scope.queryResult = {};
-
+    // $scope.payWayList =  (function(){
+    //     payWayList.splice(1,3);
+    //     return payWayList;
+    // }());
+    $scope.payWayList1 = payWayList.slice(-4);
+    $scope.payWayList2 = payWayList.slice(0,1);
+    $scope.payWayList = $scope.payWayList2.concat($scope.payWayList1);
+    console.log($scope.payWayList);
     $scope.globalPath.initPath({
       'name': '收款管理详情',
       'url': '../../..' + window.location.pathname + '#/financeMng_receiptDetails/' + $scope.param
@@ -625,9 +632,10 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
         $http.get('http://' + $rootScope.globalURL.hostURL + '/api/getOrderDetailFromBKMgr?orderID=' + id)
           .success(function(ret) {
             if (ret.success) {
-              console.log(self.payWayList);
               $scope.queryResult = ret.data;
+              $scope.queryResult.managerID = $scope.queryResult.managerID || 0;
               $scope.formResult.remarks = $scope.queryResult.remarks;
+              $scope.formResult.managerID = $scope.queryResult.managerID || 0;
               $scope.queryResult.orderUnitList = JSON.parse($scope.queryResult.orderUnitNames);
               deferred.resolve(true);
             } else {
@@ -641,7 +649,6 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
       },
       confirmReceipt: function() {
         var self = this;
-        console.log($scope.formResult);
         if (self.valiForm()) {
           $scope.modalBasic.header.content = '提示';
           $scope.modalBasic.body.content = '您已确认收到款项吗？';
@@ -668,7 +675,6 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
                     // +'&shopID='+($scope.queryResult.shopID || '')
                     +
                     '&cityID=' + $scope.queryResult.cityID;
-                  console.log(data);
                   $http.post('http://' + $rootScope.globalURL.hostURL + '/api/confirmReceiptBKMgr?' + data)
                     .success(function(ret) {
                       console.log(ret);
@@ -798,18 +804,17 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
       payWayValChange:function(){
         var self = this;
         $scope.formResult.orderPayWay = self.payWayVal.id;
-        console.log($scope.formResult.orderPayWay);
+        console.log(self.payWayVal.id);
       },
-      payWayList: payWayList.slice(-4),
       setPayWayVal: function(id){
         var self = this;
         $http.get('http://' + $rootScope.globalURL.hostURL + '/api/getOrderDetailFromBKMgr?orderID=' + id)
           .success(function(ret) {
-            for(var i in self.payWayList){
-              if(self.payWayList[i].id == ret.data.orderPayWay){
-              self.payWayVal = $scope.tblDetails.payWayList[i];
+            for(var i in $scope.payWayList){
+              if($scope.payWayList[i].id == ret.data.orderPayWay){
+              self.payWayVal = $scope.payWayList[i];
               // 给$scope.formResult.orderPayWay赋初始值
-              $scope.formResult.orderPayWay = self.payWayList[i].id;
+              $scope.formResult.orderPayWay = $scope.payWayList[i].id;
               }
             }
           })
@@ -817,7 +822,6 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
             console.log('Fail! ' + msg);
           })
       },
-      // payWayVal: setPayWayVal($scope.param),
       getContractDetails: function(){
         var self = this;
         var deferred = $q.defer();
@@ -948,19 +952,21 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.expensesList','m
     $scope.$on('repeatDone',function(e){
         $scope.tblToolbar.loadImg();
     });
-    $scope.tblDetails.setPayWayVal($scope.param);
-    $scope.tblDetails.getReceiptDetails($scope.param)
-    .then(function(result){
-      if(result){
-        var promiseContract = $scope.tblDetails.getContractDetails();
-        promiseContract.then(function(result){
-          if(result){
-            console.log($scope.querycontractResult);
-            $scope.queryResult.contractList = $scope.querycontractResult;
-          }
-        })
-      }
-    })
+    $q.all([$scope.payWayList]).then(function(){
+      $scope.tblDetails.setPayWayVal($scope.param);
+      $scope.tblDetails.getReceiptDetails($scope.param)
+      .then(function(result){
+        if(result){
+          var promiseContract = $scope.tblDetails.getContractDetails();
+          promiseContract.then(function(result){
+            if(result){
+              console.log($scope.querycontractResult);
+              $scope.queryResult.contractList = $scope.querycontractResult;
+            }
+          })
+        }
+      })
+    });
   }])
   .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     var getTimeStamp = function() {

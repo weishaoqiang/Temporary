@@ -518,7 +518,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','ngDraggable'])
       getOrderList: function(cityID, payType, pageSize, curPage, key) {
         $http.get('http://' + $rootScope.globalURL.hostURL + '/api/getOtherOrderListLKL?cityID=' + cityID +
             '&payType=' + payType +
-            '&pageSize=' + pageSize + '&curPage=' + curPage + '&key=' + key)
+            '&pageSize=' + pageSize + '&curPage=' + curPage + '&orderID=' + key)
           .success(function(ret) {
             if (ret.success) {
               console.log(ret.data.data);

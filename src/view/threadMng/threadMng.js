@@ -41,6 +41,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
           console.log(ret);
           if (ret.success) {
             self.threadClientSrcList = ret.data;
+            console.log(self.threadClientSrcList);
             deferred.resolve(true);
           } else {
             deferred.resolve(false);
@@ -492,6 +493,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
       },
       // 导出列表函数
       itemListExport: function(cityID, state, businessType, key, timeType, managerID, startDate, endDate) {
+        var self = this;
         var url = 'http://' + $rootScope.globalURL.hostURL + '/api/exportThreadUserListBKMgr?cityID=' + cityID + '&pageSize=20&curPage=1&state=' + state + '&businessType=' + businessType + '&key=' + key + '&timeType=' + timeType + '&managerID=' + managerID + "&startDate=" + startDate + '&endDate=' + endDate;
         //   console.log(timeType);
         if (self.dataList && self.dataList.length > 0) {
@@ -1841,6 +1843,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
           });
         },
         fixManagerList: function() {
+          console.log(this.managerList);
           this.managerList.forEach(function(item, index, orignArr) {
             item.arg = '<i class="idropdown-item-badge">' + item.trackCount + '</i>';
           });

@@ -37,7 +37,8 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
         elem: '#rentRateDateEnd',
         format: 'YYYY/MM/DD',
         min: '2011-01-01',
-        max: laydate.now(),
+        // max: laydate.now(),
+        max: '2099-01-01',
         isclear: false,
         istime: false,
         istoday: true,
@@ -77,7 +78,8 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
         elem: '#allIncomeDateEnd',
         format: 'YYYY/MM/DD',
         min: '2011-01-01',
-        max: laydate.now(),
+        // max: laydate.now(),
+        max: '2099-01-01',
         isclear: false,
         istime: false,
         istoday: true,
@@ -328,6 +330,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule'])
       "getStaticsRentRate": function() {
         var self = this;
         var reg = /\//g;
+        console.log(self.rentRateEnd);
         $http.get('http://' + $rootScope.globalURL.hostURL + '/api/queryRentsStatisticsBKMgr?cityID=' + $scope.tblToolbar.cityVal.id +
             '&shopID=' + $scope.tblToolbar.shopVal.id +
             '&startTime=' + self.rentRateStart.replace(reg, '-') +

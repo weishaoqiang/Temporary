@@ -1966,9 +1966,9 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
         // Get cities list
         $http.get('http://' + $rootScope.globalURL.hostURL + '/api/getCities?pageSize=100&curPage=1&sortType=0&orderColumn=id')
           .success(function(ret) {
-            console.log("cityList");
             if (ret.success) {
               self.cityList = ret.data.data;
+              console.log(self.cityList);
               deferred.resolve(true);
             } else {
               deferred.resolve(false);
@@ -2297,6 +2297,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
             $scope.formResult.remarks = JSON.stringify(remarksObj).replace(/"/g, "'");
           }
           $scope.formResult.cityID = $scope.tblDetails.cityVal.id;
+          // $scope.formResult.cityName = $scope.tblDetails.cityVal.cityName;
           $scope.formResult.minRentPeriod = $scope.tblDetails.minRentPeriodVal.id;
           $scope.formResult.lockType = $scope.tblDetails.shopLockTypeVal.id;
 
@@ -2308,7 +2309,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
           $scope.formResult.isVanke = $scope.tblDetails.isVankeVal.id;
 
           var data = $.param($scope.formResult);
-          console.log(data);
+          return;
           $http.post('http://' + $rootScope.globalURL.hostURL + '/api/updateShop', data)
             .success(function(ret) {
               console.log(ret);
@@ -2382,6 +2383,7 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
             id: ''
           };
         }
+        console.log(self.cityVal);
       },
       isVankeValChanged: function() {
         var self = this;
@@ -3382,6 +3384,9 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.addTempHum','mng
             })
             .error(function(msg) {});
         }
+      },
+      cancel: function(){
+        window.history.go(-1);
       },
       validateForm: function() {
         var self = this;

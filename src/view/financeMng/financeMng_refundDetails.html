@@ -99,7 +99,7 @@
               <td class="col-xs-10 formCtrlTd">
                 <div class="row">
                   <div class="col-xs-12">
-                    <span ng-bind="queryResult.orderStartDate"></span>
+                    <span ng-bind="queryResult.orderStartDate.slice(0,10)"></span>
                   </div>
                 </div>
               </td>
@@ -111,7 +111,7 @@
               <td class="col-xs-10 formCtrlTd">
                 <div class="row">
                   <div class="col-xs-12">
-                    <span ng-bind="queryResult.orderEndDate"></span>
+                    <span ng-bind="queryResult.orderEndDate.slice(0,10)"></span>
                   </div>
                 </div>
               </td>
@@ -149,7 +149,7 @@
               <td class="col-xs-10 formCtrlTd">
                 <div class="row">
                   <div class="col-xs-4">
-                    <span ng-bind="'￥' + queryResult.unitPrice"></span>
+                    <span v-if="queryResult.unitPrice" ng-bind="'￥' +queryResult.unitPrice"></span>
                   </div>
                   <div class="col-xs-8"></div>
                 </div>
@@ -162,7 +162,7 @@
               <td class="col-xs-10 formCtrlTd">
                 <div class="row">
                   <div class="col-xs-4">
-                    <span ng-bind="'￥' + queryResult.orderDeposit"></span>
+                    <span v-if="!queryResult.orderDeposit" ng-bind="'￥' + queryResult.orderDeposit"></span>
                   </div>
                   <div class="col-xs-8"></div>
                 </div>
@@ -175,7 +175,7 @@
               <td class="col-xs-10 formCtrlTd">
                 <div class="row">
                   <div class="col-xs-12">
-                    <span ng-bind="'￥' + queryResult.orderDiscount"></span>
+                    <span v-if="queryResult.orderDiscount" ng-bind="'￥' + queryResult.orderDiscount"></span>
                   </div>
                 </div>
               </td>

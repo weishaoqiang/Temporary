@@ -108,8 +108,8 @@ angular.module('mngApp', ['ng', 'ngRoute', 'ngCMModule','mngApp.facilityMngSmoke
                   $scope.modalBasic.footer.btn[0].func = function() {
                     $("#myModal").off(); //先解绑所有事件
                     $("#myModal").modal('hide').on('hidden.bs.modal', function(e) {});
+                    self.getGuardList('',$scope.tblToolbar.stateVal.id, $scope.tblToolbar.itemNumVal.id, 1, $scope.tblToolbar.searchVal);
                   };
-                  self.getGuardList($scope.tblToolbar.stateVal.id, $scope.tblToolbar.itemNumVal.id, 1, $scope.tblToolbar.searchVal);
                 } else {
                   $scope.modalBasic.body.content = '删除指定门禁 失败! ' + ret.message;
                   $scope.modalBasic.footer.btn[0].name = '取消';

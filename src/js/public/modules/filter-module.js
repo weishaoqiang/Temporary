@@ -891,7 +891,10 @@ const CstFilterList = {
     name: '未签订'
   }, {
     id: 1,
-    name: '已签订'
+    name: '已签订(电子)'
+  }, {
+    id: 2,
+    name: '已签订(纸质)'
   }]
 };
 function FilterFactoryClass() {
